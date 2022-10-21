@@ -1,0 +1,235 @@
+{
+       "channel": {
+          "title": "News : NPR",
+          "link": "https://www.npr.org/templates/story/story.php?storyId=1001",
+          "description": "NPR news, audio, and podcasts. Coverage of breaking stories, national and world news, politics, business, science, technology, and extended coverage of major national and world events.",
+          "language": "en",
+          "copyright": "Copyright 2022 NPR - For Personal Use Only",
+          "generator": "NPR API RSS Generator 0.94",
+          "lastBuildDate": "Wed, 19 Oct 2022 16:53:21 -0400",
+          "image": {
+             "url": "https://media.npr.org/images/podcasts/primary/npr_generic_image_300.jpg?s=200",
+             "title": "News",
+             "link": "https://www.npr.org/templates/story/story.php?storyId=1001"
+          },
+          "item": [
+             {
+                "title": "¿Cómo ha afectado su vida la ley de aborto estatal? Comparta su historia",
+                "description": "Las leyes que restringen el aborto están afectando la vida de las personas en formas grandes y pequeñas. Si han tenido un impacto en su vida o en la vida de su familia, NPR quiere oir de usted.",
+                "id":20
+                ,"pubDate": "Wed, 19 Oct 2022 16:53:21 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129531281/-como-ha-afectado-su-vida-la-ley-de-aborto-estatal-comparta-su-historia",
+                "guid": "https://www.npr.org/2022/10/19/1129531281/-como-ha-afectado-su-vida-la-ley-de-aborto-estatal-comparta-su-historia",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/gettyimages-1242531582_wide-2688e42bfe5f33c58f784c045e6fe3130241a4d2.jpg?s=600' alt='Jasmine, 23, waits to receive an abortion at a Planned Parenthood Abortion Clinic in West Palm Beach, Florida.'/><p>Las leyes que restringen el aborto están afectando la vida de las personas en formas grandes y pequeñas. Si han tenido un impacto en su vida o en la vida de su familia, NPR quiere oir de usted.</p><p>(Image credit: CHANDAN KHANNA/AFP via Getty Images)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129531281' />"
+                },
+                "creator": {
+                   "__text": "Maria Godoy"
+                }
+             },
+             {
+                "title": "A former UCLA student was sentenced to over three years in prison for Capitol riot",
+                "description": "Christian Secor, a former UCLA student and follower of the far-right racist livestreamer Nick Fuentes, was sentenced on Wednesday for obstructing congress during the Jan. 6 Capitol riot.",
+                "id":21
+                ,"pubDate": "Wed, 19 Oct 2022 16:38:23 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129912913/a-former-ucla-student-was-sentenced-to-over-three-years-in-prison-for-capitol-ri",
+                "guid": "https://www.npr.org/2022/10/19/1129912913/a-former-ucla-student-was-sentenced-to-over-three-years-in-prison-for-capitol-ri",
+                "encoded": {
+                   "__cdata": "<p>Christian Secor, a former UCLA student and follower of the far-right racist livestreamer Nick Fuentes, was sentenced on Wednesday for obstructing congress during the Jan. 6 Capitol riot.</p><p>(Image credit: Department of Justice)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129912913' />"
+                },
+                "creator": {
+                   "__text": "Tom Dreisbach"
+                }
+             },
+             {
+                "title": "'Swift-footed lizard' is named the Massachusetts state dinosaur",
+                "description": "<em>Podokesaurus holyokensis</em>, which lived millions of years ago in what is now Massachusetts, has been named the state's official dinosaur under legislation signed into law by Gov. Charlie Baker.",
+                "id":22
+                ,"pubDate": "Wed, 19 Oct 2022 16:16:52 -0400",
+                "link": "https://www.npr.org/2022/10/19/1130024340/massachusetts-state-dinosaur",
+                "guid": "https://www.npr.org/2022/10/19/1130024340/massachusetts-state-dinosaur",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/ap22292674613587_wide-7036137c9f069f173a5488a0a28e518cb92b4d1b.jpg?s=600' alt='This is an artist's rendering of the dinosaur Podokesaurus holyokensis, which lived millions of years ago in what is now Massachusetts. The dinosaur, whose name means \"swift-footed lizard of Holyoke,\" has been named the state's official dinosaur.'/><p><em>Podokesaurus holyokensis</em>, which lived millions of years ago in what is now Massachusetts, has been named the state's official dinosaur under legislation signed into law by Gov. Charlie Baker.</p><p>(Image credit: FunkMonk Michael B.H. via AP)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1130024340' />"
+                },
+                "creator": {
+                   "__text": "The Associated Press"
+                }
+             },
+             {
+                "title": "The Sanibel Island causeway washed out by Hurricane Ian has reopened",
+                "description": "The causeway linking the island to the Florida mainland reopened with temporary repairs just three weeks after it was washed out by the hurricane. The reopening will help recovery work on the island.",
+                "id":23
+                ,"pubDate": "Wed, 19 Oct 2022 14:05:57 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129956050/hurricane-ian-sanibel-island-causeway-reopens-florida",
+                "guid": "https://www.npr.org/2022/10/19/1129956050/hurricane-ian-sanibel-island-causeway-reopens-florida",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/ap22292527856329_wide-3a046fd24ce29e41c1383f380b1c9652b548744f.jpg?s=600' alt='In this aerial photo made in a flight provided by mediccorps.org, damage from Hurricane Ian is seen on the causeway leading to Sanibel Island from Fort Myers, Fla., on Sept. 30. The causeway has reopened with temporary repairs.'/><p>The causeway linking the island to the Florida mainland reopened with temporary repairs just three weeks after it was washed out by the hurricane. The reopening will help recovery work on the island.</p><p>(Image credit: Gerald Herbert/AP)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129956050' />"
+                },
+                "creator": {
+                   "__text": "The Associated Press"
+                }
+             },
+             {
+                "title": "Nestlé recalls its stuffed chocolate chip cookie dough",
+                "description": "The voluntary recall is for Nestlé Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling products manufactured between June and September. Some consumers found plastic pieces in them.",
+                "id":24
+                ,"pubDate": "Wed, 19 Oct 2022 13:08:03 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129917084/toll-house-cookie-dough-recall-nestle",
+                "guid": "https://www.npr.org/2022/10/19/1129917084/toll-house-cookie-dough-recall-nestle",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/nestl___toll_house__stuffed_chocolate_chip__cookie_dough_with_fudge_filling_upc_wide-0a05b0560f1583e6bf9c325cd009f3cb6a31db9e.jpeg?s=600' alt='Nestlé is recalling its Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling after some consumers found white plastic pieces in the products.'/><p>The voluntary recall is for Nestlé Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling products manufactured between June and September. Some consumers found plastic pieces in them.</p><p>(Image credit: Nestlé USA)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129917084' />"
+                },
+                "creator": {
+                   "__text": "Ashley Ahn"
+                }
+             },
+             {
+                "title": "Does Marjorie Taylor Greene represent the future of the Republican Party?",
+                "description": "Journalist Robert Draper says the GOP's embrace of extremism opened the door to fringe actors, who've become among the party's most influential leaders. His new book is <em>Weapons of Mass Delusion.</em>",
+                "id":25
+                ,"pubDate": "Wed, 19 Oct 2022 11:40:00 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129516628/trump-republican-marjorie-taylor-greene-robert-draper-weapons-of-mass-delusion",
+                "guid": "https://www.npr.org/2022/10/19/1129516628/trump-republican-marjorie-taylor-greene-robert-draper-weapons-of-mass-delusion",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/gettyimages-1230422858_wide-d1091629dafb4195677a57e77d90ef70dc0929da.jpg?s=600' alt='U.S. Rep. Marjorie Taylor Greene, shown here on Jan. 4, 2021, continues to embrace the falsehood that the 2020 election was stolen.'/><p>Journalist Robert Draper says the GOP's embrace of extremism opened the door to fringe actors, who've become among the party's most influential leaders. His new book is <em>Weapons of Mass Delusion.</em> </p><p>(Image credit: Saul Loeb/AFP via Getty Images)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129516628' />"
+                },
+                "creator": {
+                   "__text": "Dave Davies"
+                }
+             },
+             {
+                "title": "Herschel Walker plans to hand out fake police badges to highlight support for police",
+                "description": "After being called out for flashing an honorary police badge at a debate, Herschel Walker's campaign is embracing the moment with plans to distribute 1,000 fake badges as a fundraising prop tomorrow.",
+                "id":26
+                ,"pubDate": "Wed, 19 Oct 2022 09:36:54 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129754080/herschel-walker-bought-1000-fake-badges-controversy",
+                "guid": "https://www.npr.org/2022/10/19/1129754080/herschel-walker-bought-1000-fake-badges-controversy",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/18/screenshot-45-_wide-98b583e6dc70f2a2ddc33f10642dd544c06c7788.png?s=600' alt='Johnson County Sheriff Greg Rowland (left) stands in support of former football star-turned-prospective-politician Herschel Walker. Rowland said if Walker's badge is a prop, then so is his, which he carries every day in the line of duty. Following a heated debate last Friday, Walker ordered 1,000 imitation badges to be used as props for an upcoming fundraising event.'/><p>After being called out for flashing an honorary police badge at a debate, Herschel Walker's campaign is embracing the moment with plans to distribute 1,000 fake badges as a fundraising prop tomorrow.</p><p>(Image credit: Screen grab/Twitter)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129754080' />"
+                },
+                "creator": {
+                   "__text": "Dustin Jones"
+                }
+             },
+             {
+                "title": "A rare but dangerous flesh-eating bacteria is infecting Florida residents",
+                "description": "Hurricane Ian caused storm surges of up to 12 feet, leaving behind warm, brackish floodwaters where <em>Vibrio vulnificus </em>thrives.",
+                "id":27
+                ,"pubDate": "Wed, 19 Oct 2022 09:13:03 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129865243/flesh-eating-bacteria-florida-floodwater",
+                "guid": "https://www.npr.org/2022/10/19/1129865243/flesh-eating-bacteria-florida-floodwater",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/gettyimages-1243621314_wide-5803fa9d7b9545d12ab27c45dfbc75a43052908d.jpg?s=600' alt='A man tows a canoe through a flooded street of his neighborhood in New Smyrna Beach, Fla., last month. Vibrio vulnificus thrives in warm, brackish floodwaters.'/><p>Hurricane Ian caused storm surges of up to 12 feet, leaving behind warm, brackish floodwaters where <em>Vibrio vulnificus </em>thrives. </p><p>(Image credit: Jim Watson/AFP via Getty Images)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129865243' />"
+                },
+                "creator": {
+                   "__text": "Emily Olson"
+                }
+             },
+             {
+                "title": "Ukrainians keep a wary eye on U.S. midterm elections, fearing a loss of support",
+                "description": "The likelihood that Republicans may win the House has triggered concerns in Ukraine. Last month, most House Republicans voted against a funding package that included billions earmarked for Ukraine.",
+                "id":28
+                ,"pubDate": "Wed, 19 Oct 2022 08:50:00 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129652322/ukraine-us-midterm-elections",
+                "guid": "https://www.npr.org/2022/10/19/1129652322/ukraine-us-midterm-elections",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/18/coffee-interview-1_wide-dc3a55c8556931ad55311c70a41b7d0d8e980e79.jpg?s=600' alt='From left: Ivan Sushchyk, Vadym Zahozytsky and Yana Yelizarova discuss U.S. support for the war in Ukraine at a coffee shop in Kyiv on Oct. 11.'/><p>The likelihood that Republicans may win the House has triggered concerns in Ukraine. Last month, most House Republicans voted against a funding package that included billions earmarked for Ukraine.</p><p>(Image credit: Franco Ordoñez/NPR)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129652322' />"
+                },
+                "creator": {
+                   "__text": "Franco Ordoñez"
+                }
+             },
+             {
+                "title": "Putin orders martial law in occupied Ukrainian areas as Kyiv's forces gain ground",
+                "description": "The move signals Russia's growing frustration over Ukrainian advances in areas the Kremlin claimed to annex. It came hours after Kremlin-appointed officials ordered civilians to evacuate Kherson.",
+                "id":29
+                ,"pubDate": "Wed, 19 Oct 2022 07:25:39 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129853677/an-occupied-region-of-ukraine-is-evacuating-residents-to-russia",
+                "guid": "https://www.npr.org/2022/10/19/1129853677/an-occupied-region-of-ukraine-is-evacuating-residents-to-russia",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/gettyimages-1244075698_wide-65900306d56767502909e5fd5711225f7c989b2b.jpg?s=600' alt='Russian President Vladimir Putin chairs a Security Council meeting via a video link at the Novo-Ogaryovo state residence outside Moscow on Wednesday. Putin introduced martial law in Ukraine's Donetsk, Luhansk, Kherson and Zaporizhzhia regions that Moscow claims to have annexed.'/><p>The move signals Russia's growing frustration over Ukrainian advances in areas the Kremlin claimed to annex. It came hours after Kremlin-appointed officials ordered civilians to evacuate Kherson.</p><p>(Image credit: Sergei Ilyin/Sputnik/AFP via Getty Images)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129853677' />"
+                },
+                "creator": {
+                   "__text": "Charles Maynes"
+                }
+             },
+             {
+                "title": "Enrollment in Korean classes has shot up. Thank K-pop",
+                "description": "College student enrollment in language classes has plateaued in recent years, but enrollment in Korean language classes rose 78% from 2009 to 2016.",
+                "id":30
+                ,"pubDate": "Wed, 19 Oct 2022 07:12:45 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129380984/korean-language-classes-us-colleges-k-pop-parasite-squid-game",
+                "guid": "https://www.npr.org/2022/10/19/1129380984/korean-language-classes-us-colleges-k-pop-parasite-squid-game",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/ap22165598949718_wide-6f213e8fe4a8fa3979ea1cb75c58ef6b69bd9795.jpg?s=600' alt='BTS arrives at the 64th Annual Grammy Awards on April 3, in Las Vegas. The popularity of K-pop has contributed to a surge in people taking Korean language courses.'/><p>College student enrollment in language classes has plateaued in recent years, but enrollment in Korean language classes rose 78% from 2009 to 2016.</p><p>(Image credit: Jordan Strauss/Jordan Strauss/Invision/AP)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129380984' />"
+                },
+                "creator": {
+                   "__text": "Ashley Ahn"
+                }
+             },
+             {
+                "title": "Online platforms radicalized the Buffalo mass shooting suspect, a new report says",
+                "description": "The New York attorney general's office said it reviewed thousands of pages of documents and social media content to study how the suspect used online platforms to plan and publicize the mass shooting.",
+                "id":31
+                ,"pubDate": "Wed, 19 Oct 2022 06:00:00 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129792055/buffalo-tops-shooting-attorney-general-report",
+                "guid": "https://www.npr.org/2022/10/19/1129792055/buffalo-tops-shooting-attorney-general-report",
+                "encoded": {
+                   "__cdata": "<p>The New York attorney general's office said it reviewed thousands of pages of documents and social media content to study how the suspect used online platforms to plan and publicize the mass shooting.</p><p>(Image credit: Matt Rourke/AP)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129792055' />"
+                },
+                "creator": {
+                   "__text": "Jonathan Franklin"
+                }
+             },
+             {
+                "title": "Val Demings goes on attack against Marco Rubio in Florida Senate debate",
+                "description": "Democratic U.S. Rep. Val Demings of Florida went on the attack Tuesday in her first debate against Republican Sen. Marco Rubio.",
+                "id":32
+                ,"pubDate": "Wed, 19 Oct 2022 05:16:26 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129849444/val-demings-goes-on-attack-against-marco-rubio-in-florida-senate-debate",
+                "guid": "https://www.npr.org/2022/10/19/1129849444/val-demings-goes-on-attack-against-marco-rubio-in-florida-senate-debate",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/ap22291855886901_wide-d884530674906169066ee1153f3239d5da7b6420.jpg?s=600' alt='Republican U.S. Sen. Marco Rubio, and his Democratic challenger, U.S. Rep. Val Demings, greet each other before a televised debate at Duncan Theater on the campus of Palm Beach State College on Tuesday.'/><p>Democratic U.S. Rep. Val Demings of Florida went on the attack Tuesday in her first debate against Republican Sen. Marco Rubio.</p><p>(Image credit: Thomas Cordy/AP)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129849444' />"
+                },
+                "creator": {
+                   "__text": "The Associated Press"
+                }
+             },
+             {
+                "title": "The family of George Floyd plans to file a $250 million lawsuit against Ye",
+                "description": "The announcement of the lawsuit comes after Ye, the rapper formerly known as Kanye West, made comments about Floyd's death on the podcast <em>Drink Champs. </em>",
+                "id":33
+                ,"pubDate": "Wed, 19 Oct 2022 05:15:00 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129747423/kanye-west-george-floyd-lawsuit",
+                "guid": "https://www.npr.org/2022/10/19/1129747423/kanye-west-george-floyd-lawsuit",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/18/gettyimages-1243694046_wide-064bd9daa3e766014af093256eb2c56586e7e771.jpg?s=600' alt='Ye (C), formerly known as Kanye West, attends the Givenchy Spring-Summer 2023 fashion show during the Paris Womenswear Fashion Week, in Paris, on Oct. 2, 2022.'/><p>The announcement of the lawsuit comes after Ye, the rapper formerly known as Kanye West, made comments about Floyd's death on the podcast <em>Drink Champs. </em></p><p>(Image credit: Julien de Rosa/AFP via Getty Images)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129747423' />"
+                },
+                "creator": {
+                   "__text": "Matt Adams"
+                }
+             },
+             {
+                "title": "The family of slain Palestinian American journalist Shireen Abu Akleh demands justice",
+                "description": "It's been over five months since Abu Akleh was killed on the job, most likely by Israeli forces. Her niece tells <em>Morning Edition</em> about her aunt's legacy and her family's campaign for accountability.",
+                "id":34
+                ,"pubDate": "Wed, 19 Oct 2022 05:11:43 -0400",
+                "link": "https://www.npr.org/2022/10/19/1129846198/lina-abu-akleh-justice-palestinian-american-journalist",
+                "guid": "https://www.npr.org/2022/10/19/1129846198/lina-abu-akleh-justice-palestinian-american-journalist",
+                "encoded": {
+                   "__cdata": "<img src='https://media.npr.org/assets/img/2022/10/19/gettyimages-1241876906_wide-82c1c307244b9c4a3a0287280a05556ec9997373.jpg?s=600' alt='Lina Abu Akleh sits near photographs of her late aunt, journalist Shireen Abu Akleh, at their family home in east Jerusalem in July.'/><p>It's been over five months since Abu Akleh was killed on the job, most likely by Israeli forces. Her niece tells <em>Morning Edition</em> about her aunt's legacy and her family's campaign for accountability.</p><p>(Image credit: Rosie Scammell/AFP via Getty Images)</p><img src='https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129846198' />"
+                },
+                "creator": {
+                   "__text": "Leila Fadel"
+                }
+             }
+          ]
+       },
+       "_xmlns:npr": "https://www.npr.org/rss/",
+       "_xmlns:nprml": "https://api.npr.org/nprml",
+       "_xmlns:itunes": "http://www.itunes.com/dtds/podcast-1.0.dtd",
+       "_xmlns:content": "http://purl.org/rss/1.0/modules/content/",
+       "_xmlns:dc": "http://purl.org/dc/elements/1.1/",
+       "_xmlns:media": "http://search.yahoo.com/mrss/",
+       "_version": "2.0"
+ }
