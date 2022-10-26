@@ -5,7 +5,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 const Bookmark = ({ id, reading }) => {
   // get local storage on first load
   const [storageItem, setStorageItem] = useState(() =>
-    JSON.parse(localStorage.getItem("bookmarked") || "[]")
+    JSON.parse(localStorage.getItem("bookmarkedReadings") || "[]")
   );
   const post = { id, reading };
   // see if reading is already bookmarked
@@ -17,11 +17,11 @@ const Bookmark = ({ id, reading }) => {
       if (!isBookmarked) {
         const newStorageItem = [...storageItem, post];
         setStorageItem(newStorageItem);
-        localStorage.setItem("bookmarked", JSON.stringify(newStorageItem));
+        localStorage.setItem("bookmarkedReadings", JSON.stringify(newStorageItem));
       } else {
         const newStorageItem = storageItem.filter((post) => post.id !== id);
         setStorageItem(newStorageItem);
-        localStorage.setItem("bookmarked", JSON.stringify(newStorageItem));
+        localStorage.setItem("bookmarkedReadings", JSON.stringify(newStorageItem));
       }
   };
 

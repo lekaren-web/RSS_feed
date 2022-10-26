@@ -7,6 +7,7 @@ import Home from "../components/Home";
 import SinglePost from '../components/SinglePost'
 import Feeds from '../components/Feeds'
 import SingleFeed from '../components/SingleFeed'
+import ScrollToTop from '../functions/ScrollToTop'
 class Routes extends Component {
   componentDidMount() {
     // this.props.loadInitialData();
@@ -18,6 +19,7 @@ class Routes extends Component {
     return (
       <div>
         {/* {isLoggedIn ? ( */}
+          <ScrollToTop />
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/post/:id" component={SinglePost} />
@@ -29,6 +31,7 @@ class Routes extends Component {
             
             <Redirect to="/home" />
           </Switch>
+          
         {/* ) : ( */}
           {/* <Switch>
             <Route path="/" exact component={Login} />

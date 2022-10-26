@@ -24,12 +24,13 @@ const Navbar = (props) => {
     <div className="left-nav">
       {/* user profile icon */}
 
-      <div className="userIcon">
-        <img src="" />
-      </div>
+      
 
       {/* hoomepage Navicon */}
       <div className="nav_links">
+      <div className="userIcon">
+        <img src="" />
+      </div>
         <span style={{margin:'0 auto'}}>
           <Link to="/" style={{textDecoration: 'none'}}>
             <FontAwesomeIcon className={ location.pathname === '/home' ? "home_icon_active" : 'home_icon_inactive'} icon={faHouse} />

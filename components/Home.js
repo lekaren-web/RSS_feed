@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 // import XMLParser from 'react-xml-parser';
-import xmltojsondata from "../economist_feed.json";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";

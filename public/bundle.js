@@ -4427,17 +4427,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _components_Navbar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Navbar */ "./components/Navbar.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./client/routes.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./client/store.js");
+
+
 
 
 
 const App = () => {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_redux__WEBPACK_IMPORTED_MODULE_3__.Provider, {
+    store: _store__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "mainContainer"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Navbar__WEBPACK_IMPORTED_MODULE_1__["default"], {
     id: "mySidenav"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_routes__WEBPACK_IMPORTED_MODULE_2__["default"], {
     id: "main"
-  }));
+  })));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -4461,6 +4467,144 @@ const history =  false ? 0 : (0,history__WEBPACK_IMPORTED_MODULE_0__.createBrows
 
 /***/ }),
 
+/***/ "./client/redux/feeds.js":
+/*!*******************************!*\
+  !*** ./client/redux/feeds.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ feedsReducer),
+/* harmony export */   "fetchFeeds": () => (/* binding */ fetchFeeds),
+/* harmony export */   "setFeeds": () => (/* binding */ setFeeds)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+const initialState = [];
+const SET_FEEDS = 'SET_FEEDS';
+const SINGLE_FEED = 'SINGLE_FEED';
+const CREATE_FEED = 'CREATE_FEED';
+const DELETE_FEED = 'DELETE_FEED';
+const UPDATE_FEED = 'UPDATE_FEED';
+const setFeeds = feeds => ({
+  type: SET_FEEDS,
+  feeds
+});
+
+// export const singleProject = (project) => ({
+//   type: SINGLE_PROJECT,
+//   project
+// })
+// export const createProject = (project) => ({
+//   type: CREATE_PROJECT,
+//   project
+// });
+
+// export const deleteProject = (project) => ({
+//   type: DELETE_PROJECT,
+//   project
+// })
+
+// export const updateProject = (project) => ({
+//   type: UPDATE_PROJECT,
+//   project
+// })
+
+const fetchFeeds = () => {
+  return async dispatch => {
+    try {
+      const {
+        data
+      } = await axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/feeds');
+      dispatch(setFeeds(data));
+    } catch (err) {
+      // console.log(err)
+    }
+  };
+};
+
+// export const fetchSingleProject = (id) => async (dispatch) => {
+//   try {
+//     const {data} = await axios.get(`/api/projects/${id}`)
+//     dispatch(singleProject(data))
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+// export const createNewProject = (project, history) => {
+// return async (dispatch) => {
+//   const {data: created} = await axios.post('/api/projects/create', project)
+//   dispatch(createProject(created))
+//   history.push('/projects')
+// }}
+
+// export const deleteTheProject = (id, history) => {
+//   return async (dispatch) => {
+//     const {data: project} = await axios.delete(`api/projects/${id}`)
+//     dispatch(deleteProject(project))
+//     history.push('/')
+//     history.push('/projects')
+//   }
+// }
+
+// export const updateTheProject = (project, history) => {
+//   return async (dispatch) => {
+//     const {data: updated} = await axios.put(`/api/projects/edit/${project.id}`, project)
+//     dispatch(updateProject(updated));
+//     history.push('/')
+//     history.push(`/projects/${project.id}`)
+//   }
+// }
+// Take a look at app/redux/index.js to see where this reducer is
+// added to the Redux store with combineReducers
+function feedsReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'SET_FEEDS':
+      return action.feeds;
+    case 'SINGLE_FEED':
+      return action.feed;
+
+    //   case 'CREATE_PROJECT':
+    //     return [...state, action.project]
+
+    //   case 'DELETE_PROJECT':
+    //   return state.filter((project) => project.id !== action.project.id)
+
+    //   case 'UPDATE_PROJECT':
+    //      state = []
+    //       return state.map((project) => { return project.id === action.project.id ? action.project : project})
+    default:
+      return state;
+  }
+}
+
+/***/ }),
+
+/***/ "./client/redux/index.js":
+/*!*******************************!*\
+  !*** ./client/redux/index.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var _feeds__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./feeds */ "./client/redux/feeds.js");
+
+
+const appReducer = (0,redux__WEBPACK_IMPORTED_MODULE_1__.combineReducers)({
+  feeds: _feeds__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (appReducer);
+
+/***/ }),
+
 /***/ "./client/routes.js":
 /*!**************************!*\
   !*** ./client/routes.js ***!
@@ -4474,16 +4618,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _components_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Home */ "./components/Home.js");
 /* harmony import */ var _components_SinglePost__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/SinglePost */ "./components/SinglePost.js");
 /* harmony import */ var _components_Feeds__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Feeds */ "./components/Feeds.js");
 /* harmony import */ var _components_SingleFeed__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/SingleFeed */ "./components/SingleFeed.js");
+/* harmony import */ var _functions_ScrollToTop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../functions/ScrollToTop */ "./functions/ScrollToTop.js");
 
 
 
 // import { Login } from "./components/AuthForm";
 // import { Signup } from "./components/AuthFormSignUp";
+
 
 
 
@@ -4496,23 +4642,23 @@ class Routes extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     const {
       isLoggedIn
     } = this.props;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_functions_ScrollToTop__WEBPACK_IMPORTED_MODULE_6__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Switch, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
       path: "/home",
       component: _components_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
       path: "/post/:id",
       component: _components_SinglePost__WEBPACK_IMPORTED_MODULE_3__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
       path: "/feed/:name",
       component: _components_SingleFeed__WEBPACK_IMPORTED_MODULE_5__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
       exact: true,
       path: "/posts"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Route, {
       exact: true,
       path: "/feeds",
       component: _components_Feeds__WEBPACK_IMPORTED_MODULE_4__["default"]
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Redirect, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Redirect, {
       to: "/home"
     })));
   }
@@ -4545,6 +4691,69 @@ class Routes extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
 
 /***/ }),
 
+/***/ "./client/store.js":
+/*!*************************!*\
+  !*** ./client/store.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "resetStore": () => (/* binding */ resetStore)
+/* harmony export */ });
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./redux */ "./client/redux/index.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
+/* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var redux_devtools_extension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! redux-devtools-extension */ "./node_modules/redux-devtools-extension/index.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+
+
+
+ // https://github.com/evgenyrodionov/redux-logger
+
+ // https://github.com/gaearon/redux-thunk
+
+const RESET_STORE = 'RESET_STORE';
+let middleware = [
+// `withExtraArgument` gives us access to axios in our async action creators!
+// https://github.com/reduxjs/redux-thunk#injecting-a-custom-argument
+redux_thunk__WEBPACK_IMPORTED_MODULE_4__["default"].withExtraArgument({
+  axios: (axios__WEBPACK_IMPORTED_MODULE_0___default())
+})];
+
+// if (process.browser) {
+//   // We'd like the redux logger to only log messages when it's running in the
+//   // browser, and not when we run the tests from within Mocha.
+//   middleware = [...middleware, createLogger({ collapsed: true })]
+// }
+
+/** We wrap the entire redux store in a root reducer with a special
+ * action, RESET_STORE. It calls our application's reducer with
+ * state = undefined. This will trigger each of our sub-reducers
+ * to reset back to their initial state. This will come in
+ * handy when we need to reset our redux store in between tests.
+ */
+
+const resetStore = () => ({
+  type: RESET_STORE
+});
+const rootReducer = (state, action) => {
+  if (action.type === RESET_STORE) {
+    state = undefined;
+    return (0,_redux__WEBPACK_IMPORTED_MODULE_1__["default"])(state, action);
+  }
+  return (0,_redux__WEBPACK_IMPORTED_MODULE_1__["default"])(state, action);
+};
+const store = (0,redux__WEBPACK_IMPORTED_MODULE_5__.createStore)(rootReducer, (0,redux_devtools_extension__WEBPACK_IMPORTED_MODULE_3__.composeWithDevTools)((0,redux__WEBPACK_IMPORTED_MODULE_5__.applyMiddleware)(...middleware)));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
+/***/ }),
+
 /***/ "./components/Feeds.js":
 /*!*****************************!*\
   !*** ./components/Feeds.js ***!
@@ -4557,14 +4766,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _economist_feed_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../economist_feed.json */ "./economist_feed.json");
-/* harmony import */ var _back_channel_feed_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../back_channel_feed.json */ "./back_channel_feed.json");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _data_economist_feed_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../data/economist_feed.json */ "./data/economist_feed.json");
+/* harmony import */ var _data_back_channel_feed_json__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../data/back_channel_feed.json */ "./data/back_channel_feed.json");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _npr_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../npr.json */ "./npr.json");
+/* harmony import */ var _data_npr_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../data/npr.json */ "./data/npr.json");
 /* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _client_redux_feeds__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../client/redux/feeds */ "./client/redux/feeds.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
+/* harmony import */ var rss_to_json__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rss-to-json */ "./node_modules/rss-to-json/dist/index.js");
+/* harmony import */ var rss_to_json__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(rss_to_json__WEBPACK_IMPORTED_MODULE_8__);
 
 // import XMLParser from 'react-xml-parser';
 
@@ -4575,7 +4788,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 // import column from '../client/assets/column.png'
+
 
 class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   constructor(props) {
@@ -4587,36 +4803,38 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       },
       feeds: [{
         title: "The Economist",
-        data: _economist_feed_json__WEBPACK_IMPORTED_MODULE_1__,
+        data: _data_economist_feed_json__WEBPACK_IMPORTED_MODULE_1__,
         src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRE1fWOhNt-t5XUtE9AhUhxhO3RrEAiswDX1A&usqp=CAU"
       }, {
         title: "Backchannel",
-        data: _back_channel_feed_json__WEBPACK_IMPORTED_MODULE_2__,
+        data: _data_back_channel_feed_json__WEBPACK_IMPORTED_MODULE_2__,
         src: "https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/0de98e26784463.5635a685566c8.jpg"
       }, {
         title: "NPR Topics: News",
-        data: _npr_json__WEBPACK_IMPORTED_MODULE_4__,
+        data: _data_npr_json__WEBPACK_IMPORTED_MODULE_4__,
         src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAABDlBMVEXm5+kAAADp6uzs7e/m6uzv8PIkfLvj5ObtAADp6erl5uj///+YmZrQ0dLW19nWISh5eXoyMjPtABIhISGjpKXAwcO4ubqFhodISEhOT0+OjpDVEBrc3d9gYGBUVVXm7/E9PT4rLCzY4OYAcrrdiYyNsNASAwQfaqF+rM/WGSHbXWJfmcefGR2trq/l2dvnztBvb3AYGBjouby81OjpoKPnxchoaGnnhYfrZGkcHBzqfYHC0d/po6bsQkjnwsXsNDvtHSb77e3eUVXqcnbsNz1woczsKDGowtnprbHsTlMygsDtDhvra2/tHyjAio2MqMLVAACdAAjYLTPbP0RIj8X33t6xWFxbjLKavNbrVVv4WspHAAAZOElEQVR4nO1deV/qXJJOThKzmORCIAlyAwHxznjbDtur4Ip2q7igMz1v+87o9/8iU5Ww5GQBroDi/fH84RII5MmpU9upOmEU5vfG785vgw022GCDDVYL+bMv4B1o71H4L5vGf/+gcPf1KCp7//oexv+wNP5zK4za/tdjyOx9//bt289v375/hx/fvv39P6Yx3PqqDP/9zz//fXr6759Dhq1CrtVsVicMXw62DvZfvjDD76f/uP9re/sffw4Z7gh5bXtbLo8Z3m2/bm/vf2WG3e3t9t5f273vAcPy9janetvCzojhH9vbd69fnGH757+ut//6OWLIATl7Oz9h+KP2pechMDz//vOf//jrzxFDCwXU/zlkePC1NU0qw9bvy1DMsmxp2/uNx3Db6RS57eZvzNBxtrcFm/1tGP78597ffn77s3v6bcTQq9r2zsTi3/54/NoMv/30Pbbv34cMC2LxN/LalL3vP8P4++/neZ//jcL/7tD4vwMKr1+QYT0CncYuDfGzL3cJIDQYmcJnX90GG2ywwQYbbLDBBhtssMEGG2zwCfBzBAnHYgeZhEPrCj74RWSG4RzT8yyRG77iEyNEszxLE0j4IMMRzdQ/4WJ/ETzvum69V4c/ibfT0QW7UG21cjsq49PhOgWVE8xy9qSVqzS1gDdnFzIcEfLlSi7PTfvwTwfPM/VGu/t2JUlHMIpcnq14FZatViotls3pSFGoshkRF0Kq2Rz8zIj+wRK7I5gVzMuq68yQdxv3e299wzAk47kRMMxV2IJq6pqVYdmyA2yELJsBghnPNC01y7K2w/gMyxoQLBdVc11nIsimeP50AYMnSTfXh0cNTKhyuHhccVCncKLNsvmAYZU98RQOD2olGDTiMywBQdMh3JoS5PlG+xi4DW7eum3FdXne1zTIsKIPr5mAJOo+QzZrDkWRiCW2BaMGDFl2x1lbAeX53t4FyObl9fkR4/KTF5ChSib/tDTiM5xoE2KCnHI+w+r6yqfbeLqBqXdx3xB5nnoJ56E1Nggayw4ZhqjAvznBZ5hZ0xHkxfabZAwuunU3Qo8JdKk2pqOMGHaE0FtUlvXnIauv5RDyfPsahu/4sOHG6DFRhuKIYTE0WsRCbshQSPiAzwbv1p/6KJ71+PD5SGGoRhhqyLCyhgz5+t7AGDzcJw6fjxSG4RlHPJYVA4u/2qt9B/jem2FcHNZT+aUyrIbnYQblEy3+ujHkmT0Q0Kc6M4VgGkN2cowRWOS2jgwbl5Lx1ksXUB9pDAvO2ISAKg0s/poxVA4vjavTaQLqI40h2xxSJFYO/mbWjiHvXj8b/XsljSA4nIIf+aUwBNNQ0ASEnWOrGlk7hnzjQRq8pfEjxNEsu4Kyl8bQNqss2yqjr41+ObNuDN32g3HVFRMJEo6x1M4JxnlDhlWKoRlYC8FsBkU6VTvwZNbKWrg90KGJEkqI4BTLPj22k8ewj3FMLVSWYppiEB9yRDTzzVLG05ThfNRMbW2ctvMr4+LITXiB0y2/ILxSyjuCMAqPwtft/zO0+ITjBG7yalJW6nPgHj4bD0cJA8g5eazwq8K4cFOj2IhPs25w7wdGP8FIECFfAH6tvCbOCtLXmyF/OBi8xQkS0QMj1ypZ00cvAGai1pahe9833hrxKFBDzdjx5kuxcHYzvy5zLgr36CpBRAnJ4wBazryXLYrr2kHOH10aF3GCOkzArLo2qnAB8PU346YXE1GcgSUtbWKNjABYBhmtQ+x1TkAXj0TeHjs/fgAdQ2GeeT8/3GNDakcIEsFusayaLqCaBV4M4US1Uy6XS/ZknWJ4ummX4IVmXvEvlZimSd0roudN+gt1y0RXgiNWplQqNVUt4ba9E/yeNDiMGHqigw9d0dLdLbHJFginZcal1FlzMgcDDTxEEb03rhPJR8GBKuXrOGVwZOHM/PjEVlFbzgzh2/3BdaQumGjgwzSnpcjEDDjUmK0v2KqqZtDfzo8oEgc18A68UCyBIOzA6A2Tp5MvwDluhT4fE5LwBgdvWdku2iVsHGypy1iu4usPMS3DObjqICYSHFYRA8OSvsNWPV3hOE7UsPLf44YEO5gE1hmYS44Jf+dgLIBROaRoOQ+oR1OPGuGKeEN0hSgQxRT8M5fA8NgYRAwhgRColU+UUJnZPXvdlX2GlQ6bGfk5MO/YkRwiQXvktoJL1ML0PymyJ6ExUzLsCZ0+zmFKzsHEx/BEImilZaxWufeSsUdPQmJW2BMvmd8fPw62amcBQ7ia0DwR8sPcNo4GNf7B/xDyFyfeuAahZJX1QgdwQYALEh/jg8oSzCuEvMZxnSYowhSwEujJ8t3BY61W2zpjAoYn1HKEUwqWamQQLiU8w8QdXNVQdtjyeFZhKhUm60RMQTzhPVxzstqzLCinxg0dTxC9Am5MTERBPF+3gN3L/q5fzI8Mi9TF4FoNDApnU+PABEs0GXp8hDJbgkHPjqeZWACJZ4BhdsnBJN9+lvboSQhD0crH3iiLry+12uPtH7vDZgVgmLNoIlYVU94wYmWHPhnmGCtgHmCsTQmqJdDEo5UqYp3g33h31OUmBNwHox+5Ghyb6Ntk+QymX23/TBx3Y6CmoW83gSsuEp9nZBgwNawTocC2hldPPDSGXAnHLThQ9D+N6KiRl2fpYQjPpQHtzBAQtWb0Lsq7+zB+IJ6hZhO0h5ELcQrAEGT1xOPojhXOxDVinHtDMQVutj8ZT4KbhLYkg98qoNGpeLND0XkJgimkbT3aiaiMMTCAtdrLGd1Lk8aQqGw1b0YAt63Iof4MwkccbbSdhB1qU5ypAXlRxRqHbEY1lWVEmvz5oE8NIQHXKbZey9091rZ+7EaahVIZwihUo8j5UxBsYMG/e5iJ1EkoDYfzbyQ4WpCrq5aLysIDydcvjFPKFOIktOh7J4s/QELPYt1Q0xie5GJoAUMCfozv9oCd8GUSh84XIYGdLDwSgfE6BT+tl0kNbOZleG5IlDeD3xiZhLK4v1U7iA7gdIY51YoDJxy8wVZQSHOBTKJhQq8FvzestQine0VMDlUWNB3upfFGDaFYin6mLNzWarcJBNM1jQpWJKJpRnVuoFNROnFdcXgfbbbE+aJToic/vF8HJ4jdWcj+8/fSFWXs4fa3PEouZPG2trUvJPXrpY6hd5Ja+4TGAGyoUBnJJMgtTHscynhBGOGUmFPxqzg2nsL+Guq6Du0IKj+2tvbFxIbEVIZwuZ2oNh4Bl26E4RLA6BSVcB4ElwlM8KNKaR81B/je5eA8PITYuR6R0but2m0ywVSG6HmxaeUz6LlxoEnHDirILdwOkNXEE4QOW1hETLvSQzgsJBC5ZCg1I5/VagdcSktpKkMUxUrkFXG0pgg6Js+VJ2LsF+LokyCDjumBYfn9ITBa+25Yz8DtpNMK8u5L7WU37fxUhnG/j3B2Z/jJIsQTZjVkcsFlVa1xoEi8sH0gTmHs1r0DfI82Fehn2NQ7lH20g2nnpzMkEPrjhBx9MIdhyDAXDhJagBMn54CtL4yjKGK1Ch43SbmpQUHgO+EeGxfhIQRFSk93+a5Wm7LrVzpDuFk7aMqwGJFwjO7lWH+52/8WvULXmaKYjuetvwlC1gKvFMDooBc6C4TA/MA4DA8h+L7NsMaWdx9rB1PauqcwDPJYbEnNe17eRstdHCclUQ+xYcmDYG1i9YIUXbap5vMqnrhIOMz3aGMYcvyHDH9Mk1Gf4U6UYWVkvoijBvlA/2fFYibZCvgeqkQKKzYmRo/TfM97iM4iLo17KlHJCwjesuEvls8et6buraB4mWgYKKqZcUzMCWqpkK1mK+UmnSsWSmUqcCZmpxNOzXCYSi5UKoVyJpJk/kWIbwYV24ss7VaI+1P06PBaYm4IlYnnOAfiJp2JBgjRdD18jhw9IOraoiXFfO/m6p6uh21RInG2VVt8e4zEtos5z1z0uyEyvKBsRZlthue/fFt7XNu1zvnQlY4jxjA8q2SxtoQh/FTUj6Vw7Au+L5U4A1v4eDb3h6UK4/uldGHwjUspPA3B9y1TtvWgtj/L1g41AdZJaZouxrjACzq84kwsRWxJMHoDyPIWDfmjgRT2up0yZe7RVMzaxJSYah6v3rJLlWq2kFHpjAPhrGKzUq1WSvaoLUpXIy0ljqpS2o3okQMLAIJfIySkgcs/+V9+BVMxgyE4jVmNc5pjA53NhwaA04L6MMRJ2QoMG0uXf2GoT1kozEctEA5ScE8ppxTzJKGPxsj+dpaeAYYVXcNClKJnecVya+J8MkTBTdIqHdXz1GZhVJEJsRBNAN5EBbgcu7wKOPfNeAormjxVTo9h08yddoFhwYIY3OP8HiDFK4zDS+LYOKQ6vsJxugrOdgnTMxbtc6MTHjbCeJ+9Zc1D94ZaUcMFkTBDMPezhNSX0vK4XBZptcaeLYQIZW0ks8QPNcpCkJSgCbXCYipEA9RF4NKVCUKFVjR3ta2Z5h6DN6pwlGitINpAieiE1w8JbpJqEwzQwrFvhy3Zocp3vAH20spx+KCHcPxlLNUJIu9PjZsCIEN6DVrJBBGm0mJbdAkH0QrIDRdJJ34FzDrPDJUvgE1enpAydYla2Bboz5Zf5tiUDhlmqFvOBbrRj8wjIoDrPTaDC2/jNBzMypwGQen41sr2MOe/DPBHUj/MUKRjQ+5xtqLxidDJ1WB1Ddc64wkysewvp4UWSbkO3CCQ253R+hquey9t6ZBvSzchhsPOszHkWm1a7Du8QjW2hhPkS61qQhoXayxATJ2xNiX+8iixTkbeYtBC9D4+cYDBD0cWkWUDWaltzcUwuqoAQmj7eiYhgW36Ux1U2lC1gEjj6TDgQ8qgeHLLW/3lz6WHMMPxSqUPeTeoRZiONIaoMK34WBDQr5zvxgQniRnfesLYDpM0JOnGvBvIMOSWwvdSWnF3nsBiCsOkFH3QIUS0arCWj3+YJFjJCJahvEgIvhj4w5UyTOqJDRj6GTpUwDjr/BETcoE2BSFNXe14B1Y5hnD8JMGsiUFSmPNaLXxVKAzrMlC9CoEmXeZ+BKuch+maxj+KFpDxu2rNYWq1hTOT5BdeDaUwQ5eKi+hSrHWILzYIozIiLoOqBZP7Q5vplFDlgPR2lpkXWpI9TGSIlSQxnYE+Z1Digd9lktDyE5J1cCSX2tDO92ifxon4NFvz+TQpDL14RQ4mtoceKXYsCGZ2nBYiZrblYdXfUlN7fEO6CjPk6GJW8Et/vJ8hQ06iBR1oGypDZxy9m+382FnzE5lFCD6W3KjBS0Yktggvvcu388UWaQzNFp25IzqGjqMKNhBIrxn6Pt+7WabH5iMaH2bp+PB1jnRwOkO/oLSqTiJgC4L54lhunSZbqLKh8Ar0ammh9fokuH1qaU0osQUqxq/VUlbvJ5jGUMHouGNhS4EgaJ0cEAxVueOL4ZSCgEtx0VWeReG+GdfhLIZKb3uwO0f4NI0hI1j+jjs7zeZOy1/0pHIBFTruQv8msRZjEbinxkMk1xYyYfLu7ewQeCpDoKFWRtnEQpFOpWJjAlUBBXoouRZjAYBj+kzlSyPK9EftZaaY6lQPqY/QXleEaKZaKhRKRVOXI5ltzTOpM0XTW3qXKX9kSOH1Ub1Maet5ct5JK2CRrlJs7gk3k05emZHdXwL4Rp9Spoodro8Avw0s4rK/82PB19+kPTolTM11FNOZGdP1hhJZPzTp4AXCizkctzkhR7smlEiX4jK6KmLgDwdUyZdSpgMC+aD2siSG8tn+bZgCMW07LC/8/elhPXbWwuDbfar+mbPpRgc0+rPji7kgvNA3i6j0V7nHUrSvbCmoP9AFQ04kKSzezmEw5gEuEYTvlV+aFHIA+MYFXSK5LLjXElVcCq5pgaqnuduaw2DMBq5jUQWc6F1YlJA+X8bbV5cACPMvG3S5CUsvNhwsRZ3Kr1tbf4Q/RmjSoSC/Z7yt5qEovCGFhYPo0d0CQJ3OXCadCfAdIg6gQ0dqfP1B6iZtVLE4wPmmytjB6NN+JtjExZUN6ORHShJApVF5Pb43kOLbACwFIKZSWDr8pS+6OHFxOYVIk7arfvtP+GshBuivZghRh1FuDU4QujMOJSyxEWFuYJ047f3F8sW8Ee3vXB7ELj3FMcAoUjMRa2gXebqVfPZSO6DK//xCforgvfS8IiH11TTd9ISxduQS9xdx3mTlpRapB8DWNEpO+GPaaC0X4hvtTBDthG1SBsNvKHlvfRtawkgNLq7DUO0A4FpRJZJLhntIZ01RnUbaQlHbvJOif2pEAJToLgMwUx5WN4TwhQbdj4DLI5GcFw4EUPx1jnhi7Y5+xDfmiqnlYSyvW5meQbh7hkTt6+VfQqR3DYaitv+rGlVm/nisPUZG0L+BlPsCpmKwOhll8BbeGF3qG3Cv0UjWy++QTWrPmwJZfkWCkaNY9UVbinpEiFaArnFBNyBq1WDf6hBkESi+/DE/RRluylZ8gQ7XJmzKGrld43JlpiIAWH3jNFIT06LLoRm84rsXbEJk5iMpi9hVG3MVsB+dXuXle/3B4WoJ4kyU+nTogk2uxWhNRNDq/DqXqMpntzWQ0Gi4gGVRkc0ExNOIBK0GV5E2UoapxFqBcTK+gty93M1QqjII6O0jTNt42zCWttGWiO9dSSsfQjS5A4mOsLFh7CRWLiKD8YdLf3zdFVNZAj0c6y2Ys9G34O7lsc0S+nTj1aogPkVFBZepK2Zs7UmWz0B/1B7373YTOMLoKWevwC9ZmLF7zaYFl9+TnqM7N60EON27dDYP8wxVPb68Jotnt/7eH7dAgqOe68mJd/v+ticvifyxI7FE7+fDH91ElNzKAL6bcU9LCwdqL3GfeLj4V58IULn9cXfm4+51/2ULDwH1s6SnmBIcwcgWpri72MPMfW6XBP4hvhedd8JmvZQ9hs5GjCg8HvxIHD6c2ECwEzGyYApju4utDHzv2biOHrTYpD1qfIDS2T27+3HwEgxmbevxYP/1bHeXSVZBWHcB3m6EYM+Qrj9CzQTg76+MbuQYZ6ZvhcUMH66LW9GNfspp7gCuF7DNSJsduosJu1CuDmB6n++j+7WZBZCtBH3zaxBw48Vi1PzXj43V5EjTwIuXxnP0lqJdZHfMhZocOWypYD0l8hnu6UBaYdybBPRPYw4UYYotCMnn3vcyhqAIYye+P8meNFh1SBED3+4bx/G9Ly0QsXKoifeXwOnYmW3He5Xv+4Onj3/0N26ndBy7r/7+rCcd5x2iSoQ8DOCJF7s9LtzMD7OE1BfvXUlPsY28SVA2Yv/qDo2cg+e1bDEmoXxPMm6SNwxfNcTuVWx/SMaXtSrL5ormL3QGco6HzwcqJfgMfPsyeb/pDwAvnkqDp/gDEQij4yYB2c5824kSInBF3Bs7cW9eFwh+rJ2gv/70SoqrGxRVHTfvZKuq5kyXVsIputXBKqFy8t7KbRDRDwh6U4GCepx0AUQw/W2bWh3VclI6WQnhiBbsEdHCjWeT3nPY/zQRDcCLexLYxSRThds2+fvO5wod1ST+Nr+TDeewNMjxMmW/0OvE1hK9Pd49ff6QtMVU4K7ez+eJT1+BCSarpWGxWqvQVD3TNDXcbs7K26XhnrrVnUzadOXrx9LgLeXBQx8Ivn2R+vgHbMbWvGJzskMwhVbZVs3U3QDd9ttgMPvJJx8Avn4jGU+JkoogfnM69m+HyeUKzbyp6el75PHued+QDj/HDkbBK91n4+p8ysWQYU0ecXRd0x1luPv2FC3LN0BCL3of7YumgVdgMhqns1WCPOeeCbx4f2lIc3zgx4E/egOdejjjcUjzfphbf7oyBmsioSPAtIG7/tBewlXxdbBAg+vUif1pcI+uB8bV9dGC2t0VDx/w8WZTn/71SeDFXh9crNPkRwPO9xE8f/82MKTuOs3AMHj+HO6/dN1Lez7gjNOZxvmzJPWvF7hHK4dbx0eQXj3d13/5Inmm18Vzr9vrKKAT8Hwdx+HqAYR1fpI87/Lnxzf++K+XBk0CziV8lqV0023UmdniCu8XG+3jgSQNHrq/PvSfA55v770ZIHFv3fsjMeGZq5M3uny9fXgNbh9Mv/Ovwg/BM/X2NT7R+erm7fTwyHX9xx5TwGP19t7xA4639HAYe7juugMp9LrHN1d4/VL/4XTvvnfUGOGofd49vhjgS4P+w/XhtIFeZ4AMHt3vPV2A6vGfP24Mnvv9y37/CkxecOTyrXvY/krCGQeIY73R6B1eP1z6IzaC8Xxx3L1vNOrK1xw8GqNZx4v1xlGvd3QEvNzh1Pzsa1s2Rlrms69jgw022GCDDTbYYIMNNvgwOHocH1+0s0KIlqlpmukFv1TTxH80wvnlPOFdRj7tCheFaDLFTIczHTNTsgRPMIsZB0hmFM8ROP95GbiTNud4X/bhxqJJWupO3nTUgpXVPCFf1URNy1fsTL7pFTL5vOqpzbzdzNjLeHTrZwDGsKI1VWCYEQomMGwKBBjmK5mcbRc0u1LIZM1S2cwubbPpjwaMYdXsAMM8WygrnqCWkKGaV7PlSrFZVLMluwPQOoWl74TzQRAtXXd0x9LyqiaKeRH+dkxNUYgj6AznKKIicrosMgqz5B23PgxK8JxFK/jlBf98VTLJUERE8HP067OvaYMNNthggw02WA4+pkXz86D8P8VvnVZLSm2tAAAAAElFTkSuQmCC"
       }],
       selectedCategory: "",
       viewFilter: [{
         value: "list_view",
         label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__.FontAwesomeIcon, {
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faList
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faList
         }))
       }, {
         value: "column_view",
         label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__.FontAwesomeIcon, {
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faGrip
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faGrip
         }))
       }],
       bookmarked: []
     };
   }
   componentDidMount() {
+    this.props.getFeeds();
     this.setState({
-      bookmarked: JSON.parse(localStorage.getItem("bookmarked"))
+      bookmarked: JSON.parse(localStorage.getItem("bookmarkedReadings"))
     });
+    // var rss = await parse("https://medium.com/feed/backchannel");
   }
 
   // var self = this;
@@ -4642,7 +4860,6 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
   //   });
   //   }
   filterSelectedData = function (data) {
-    console.log(data);
     this.state.selectedFilter(data);
   };
   render() {
@@ -4650,12 +4867,20 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "allFeed_container_outer"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "feeds_heading"
-    }, "Feeds"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, "Feeds", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      className: "Add_feed"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faPlus,
+      style: {
+        width: 25,
+        height: 25
+      }
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "filters"
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "allFeed_container"
-    }, this.state.feeds.map((e, index) => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+    }, this.props.feeds.map((e, index) => {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         key: index,
         className: "feeds_card",
         to: {
@@ -4669,8 +4894,8 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
         className: "image",
-        src: e.src,
-        alt: e.title,
+        src: e?.image,
+        alt: e?.title,
         style: {
           width: "100%"
         }
@@ -4678,29 +4903,29 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         className: "middle"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
         className: "text"
-      }, e.title))));
+      }, e?.title))));
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "heading2",
       style: {
-        marginTop: '50px'
+        marginTop: "50px"
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", {
       className: "Bookmarked_Readings_h2 "
-    }, "Bookmarked Readings ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__.FontAwesomeIcon, {
-      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_6__.faBookBookmark,
+    }, "Bookmarked Readings", " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_5__.FontAwesomeIcon, {
+      icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_9__.faBookBookmark,
       className: "faBookBookmark_icon"
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "bookmarkedList"
-    }, this.state.bookmarked.length ? this.state.bookmarked.map((e, index) => {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__.Link, {
+    }, this.state.bookmarked ? this.state.bookmarked.map((e, index) => {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Link, {
         style: {
-          textDecoration: 'none'
+          textDecoration: "none"
         },
         key: index,
         to: {
           pathname: `/post/${e.id}`,
           state: {
-            feedtitle: '',
+            feedtitle: "",
             posts: e.reading
           }
         }
@@ -4708,7 +4933,7 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         className: "bookmarked_cards"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
         className: "bookmarked_description"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, e.reading.title.__cdata), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, "Published"), ": ", e.reading.pubDate))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h4", null, e.reading.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, e.reading?.author)))));
     }) :
     /*#__PURE__*/
     // if there are bookmarked items, map and return each item as a card
@@ -4717,7 +4942,20 @@ class Feeds extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, "No bookmarked items"))));
   }
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Feeds);
+const mapState = state => {
+  return {
+    feeds: state.feeds
+  };
+};
+const mapDispatch = (dispatch, {
+  history
+}) => ({
+  getFeeds: () => dispatch((0,_client_redux_feeds__WEBPACK_IMPORTED_MODULE_7__.fetchFeeds)())
+  // deleteTheProject: (project) => dispatch(deleteTheProject(project, history)),
+  // createNewProject: (project) => dispatch(createNewProject(project, history)),
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_6__.connect)(mapState, mapDispatch)(Feeds));
 
 /***/ }),
 
@@ -4733,13 +4971,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _economist_feed_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../economist_feed.json */ "./economist_feed.json");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
 
 // import XMLParser from 'react-xml-parser';
-
 
 
 
@@ -4794,12 +5030,12 @@ const Navbar = props => {
     react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "left-nav"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+      className: "nav_links"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "userIcon"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("img", {
       src: ""
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: "nav_links"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
       style: {
         margin: '0 auto'
       }
@@ -4844,17 +5080,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _economist_feed_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../economist_feed.json */ "./economist_feed.json");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
-/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
-/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
-/* harmony import */ var _functions_Bookmark__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../functions/Bookmark */ "./functions/Bookmark.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.esm.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
+/* harmony import */ var _functions_Bookmark__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../functions/Bookmark */ "./functions/Bookmark.js");
 
 // import XMLParser from 'react-xml-parser';
-
 
 
 
@@ -4878,62 +5112,51 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       filteredData: [],
       currentFeed: this.props.location.state.feed,
       selectedCategory: "",
-      categories: [],
+      categories: [{
+        value: "view all",
+        label: "view all"
+      }],
       currentCategory: "",
       viewFilter: [{
         value: "list_view",
-        label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faList
+        label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faList
         }))
       }, {
         value: "column_view",
-        label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faGrip
+        label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faGrip
         }))
       }]
     };
   }
   componentDidMount() {
-    const categoriesArr = [{
-      value: "view all",
-      label: "view all"
-    }];
-    let categoryItem;
-    // if (this.state.currentFeed.data.channel.item) {
-    this.state.currentFeed.data.channel.item.map(e => {
-      if (e.category) {
-        e.category.map(i => {
-          categoryItem = i;
-          // if the category doesnt exist yet
+    let categoryItems = ["view all"];
+    let eachPostCategories = [];
+    let eachPost;
+    try {
+      this.state.currentFeed?.items?.map(e => {
+        eachPost = e;
+        eachPost.category?.map(element => {
+          categoryItems.push(element);
         });
+      });
 
-        if (!categoriesArr.includes({
-          value: categoryItem.__cdata,
-          label: categoryItem.__cdata
-        })) {
-          categoriesArr.push({
-            value: categoryItem.__cdata,
-            label: categoryItem.__cdata
-          });
-          // console.log({ value: i.__cdata, label: i.__cdata })
-        } else {
-          return;
-        }
-
-        //   console.log(categoriesArr);
-
-        //   }
-        // });
-
-        this.setState({
-          categories: categoriesArr
-        });
-      }
-    });
-
-    // }
+      // removes duplicates and make in alphabetical order
+      categoryItems = [...new Set(categoryItems)].sort();
+      categoryItems.map(e => {
+        eachPostCategories = [...eachPostCategories, {
+          value: e,
+          label: e
+        }];
+      });
+      this.setState({
+        categories: eachPostCategories
+      });
+    } catch (error) {
+      console.log('Error: ', error);
+    }
   }
-
   QueryData = function (category, data) {
     // let dataArr = [...data];
     if (category === "view all") {
@@ -4941,9 +5164,9 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         filteredData: []
       });
     }
-    const feeddata = this.state.currentFeed.data.channel.item.filter(item => {
+    const feeddata = this.state.currentFeed.items?.filter(item => {
       if (item.category) {
-        if (item.category.filter(e => e.__cdata == category).length > 0) {
+        if (item.category.filter(e => e == category).length > 0) {
           // this.setState({filteredData: item })
           return item;
         } else {
@@ -4958,7 +5181,7 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     }
 
     // item.category.find(
-    //   (innerItem) => innerItem.category.__cdata === category
+    //   (innerItem) => innerItem.category === category
     // )
     );
 
@@ -4973,7 +5196,7 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
     this.state.selectedCategory(data.value);
   };
   addToFavorite = id => {
-    const data = this.state.currentFeed.data.channel.item.find(item => item.id === id);
+    const data = this.state.currentFeed?.items.find(item => item.id === id);
     this.setState({
       bookmarked: [...this.state.bookmarked, data]
     });
@@ -4997,7 +5220,7 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       className: "Single_feed_heading"
     }, this.state.currentFeed.title))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       className: "back_button"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
       to: "/feeds"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
       className: "arrow left"
@@ -5008,7 +5231,7 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
       style: {
         marginRight: "-20px"
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_select__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_select__WEBPACK_IMPORTED_MODULE_6__["default"], {
       options: this.state.viewFilter
       // dangerouslySetInnerHTML={{
       //   __html: this.state.selectedFilter.label,
@@ -5031,17 +5254,16 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
             isList: !this.state.isList
           });
         }
-        console.log(val);
       },
       defaultValue: {
-        label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_3__.FontAwesomeIcon, {
-          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_5__.faList
+        label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+          icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faList
         })),
         value: 0
       }
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-      className: this.state.categories.length ? "category_select" : "category_select_inactive"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_select__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      className: this.state.categories.length > 1 ? "category_select" : "category_select_inactive"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_select__WEBPACK_IMPORTED_MODULE_6__["default"], {
       defaultValue: {
         label: "Select Category",
         value: 0
@@ -5058,16 +5280,16 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
         });
         this.QueryData(val.value, this.props.location.state.feed);
       }
-    }))), !this.state.filteredData.length ? this.state.currentFeed.data.channel.item.map((e, index) => {
-      if (e.encoded) {
+    }))), !this.state.filteredData.length ? this.state.currentFeed.items?.map((e, index) => {
+      if (e.content_encoded) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: this.state.isColumn ? "posts_card_isColumn" : "posts_card",
           key: index,
           id: e.title
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_functions_Bookmark__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          id: e.id,
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_functions_Bookmark__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          id: e.title,
           reading: e
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
           className: "posts_card_inner",
           style: {
             textDecoration: "none"
@@ -5075,21 +5297,21 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
           key: index,
           to: {
             pathname: `/post/${index}`,
-            // search: `?name=${e.title.__cdata}`,
+            // search: `?name=${e.title}`,
             state: {
               feedtitle: this.state.currentFeed.title,
               posts: e
             }
           }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, e.title ? e.title.__cdata : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, e.title ? e.title : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           style: {
             color: "#454545",
             fontWeight: "100"
           }
-        }, e.pubDate), e.encoded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        }, e.pubDate), e?.content_encoded && !this.state.isColumn ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "posts_card_description",
           dangerouslySetInnerHTML: {
-            __html: e.encoded.__cdata
+            __html: e?.content_encoded
           }
         }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
           className: "category"
@@ -5097,59 +5319,54 @@ class SingleFeed extends react__WEBPACK_IMPORTED_MODULE_0__.Component {
           return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
             key: index,
             id: `${f}` + "__" + `${index}`,
-            className: this.state.currentCategory === f.__cdata ? "categorySingle active_category" : "categorySingle"
-          }, f.__cdata);
+            className: this.state.currentCategory === f ? "categorySingle active_category" : "categorySingle"
+          }, f);
         }) : "")));
-      } else {
-        /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: "posts_card",
-          key: index,
-          id: e.title
-        }, "here");
       }
+      ;
     }) : this.state.filteredData.map((e, index) => {
-      if (e.encoded) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: this.state.isColumn ? "posts_card_isColumn" : "posts_card",
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: this.state.isColumn ? "posts_card_isColumn" : "posts_card",
+        key: index,
+        id: e.title
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_functions_Bookmark__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        id: e.id,
+        reading: e
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Link, {
+        className: "posts_card_inner",
+        style: {
+          textDecoration: "none"
+        },
+        key: index,
+        to: {
+          pathname: `/post/${index}`,
+          // search: `?name=${e.title}`,
+          state: {
+            feedtitle: this.state.currentFeed.title,
+            posts: e
+          }
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", null, e.title ? e.title : ""), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        style: {
+          color: "#454545",
+          fontWeight: "100"
+        }
+      }, e.pubDate), e?.content_encoded && !this.state.isColumn ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "posts_card_description",
+        dangerouslySetInnerHTML: {
+          __html: e?.content_encoded
+        }
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "posts_card_description"
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        className: "category"
+      }, e.category ? e.category.map((f, index) => {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
           key: index,
-          id: e.title
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_functions_Bookmark__WEBPACK_IMPORTED_MODULE_4__["default"], {
-          id: e.id,
-          reading: e
-        }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
-          className: "posts_card_inner",
-          style: {
-            textDecoration: "none"
-          },
-          key: index,
-          to: {
-            pathname: `/post/${index}`,
-            // search: `?name=${e.title.__cdata}`,
-            state: {
-              feedtitle: this.state.currentFeed.title,
-              posts: e
-            }
-          }
-        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          style: {
-            color: "#454545",
-            fontWeight: "100"
-          }
-        }, e.pubDate), e.encoded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: "posts_card_description",
-          dangerouslySetInnerHTML: {
-            __html: e.encoded.__cdata
-          }
-        }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-          className: "category"
-        }, e.category ? e.category.map((f, index) => {
-          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-            key: index,
-            id: `${f}` + "__" + `${index}`,
-            className: this.state.currentCategory === f.__cdata ? "categorySingle active_category" : "categorySingle"
-          }, f.__cdata);
-        }) : "")));
-      }
+          id: `${f}` + "__" + `${index}`,
+          className: this.state.currentCategory === f ? "categorySingle active_category" : "categorySingle"
+        }, f);
+      }) : "")));
     }));
   }
 }
@@ -5169,32 +5386,57 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _functions_Bookmark__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../functions/Bookmark */ "./functions/Bookmark.js");
+/* harmony import */ var _fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fortawesome/react-fontawesome */ "./node_modules/@fortawesome/react-fontawesome/index.es.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.mjs");
+
+
 
 
 
 
 function SinglePost(props) {
+  // useEffect(() => {
+  // }, [])
   const post = props.location.state.posts;
   const feedTitle = props.location.state.feedtitle;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "single_post"
+    className: "single_post "
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "back_button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    className: "single-post-buttons"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "single-back_button"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "",
     onClick: () => history.back()
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("i", {
     className: "arrow left"
-  }), " back to ", feedTitle ? feedTitle : 'feeds')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, post.title.__cdata), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }), " back to ", feedTitle ? feedTitle : 'feeds')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "downloadPdf"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    onClick: () => {
+      window.print();
+    }
+  }, "Download Article")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "blog_pdf myDivToPrint"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, post.title), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "post_subheader"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, post.pubDate)), post.encoded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, post.pubDate)), post.content_encoded ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "blog_content",
     dangerouslySetInnerHTML: {
-      __html: post.encoded.__cdata
+      __html: post.content_encoded
     }
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "in"));
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "blog_content",
+    dangerouslySetInnerHTML: {
+      __html: post.description
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: "socialMedias"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_fortawesome_react_fontawesome__WEBPACK_IMPORTED_MODULE_2__.FontAwesomeIcon, {
+    icon: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_4__.faFacebook
+  })));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SinglePost);
 
@@ -5222,7 +5464,7 @@ const Bookmark = ({
   reading
 }) => {
   // get local storage on first load
-  const [storageItem, setStorageItem] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => JSON.parse(localStorage.getItem("bookmarked") || "[]"));
+  const [storageItem, setStorageItem] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => JSON.parse(localStorage.getItem("bookmarkedReadings") || "[]"));
   const post = {
     id,
     reading
@@ -5236,11 +5478,11 @@ const Bookmark = ({
     if (!isBookmarked) {
       const newStorageItem = [...storageItem, post];
       setStorageItem(newStorageItem);
-      localStorage.setItem("bookmarked", JSON.stringify(newStorageItem));
+      localStorage.setItem("bookmarkedReadings", JSON.stringify(newStorageItem));
     } else {
       const newStorageItem = storageItem.filter(post => post.id !== id);
       setStorageItem(newStorageItem);
-      localStorage.setItem("bookmarked", JSON.stringify(newStorageItem));
+      localStorage.setItem("bookmarkedReadings", JSON.stringify(newStorageItem));
     }
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -5252,6 +5494,1924 @@ const Bookmark = ({
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Bookmark);
+
+/***/ }),
+
+/***/ "./functions/ScrollToTop.js":
+/*!**********************************!*\
+  !*** ./functions/ScrollToTop.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
+
+
+function ScrollToTop({
+  history
+}) {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const unlisten = history.listen(() => {
+      window.scrollTo(0, 0);
+    });
+    return () => {
+      unlisten();
+    };
+  }, []);
+  return null;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.withRouter)(ScrollToTop));
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/fxp.js":
+/*!*************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/fxp.js ***!
+  \*************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+const validator = __webpack_require__(/*! ./validator */ "./node_modules/fast-xml-parser/src/validator.js");
+const XMLParser = __webpack_require__(/*! ./xmlparser/XMLParser */ "./node_modules/fast-xml-parser/src/xmlparser/XMLParser.js");
+const XMLBuilder = __webpack_require__(/*! ./xmlbuilder/json2xml */ "./node_modules/fast-xml-parser/src/xmlbuilder/json2xml.js");
+
+module.exports = {
+  XMLParser: XMLParser,
+  XMLValidator: validator,
+  XMLBuilder: XMLBuilder
+}
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/util.js":
+/*!**************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/util.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+const nameStartChar = ':A-Za-z_\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u02FF\\u0370-\\u037D\\u037F-\\u1FFF\\u200C-\\u200D\\u2070-\\u218F\\u2C00-\\u2FEF\\u3001-\\uD7FF\\uF900-\\uFDCF\\uFDF0-\\uFFFD';
+const nameChar = nameStartChar + '\\-.\\d\\u00B7\\u0300-\\u036F\\u203F-\\u2040';
+const nameRegexp = '[' + nameStartChar + '][' + nameChar + ']*'
+const regexName = new RegExp('^' + nameRegexp + '$');
+
+const getAllMatches = function(string, regex) {
+  const matches = [];
+  let match = regex.exec(string);
+  while (match) {
+    const allmatches = [];
+    allmatches.startIndex = regex.lastIndex - match[0].length;
+    const len = match.length;
+    for (let index = 0; index < len; index++) {
+      allmatches.push(match[index]);
+    }
+    matches.push(allmatches);
+    match = regex.exec(string);
+  }
+  return matches;
+};
+
+const isName = function(string) {
+  const match = regexName.exec(string);
+  return !(match === null || typeof match === 'undefined');
+};
+
+exports.isExist = function(v) {
+  return typeof v !== 'undefined';
+};
+
+exports.isEmptyObject = function(obj) {
+  return Object.keys(obj).length === 0;
+};
+
+/**
+ * Copy all the properties of a into b.
+ * @param {*} target
+ * @param {*} a
+ */
+exports.merge = function(target, a, arrayMode) {
+  if (a) {
+    const keys = Object.keys(a); // will return an array of own properties
+    const len = keys.length; //don't make it inline
+    for (let i = 0; i < len; i++) {
+      if (arrayMode === 'strict') {
+        target[keys[i]] = [ a[keys[i]] ];
+      } else {
+        target[keys[i]] = a[keys[i]];
+      }
+    }
+  }
+};
+/* exports.merge =function (b,a){
+  return Object.assign(b,a);
+} */
+
+exports.getValue = function(v) {
+  if (exports.isExist(v)) {
+    return v;
+  } else {
+    return '';
+  }
+};
+
+// const fakeCall = function(a) {return a;};
+// const fakeCallNoReturn = function() {};
+
+exports.isName = isName;
+exports.getAllMatches = getAllMatches;
+exports.nameRegexp = nameRegexp;
+
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/validator.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/validator.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+const util = __webpack_require__(/*! ./util */ "./node_modules/fast-xml-parser/src/util.js");
+
+const defaultOptions = {
+  allowBooleanAttributes: false, //A tag can have attributes without any value
+  unpairedTags: []
+};
+
+//const tagsPattern = new RegExp("<\\/?([\\w:\\-_\.]+)\\s*\/?>","g");
+exports.validate = function (xmlData, options) {
+  options = Object.assign({}, defaultOptions, options);
+
+  //xmlData = xmlData.replace(/(\r\n|\n|\r)/gm,"");//make it single line
+  //xmlData = xmlData.replace(/(^\s*<\?xml.*?\?>)/g,"");//Remove XML starting tag
+  //xmlData = xmlData.replace(/(<!DOCTYPE[\s\w\"\.\/\-\:]+(\[.*\])*\s*>)/g,"");//Remove DOCTYPE
+  const tags = [];
+  let tagFound = false;
+
+  //indicates that the root tag has been closed (aka. depth 0 has been reached)
+  let reachedRoot = false;
+
+  if (xmlData[0] === '\ufeff') {
+    // check for byte order mark (BOM)
+    xmlData = xmlData.substr(1);
+  }
+  
+  for (let i = 0; i < xmlData.length; i++) {
+
+    if (xmlData[i] === '<' && xmlData[i+1] === '?') {
+      i+=2;
+      i = readPI(xmlData,i);
+      if (i.err) return i;
+    }else if (xmlData[i] === '<') {
+      //starting of tag
+      //read until you reach to '>' avoiding any '>' in attribute value
+      let tagStartPos = i;
+      i++;
+      
+      if (xmlData[i] === '!') {
+        i = readCommentAndCDATA(xmlData, i);
+        continue;
+      } else {
+        let closingTag = false;
+        if (xmlData[i] === '/') {
+          //closing tag
+          closingTag = true;
+          i++;
+        }
+        //read tagname
+        let tagName = '';
+        for (; i < xmlData.length &&
+          xmlData[i] !== '>' &&
+          xmlData[i] !== ' ' &&
+          xmlData[i] !== '\t' &&
+          xmlData[i] !== '\n' &&
+          xmlData[i] !== '\r'; i++
+        ) {
+          tagName += xmlData[i];
+        }
+        tagName = tagName.trim();
+        //console.log(tagName);
+
+        if (tagName[tagName.length - 1] === '/') {
+          //self closing tag without attributes
+          tagName = tagName.substring(0, tagName.length - 1);
+          //continue;
+          i--;
+        }
+        if (!validateTagName(tagName)) {
+          let msg;
+          if (tagName.trim().length === 0) {
+            msg = "Invalid space after '<'.";
+          } else {
+            msg = "Tag '"+tagName+"' is an invalid name.";
+          }
+          return getErrorObject('InvalidTag', msg, getLineNumberForPosition(xmlData, i));
+        }
+
+        const result = readAttributeStr(xmlData, i);
+        if (result === false) {
+          return getErrorObject('InvalidAttr', "Attributes for '"+tagName+"' have open quote.", getLineNumberForPosition(xmlData, i));
+        }
+        let attrStr = result.value;
+        i = result.index;
+
+        if (attrStr[attrStr.length - 1] === '/') {
+          //self closing tag
+          const attrStrStart = i - attrStr.length;
+          attrStr = attrStr.substring(0, attrStr.length - 1);
+          const isValid = validateAttributeString(attrStr, options);
+          if (isValid === true) {
+            tagFound = true;
+            //continue; //text may presents after self closing tag
+          } else {
+            //the result from the nested function returns the position of the error within the attribute
+            //in order to get the 'true' error line, we need to calculate the position where the attribute begins (i - attrStr.length) and then add the position within the attribute
+            //this gives us the absolute index in the entire xml, which we can use to find the line at last
+            return getErrorObject(isValid.err.code, isValid.err.msg, getLineNumberForPosition(xmlData, attrStrStart + isValid.err.line));
+          }
+        } else if (closingTag) {
+          if (!result.tagClosed) {
+            return getErrorObject('InvalidTag', "Closing tag '"+tagName+"' doesn't have proper closing.", getLineNumberForPosition(xmlData, i));
+          } else if (attrStr.trim().length > 0) {
+            return getErrorObject('InvalidTag', "Closing tag '"+tagName+"' can't have attributes or invalid starting.", getLineNumberForPosition(xmlData, tagStartPos));
+          } else {
+            const otg = tags.pop();
+            if (tagName !== otg.tagName) {
+              let openPos = getLineNumberForPosition(xmlData, otg.tagStartPos);
+              return getErrorObject('InvalidTag',
+                "Expected closing tag '"+otg.tagName+"' (opened in line "+openPos.line+", col "+openPos.col+") instead of closing tag '"+tagName+"'.",
+                getLineNumberForPosition(xmlData, tagStartPos));
+            }
+
+            //when there are no more tags, we reached the root level.
+            if (tags.length == 0) {
+              reachedRoot = true;
+            }
+          }
+        } else {
+          const isValid = validateAttributeString(attrStr, options);
+          if (isValid !== true) {
+            //the result from the nested function returns the position of the error within the attribute
+            //in order to get the 'true' error line, we need to calculate the position where the attribute begins (i - attrStr.length) and then add the position within the attribute
+            //this gives us the absolute index in the entire xml, which we can use to find the line at last
+            return getErrorObject(isValid.err.code, isValid.err.msg, getLineNumberForPosition(xmlData, i - attrStr.length + isValid.err.line));
+          }
+
+          //if the root level has been reached before ...
+          if (reachedRoot === true) {
+            return getErrorObject('InvalidXml', 'Multiple possible root nodes found.', getLineNumberForPosition(xmlData, i));
+          } else if(options.unpairedTags.indexOf(tagName) !== -1){
+            //don't push into stack
+          } else {
+            tags.push({tagName, tagStartPos});
+          }
+          tagFound = true;
+        }
+
+        //skip tag text value
+        //It may include comments and CDATA value
+        for (i++; i < xmlData.length; i++) {
+          if (xmlData[i] === '<') {
+            if (xmlData[i + 1] === '!') {
+              //comment or CADATA
+              i++;
+              i = readCommentAndCDATA(xmlData, i);
+              continue;
+            } else if (xmlData[i+1] === '?') {
+              i = readPI(xmlData, ++i);
+              if (i.err) return i;
+            } else{
+              break;
+            }
+          } else if (xmlData[i] === '&') {
+            const afterAmp = validateAmpersand(xmlData, i);
+            if (afterAmp == -1)
+              return getErrorObject('InvalidChar', "char '&' is not expected.", getLineNumberForPosition(xmlData, i));
+            i = afterAmp;
+          }else{
+            if (reachedRoot === true && !isWhiteSpace(xmlData[i])) {
+              return getErrorObject('InvalidXml', "Extra text at the end", getLineNumberForPosition(xmlData, i));
+            }
+          }
+        } //end of reading tag text value
+        if (xmlData[i] === '<') {
+          i--;
+        }
+      }
+    } else {
+      if ( isWhiteSpace(xmlData[i])) {
+        continue;
+      }
+      return getErrorObject('InvalidChar', "char '"+xmlData[i]+"' is not expected.", getLineNumberForPosition(xmlData, i));
+    }
+  }
+
+  if (!tagFound) {
+    return getErrorObject('InvalidXml', 'Start tag expected.', 1);
+  }else if (tags.length == 1) {
+      return getErrorObject('InvalidTag', "Unclosed tag '"+tags[0].tagName+"'.", getLineNumberForPosition(xmlData, tags[0].tagStartPos));
+  }else if (tags.length > 0) {
+      return getErrorObject('InvalidXml', "Invalid '"+
+          JSON.stringify(tags.map(t => t.tagName), null, 4).replace(/\r?\n/g, '')+
+          "' found.", {line: 1, col: 1});
+  }
+
+  return true;
+};
+
+function isWhiteSpace(char){
+  return char === ' ' || char === '\t' || char === '\n'  || char === '\r';
+}
+/**
+ * Read Processing insstructions and skip
+ * @param {*} xmlData
+ * @param {*} i
+ */
+function readPI(xmlData, i) {
+  const start = i;
+  for (; i < xmlData.length; i++) {
+    if (xmlData[i] == '?' || xmlData[i] == ' ') {
+      //tagname
+      const tagname = xmlData.substr(start, i - start);
+      if (i > 5 && tagname === 'xml') {
+        return getErrorObject('InvalidXml', 'XML declaration allowed only at the start of the document.', getLineNumberForPosition(xmlData, i));
+      } else if (xmlData[i] == '?' && xmlData[i + 1] == '>') {
+        //check if valid attribut string
+        i++;
+        break;
+      } else {
+        continue;
+      }
+    }
+  }
+  return i;
+}
+
+function readCommentAndCDATA(xmlData, i) {
+  if (xmlData.length > i + 5 && xmlData[i + 1] === '-' && xmlData[i + 2] === '-') {
+    //comment
+    for (i += 3; i < xmlData.length; i++) {
+      if (xmlData[i] === '-' && xmlData[i + 1] === '-' && xmlData[i + 2] === '>') {
+        i += 2;
+        break;
+      }
+    }
+  } else if (
+    xmlData.length > i + 8 &&
+    xmlData[i + 1] === 'D' &&
+    xmlData[i + 2] === 'O' &&
+    xmlData[i + 3] === 'C' &&
+    xmlData[i + 4] === 'T' &&
+    xmlData[i + 5] === 'Y' &&
+    xmlData[i + 6] === 'P' &&
+    xmlData[i + 7] === 'E'
+  ) {
+    let angleBracketsCount = 1;
+    for (i += 8; i < xmlData.length; i++) {
+      if (xmlData[i] === '<') {
+        angleBracketsCount++;
+      } else if (xmlData[i] === '>') {
+        angleBracketsCount--;
+        if (angleBracketsCount === 0) {
+          break;
+        }
+      }
+    }
+  } else if (
+    xmlData.length > i + 9 &&
+    xmlData[i + 1] === '[' &&
+    xmlData[i + 2] === 'C' &&
+    xmlData[i + 3] === 'D' &&
+    xmlData[i + 4] === 'A' &&
+    xmlData[i + 5] === 'T' &&
+    xmlData[i + 6] === 'A' &&
+    xmlData[i + 7] === '['
+  ) {
+    for (i += 8; i < xmlData.length; i++) {
+      if (xmlData[i] === ']' && xmlData[i + 1] === ']' && xmlData[i + 2] === '>') {
+        i += 2;
+        break;
+      }
+    }
+  }
+
+  return i;
+}
+
+const doubleQuote = '"';
+const singleQuote = "'";
+
+/**
+ * Keep reading xmlData until '<' is found outside the attribute value.
+ * @param {string} xmlData
+ * @param {number} i
+ */
+function readAttributeStr(xmlData, i) {
+  let attrStr = '';
+  let startChar = '';
+  let tagClosed = false;
+  for (; i < xmlData.length; i++) {
+    if (xmlData[i] === doubleQuote || xmlData[i] === singleQuote) {
+      if (startChar === '') {
+        startChar = xmlData[i];
+      } else if (startChar !== xmlData[i]) {
+        //if vaue is enclosed with double quote then single quotes are allowed inside the value and vice versa
+      } else {
+        startChar = '';
+      }
+    } else if (xmlData[i] === '>') {
+      if (startChar === '') {
+        tagClosed = true;
+        break;
+      }
+    }
+    attrStr += xmlData[i];
+  }
+  if (startChar !== '') {
+    return false;
+  }
+
+  return {
+    value: attrStr,
+    index: i,
+    tagClosed: tagClosed
+  };
+}
+
+/**
+ * Select all the attributes whether valid or invalid.
+ */
+const validAttrStrRegxp = new RegExp('(\\s*)([^\\s=]+)(\\s*=)?(\\s*([\'"])(([\\s\\S])*?)\\5)?', 'g');
+
+//attr, ="sd", a="amit's", a="sd"b="saf", ab  cd=""
+
+function validateAttributeString(attrStr, options) {
+  //console.log("start:"+attrStr+":end");
+
+  //if(attrStr.trim().length === 0) return true; //empty string
+
+  const matches = util.getAllMatches(attrStr, validAttrStrRegxp);
+  const attrNames = {};
+
+  for (let i = 0; i < matches.length; i++) {
+    if (matches[i][1].length === 0) {
+      //nospace before attribute name: a="sd"b="saf"
+      return getErrorObject('InvalidAttr', "Attribute '"+matches[i][2]+"' has no space in starting.", getPositionFromMatch(matches[i]))
+    } else if (matches[i][3] !== undefined && matches[i][4] === undefined) {
+      return getErrorObject('InvalidAttr', "Attribute '"+matches[i][2]+"' is without value.", getPositionFromMatch(matches[i]));
+    } else if (matches[i][3] === undefined && !options.allowBooleanAttributes) {
+      //independent attribute: ab
+      return getErrorObject('InvalidAttr', "boolean attribute '"+matches[i][2]+"' is not allowed.", getPositionFromMatch(matches[i]));
+    }
+    /* else if(matches[i][6] === undefined){//attribute without value: ab=
+                    return { err: { code:"InvalidAttr",msg:"attribute " + matches[i][2] + " has no value assigned."}};
+                } */
+    const attrName = matches[i][2];
+    if (!validateAttrName(attrName)) {
+      return getErrorObject('InvalidAttr', "Attribute '"+attrName+"' is an invalid name.", getPositionFromMatch(matches[i]));
+    }
+    if (!attrNames.hasOwnProperty(attrName)) {
+      //check for duplicate attribute.
+      attrNames[attrName] = 1;
+    } else {
+      return getErrorObject('InvalidAttr', "Attribute '"+attrName+"' is repeated.", getPositionFromMatch(matches[i]));
+    }
+  }
+
+  return true;
+}
+
+function validateNumberAmpersand(xmlData, i) {
+  let re = /\d/;
+  if (xmlData[i] === 'x') {
+    i++;
+    re = /[\da-fA-F]/;
+  }
+  for (; i < xmlData.length; i++) {
+    if (xmlData[i] === ';')
+      return i;
+    if (!xmlData[i].match(re))
+      break;
+  }
+  return -1;
+}
+
+function validateAmpersand(xmlData, i) {
+  // https://www.w3.org/TR/xml/#dt-charref
+  i++;
+  if (xmlData[i] === ';')
+    return -1;
+  if (xmlData[i] === '#') {
+    i++;
+    return validateNumberAmpersand(xmlData, i);
+  }
+  let count = 0;
+  for (; i < xmlData.length; i++, count++) {
+    if (xmlData[i].match(/\w/) && count < 20)
+      continue;
+    if (xmlData[i] === ';')
+      break;
+    return -1;
+  }
+  return i;
+}
+
+function getErrorObject(code, message, lineNumber) {
+  return {
+    err: {
+      code: code,
+      msg: message,
+      line: lineNumber.line || lineNumber,
+      col: lineNumber.col,
+    },
+  };
+}
+
+function validateAttrName(attrName) {
+  return util.isName(attrName);
+}
+
+// const startsWithXML = /^xml/i;
+
+function validateTagName(tagname) {
+  return util.isName(tagname) /* && !tagname.match(startsWithXML) */;
+}
+
+//this function returns the line number for the character at the given index
+function getLineNumberForPosition(xmlData, index) {
+  const lines = xmlData.substring(0, index).split(/\r?\n/);
+  return {
+    line: lines.length,
+
+    // column number is last line's length + 1, because column numbering starts at 1:
+    col: lines[lines.length - 1].length + 1
+  };
+}
+
+//this function returns the position of the first character of match within attrStr
+function getPositionFromMatch(match) {
+  return match.startIndex + match[1].length;
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlbuilder/json2xml.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlbuilder/json2xml.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+//parse Empty Node as self closing node
+const buildFromOrderedJs = __webpack_require__(/*! ./orderedJs2Xml */ "./node_modules/fast-xml-parser/src/xmlbuilder/orderedJs2Xml.js");
+
+const defaultOptions = {
+  attributeNamePrefix: '@_',
+  attributesGroupName: false,
+  textNodeName: '#text',
+  ignoreAttributes: true,
+  cdataPropName: false,
+  format: false,
+  indentBy: '  ',
+  suppressEmptyNode: false,
+  suppressUnpairedNode: true,
+  suppressBooleanAttributes: true,
+  tagValueProcessor: function(key, a) {
+    return a;
+  },
+  attributeValueProcessor: function(attrName, a) {
+    return a;
+  },
+  preserveOrder: false,
+  commentPropName: false,
+  unpairedTags: [],
+  entities: [
+    { regex: new RegExp("&", "g"), val: "&amp;" },//it must be on top
+    { regex: new RegExp(">", "g"), val: "&gt;" },
+    { regex: new RegExp("<", "g"), val: "&lt;" },
+    { regex: new RegExp("\'", "g"), val: "&apos;" },
+    { regex: new RegExp("\"", "g"), val: "&quot;" }
+  ],
+  processEntities: true,
+  stopNodes: [],
+  transformTagName: false,
+};
+
+function Builder(options) {
+  this.options = Object.assign({}, defaultOptions, options);
+  if (this.options.ignoreAttributes || this.options.attributesGroupName) {
+    this.isAttribute = function(/*a*/) {
+      return false;
+    };
+  } else {
+    this.attrPrefixLen = this.options.attributeNamePrefix.length;
+    this.isAttribute = isAttribute;
+  }
+
+  this.processTextOrObjNode = processTextOrObjNode
+
+  if (this.options.format) {
+    this.indentate = indentate;
+    this.tagEndChar = '>\n';
+    this.newLine = '\n';
+  } else {
+    this.indentate = function() {
+      return '';
+    };
+    this.tagEndChar = '>';
+    this.newLine = '';
+  }
+
+  if (this.options.suppressEmptyNode) {
+    this.buildTextNode = buildEmptyTextNode;
+    this.buildObjNode = buildEmptyObjNode;
+  } else {
+    this.buildTextNode = buildTextValNode;
+    this.buildObjNode = buildObjectNode;
+  }
+
+  this.buildTextValNode = buildTextValNode;
+  this.buildObjectNode = buildObjectNode;
+
+  this.replaceEntitiesValue = replaceEntitiesValue;
+  this.buildAttrPairStr = buildAttrPairStr;
+}
+
+Builder.prototype.build = function(jObj) {
+  if(this.options.preserveOrder){
+    return buildFromOrderedJs(jObj, this.options);
+  }else {
+    if(Array.isArray(jObj) && this.options.arrayNodeName && this.options.arrayNodeName.length > 1){
+      jObj = {
+        [this.options.arrayNodeName] : jObj
+      }
+    }
+    return this.j2x(jObj, 0).val;
+  }
+};
+
+Builder.prototype.j2x = function(jObj, level) {
+  let attrStr = '';
+  let val = '';
+  for (let key in jObj) {
+    if (typeof jObj[key] === 'undefined') {
+      // supress undefined node
+    } else if (jObj[key] === null) {
+      if(key[0] === "?") val += this.indentate(level) + '<' + key + '?' + this.tagEndChar;
+      else val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
+      // val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
+    } else if (jObj[key] instanceof Date) {
+      val += this.buildTextNode(jObj[key], key, '', level);
+    } else if (typeof jObj[key] !== 'object') {
+      //premitive type
+      const attr = this.isAttribute(key);
+      if (attr) {
+        attrStr += this.buildAttrPairStr(attr, '' + jObj[key]);
+      }else {
+        //tag value
+        if (key === this.options.textNodeName) {
+          let newval = this.options.tagValueProcessor(key, '' + jObj[key]);
+          val += this.replaceEntitiesValue(newval);
+        } else {
+          val += this.buildTextNode(jObj[key], key, '', level);
+        }
+      }
+    } else if (Array.isArray(jObj[key])) {
+      //repeated nodes
+      const arrLen = jObj[key].length;
+      for (let j = 0; j < arrLen; j++) {
+        const item = jObj[key][j];
+        if (typeof item === 'undefined') {
+          // supress undefined node
+        } else if (item === null) {
+          if(key[0] === "?") val += this.indentate(level) + '<' + key + '?' + this.tagEndChar;
+          else val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
+          // val += this.indentate(level) + '<' + key + '/' + this.tagEndChar;
+        } else if (typeof item === 'object') {
+          val += this.processTextOrObjNode(item, key, level)
+        } else {
+          val += this.buildTextNode(item, key, '', level);
+        }
+      }
+    } else {
+      //nested node
+      if (this.options.attributesGroupName && key === this.options.attributesGroupName) {
+        const Ks = Object.keys(jObj[key]);
+        const L = Ks.length;
+        for (let j = 0; j < L; j++) {
+          attrStr += this.buildAttrPairStr(Ks[j], '' + jObj[key][Ks[j]]);
+        }
+      } else {
+        val += this.processTextOrObjNode(jObj[key], key, level)
+      }
+    }
+  }
+  return {attrStr: attrStr, val: val};
+};
+
+function buildAttrPairStr(attrName, val){
+  val = this.options.attributeValueProcessor(attrName, '' + val);
+  val = this.replaceEntitiesValue(val);
+  if (this.options.suppressBooleanAttributes && val === "true") {
+    return ' ' + attrName;
+  } else return ' ' + attrName + '="' + val + '"';
+}
+
+function processTextOrObjNode (object, key, level) {
+  const result = this.j2x(object, level + 1);
+  if (object[this.options.textNodeName] !== undefined && Object.keys(object).length === 1) {
+    return this.buildTextNode(object[this.options.textNodeName], key, result.attrStr, level);
+  } else {
+    return this.buildObjNode(result.val, key, result.attrStr, level);
+  }
+}
+
+function buildObjectNode(val, key, attrStr, level) {
+  let tagEndExp = '</' + key + this.tagEndChar;
+  let piClosingChar = "";
+  
+  if(key[0] === "?") {
+    piClosingChar = "?";
+    tagEndExp = "";
+  }
+
+  if (attrStr && val.indexOf('<') === -1) {
+    return ( this.indentate(level) + '<' +  key + attrStr + piClosingChar + '>' + val + tagEndExp );
+  } else if (this.options.commentPropName !== false && key === this.options.commentPropName && piClosingChar.length === 0) {
+    return this.indentate(level) + `<!--${val}-->` + this.newLine;
+  }else {
+    return (
+      this.indentate(level) + '<' + key + attrStr + piClosingChar + this.tagEndChar +
+      val +
+      this.indentate(level) + tagEndExp    );
+  }
+}
+
+function buildEmptyObjNode(val, key, attrStr, level) {
+  if (val !== '') {
+    return this.buildObjectNode(val, key, attrStr, level);
+  } else {
+    if(key[0] === "?") return  this.indentate(level) + '<' + key + attrStr+ '?' + this.tagEndChar;
+    else return  this.indentate(level) + '<' + key + attrStr + '/' + this.tagEndChar;
+  }
+}
+
+function buildTextValNode(val, key, attrStr, level) {
+  if (this.options.cdataPropName !== false && key === this.options.cdataPropName) {
+    return this.indentate(level) + `<![CDATA[${val}]]>` +  this.newLine;
+  }else if (this.options.commentPropName !== false && key === this.options.commentPropName) {
+    return this.indentate(level) + `<!--${val}-->` +  this.newLine;
+  }else{
+    let textValue = this.options.tagValueProcessor(key, val);
+    textValue = this.replaceEntitiesValue(textValue);
+  
+    if( textValue === '' && this.options.unpairedTags.indexOf(key) !== -1){ //unpaired
+      if(this.options.suppressUnpairedNode){
+        return this.indentate(level) + '<' + key + this.tagEndChar;
+      }else{
+        return this.indentate(level) + '<' + key + "/" + this.tagEndChar;
+      }
+    } else{
+      return (
+        this.indentate(level) + '<' + key + attrStr + '>' +
+         textValue +
+        '</' + key + this.tagEndChar  );
+    }
+
+  }
+}
+
+function replaceEntitiesValue(textValue){
+  if(textValue && textValue.length > 0 && this.options.processEntities){
+    for (let i=0; i<this.options.entities.length; i++) {
+      const entity = this.options.entities[i];
+      textValue = textValue.replace(entity.regex, entity.val);
+    }
+  }
+  return textValue;
+}
+
+function buildEmptyTextNode(val, key, attrStr, level) {
+  if( val === '' && this.options.unpairedTags.indexOf(key) !== -1){ //unpaired
+    if(this.options.suppressUnpairedNode){
+      return this.indentate(level) + '<' + key + this.tagEndChar;
+    }else{
+      return this.indentate(level) + '<' + key + "/" + this.tagEndChar;
+    }
+  }else if (val !== '') { //empty
+    return this.buildTextValNode(val, key, attrStr, level);
+  } else {
+    if(key[0] === "?") return  this.indentate(level) + '<' + key + attrStr+ '?' + this.tagEndChar; //PI tag
+    else return  this.indentate(level) + '<' + key + attrStr + '/' + this.tagEndChar; //normal
+  }
+}
+
+function indentate(level) {
+  return this.options.indentBy.repeat(level);
+}
+
+function isAttribute(name /*, options*/) {
+  if (name.startsWith(this.options.attributeNamePrefix)) {
+    return name.substr(this.attrPrefixLen);
+  } else {
+    return false;
+  }
+}
+
+module.exports = Builder;
+
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlbuilder/orderedJs2Xml.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlbuilder/orderedJs2Xml.js ***!
+  \**********************************************************************/
+/***/ ((module) => {
+
+const EOL = "\n";
+
+/**
+ * 
+ * @param {array} jArray 
+ * @param {any} options 
+ * @returns 
+ */
+function toXml(jArray, options){
+    return arrToStr( jArray, options, "", 0);
+}
+
+function arrToStr(arr, options, jPath, level){
+    let xmlStr = "";
+
+    let indentation = "";
+    if(options.format && options.indentBy.length > 0){//TODO: this logic can be avoided for each call
+        indentation = EOL + "" + options.indentBy.repeat(level);
+    }
+
+    for (let i = 0; i < arr.length; i++) {
+        const tagObj = arr[i];
+        const tagName = propName(tagObj);
+        let newJPath = "";
+        if(jPath.length === 0) newJPath = tagName
+        else newJPath = `${jPath}.${tagName}`;
+
+        if(tagName === options.textNodeName){
+            let tagText = tagObj[tagName];
+            if(!isStopNode(newJPath, options)){
+                tagText = options.tagValueProcessor( tagName, tagText);
+                tagText = replaceEntitiesValue(tagText, options);
+            }
+            xmlStr += indentation + tagText;
+            continue;
+        }else if( tagName === options.cdataPropName){
+            xmlStr += indentation + `<![CDATA[${tagObj[tagName][0][options.textNodeName]}]]>`;
+            continue;
+        }else if( tagName === options.commentPropName){
+            xmlStr += indentation + `<!--${tagObj[tagName][0][options.textNodeName]}-->`;
+            continue;
+        }else if( tagName[0] === "?"){
+            const attStr = attr_to_str(tagObj[":@"], options);
+            const tempInd = tagName === "?xml" ? "" : indentation;
+            let piTextNodeName = tagObj[tagName][0][options.textNodeName];
+            piTextNodeName = piTextNodeName.length !== 0 ? " " + piTextNodeName : ""; //remove extra spacing
+            xmlStr += tempInd + `<${tagName}${piTextNodeName}${attStr}?>`;
+            continue;
+        }
+        const attStr = attr_to_str(tagObj[":@"], options);
+        let tagStart =  indentation + `<${tagName}${attStr}`;
+        let tagValue = arrToStr(tagObj[tagName], options, newJPath, level + 1);
+        if(options.unpairedTags.indexOf(tagName) !== -1){
+            if(options.suppressUnpairedNode)  xmlStr += tagStart + ">"; 
+            else xmlStr += tagStart + "/>"; 
+        }else if( (!tagValue || tagValue.length === 0) && options.suppressEmptyNode){ 
+            xmlStr += tagStart + "/>"; 
+        }else{ 
+            //TODO: node with only text value should not parse the text value in next line
+            xmlStr += tagStart + `>${tagValue}${indentation}</${tagName}>` ;
+        }
+    }
+    
+    return xmlStr;
+}
+
+function propName(obj){
+    const keys = Object.keys(obj);
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      if(key !== ":@") return key;
+    }
+  }
+
+function attr_to_str(attrMap, options){
+    let attrStr = "";
+    if(attrMap && !options.ignoreAttributes){
+        for (let attr in attrMap){
+            let attrVal = options.attributeValueProcessor(attr, attrMap[attr]);
+            attrVal = replaceEntitiesValue(attrVal, options);
+            if(attrVal === true && options.suppressBooleanAttributes){
+                attrStr+= ` ${attr.substr(options.attributeNamePrefix.length)}`;
+            }else{
+                attrStr+= ` ${attr.substr(options.attributeNamePrefix.length)}="${attrVal}"`;
+            }
+        }
+    }
+    return attrStr;
+}
+
+function isStopNode(jPath, options){
+    jPath = jPath.substr(0,jPath.length - options.textNodeName.length - 1);
+    let tagName = jPath.substr(jPath.lastIndexOf(".") + 1);
+    for(let index in options.stopNodes){
+        if(options.stopNodes[index] === jPath || options.stopNodes[index] === "*."+tagName) return true;
+    }
+    return false;
+}
+
+function replaceEntitiesValue(textValue, options){
+    if(textValue && textValue.length > 0 && options.processEntities){
+      for (let i=0; i< options.entities.length; i++) {
+        const entity = options.entities[i];
+        textValue = textValue.replace(entity.regex, entity.val);
+      }
+    }
+    return textValue;
+  }
+module.exports = toXml;
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlparser/DocTypeReader.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlparser/DocTypeReader.js ***!
+  \*********************************************************************/
+/***/ ((module) => {
+
+//TODO: handle comments
+function readDocType(xmlData, i){
+    
+    const entities = {};
+    if( xmlData[i + 3] === 'O' &&
+         xmlData[i + 4] === 'C' &&
+         xmlData[i + 5] === 'T' &&
+         xmlData[i + 6] === 'Y' &&
+         xmlData[i + 7] === 'P' &&
+         xmlData[i + 8] === 'E')
+    {    
+        i = i+9;
+        let angleBracketsCount = 1;
+        let hasBody = false, entity = false, comment = false;
+        let exp = "";
+        for(;i<xmlData.length;i++){
+            if (xmlData[i] === '<') {
+                if( hasBody && 
+                     xmlData[i+1] === '!' &&
+                     xmlData[i+2] === 'E' &&
+                     xmlData[i+3] === 'N' &&
+                     xmlData[i+4] === 'T' &&
+                     xmlData[i+5] === 'I' &&
+                     xmlData[i+6] === 'T' &&
+                     xmlData[i+7] === 'Y'
+                ){
+                    i += 7;
+                    entity = true;
+                }else if( hasBody && 
+                    xmlData[i+1] === '!' &&
+                     xmlData[i+2] === 'E' &&
+                     xmlData[i+3] === 'L' &&
+                     xmlData[i+4] === 'E' &&
+                     xmlData[i+5] === 'M' &&
+                     xmlData[i+6] === 'E' &&
+                     xmlData[i+7] === 'N' &&
+                     xmlData[i+8] === 'T'
+                ){
+                    //Not supported
+                    i += 8;
+                }else if( hasBody && 
+                    xmlData[i+1] === '!' &&
+                    xmlData[i+2] === 'A' &&
+                    xmlData[i+3] === 'T' &&
+                    xmlData[i+4] === 'T' &&
+                    xmlData[i+5] === 'L' &&
+                    xmlData[i+6] === 'I' &&
+                    xmlData[i+7] === 'S' &&
+                    xmlData[i+8] === 'T'
+                ){
+                    //Not supported
+                    i += 8;
+                }else if( hasBody && 
+                    xmlData[i+1] === '!' &&
+                    xmlData[i+2] === 'N' &&
+                    xmlData[i+3] === 'O' &&
+                    xmlData[i+4] === 'T' &&
+                    xmlData[i+5] === 'A' &&
+                    xmlData[i+6] === 'T' &&
+                    xmlData[i+7] === 'I' &&
+                    xmlData[i+8] === 'O' &&
+                    xmlData[i+9] === 'N'
+                ){
+                    //Not supported
+                    i += 9;
+                }else if( //comment
+                    xmlData[i+1] === '!' &&
+                    xmlData[i+2] === '-' &&
+                    xmlData[i+3] === '-'
+                ){
+                    comment = true;
+                }else{
+                    throw new Error("Invalid DOCTYPE");
+                }
+                angleBracketsCount++;
+                exp = "";
+            } else if (xmlData[i] === '>') {
+                if(comment){
+                    if( xmlData[i - 1] === "-" && xmlData[i - 2] === "-"){
+                        comment = false;
+                    }else{
+                        throw new Error(`Invalid XML comment in DOCTYPE`);
+                    }
+                }else if(entity){
+                    parseEntityExp(exp, entities);
+                    entity = false;
+                }
+                angleBracketsCount--;
+                if (angleBracketsCount === 0) {
+                  break;
+                }
+            }else if( xmlData[i] === '['){
+                hasBody = true;
+            }else{
+                exp += xmlData[i];
+            }
+        }
+        if(angleBracketsCount !== 0){
+            throw new Error(`Unclosed DOCTYPE`);
+        }
+    }else{
+        throw new Error(`Invalid Tag instead of DOCTYPE`);
+    }
+    return {entities, i};
+}
+
+const entityRegex = RegExp("^\\s([a-zA-z0-0]+)[ \t](['\"])([^&]+)\\2");
+function parseEntityExp(exp, entities){
+    const match = entityRegex.exec(exp);
+    if(match){
+        entities[ match[1] ] = {
+            regx : RegExp( `&${match[1]};`,"g"),
+            val: match[3]
+        };
+    }
+}
+module.exports = readDocType;
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlparser/OptionsBuilder.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlparser/OptionsBuilder.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+
+const defaultOptions = {
+    preserveOrder: false,
+    attributeNamePrefix: '@_',
+    attributesGroupName: false,
+    textNodeName: '#text',
+    ignoreAttributes: true,
+    removeNSPrefix: false, // remove NS from tag name or attribute name if true
+    allowBooleanAttributes: false, //a tag can have attributes without any value
+    //ignoreRootElement : false,
+    parseTagValue: true,
+    parseAttributeValue: false,
+    trimValues: true, //Trim string values of tag and attributes
+    cdataPropName: false,
+    numberParseOptions: {
+      hex: true,
+      leadingZeros: true
+    },
+    tagValueProcessor: function(tagName, val) {
+      return val;
+    },
+    attributeValueProcessor: function(attrName, val) {
+      return val;
+    },
+    stopNodes: [], //nested tags will not be parsed even for errors
+    alwaysCreateTextNode: false,
+    isArray: () => false,
+    commentPropName: false,
+    unpairedTags: [],
+    processEntities: true,
+    htmlEntities: false,
+    ignoreDeclaration: false,
+    ignorePiTags: false,
+    transformTagName: false,
+};
+   
+const buildOptions = function(options) {
+    return Object.assign({}, defaultOptions, options);
+};
+
+exports.buildOptions = buildOptions;
+exports.defaultOptions = defaultOptions;
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlparser/OrderedObjParser.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlparser/OrderedObjParser.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+///@ts-check
+
+const util = __webpack_require__(/*! ../util */ "./node_modules/fast-xml-parser/src/util.js");
+const xmlNode = __webpack_require__(/*! ./xmlNode */ "./node_modules/fast-xml-parser/src/xmlparser/xmlNode.js");
+const readDocType = __webpack_require__(/*! ./DocTypeReader */ "./node_modules/fast-xml-parser/src/xmlparser/DocTypeReader.js");
+const toNumber = __webpack_require__(/*! strnum */ "./node_modules/strnum/strnum.js");
+
+const regx =
+  '<((!\\[CDATA\\[([\\s\\S]*?)(]]>))|((NAME:)?(NAME))([^>]*)>|((\\/)(NAME)\\s*>))([^<]*)'
+  .replace(/NAME/g, util.nameRegexp);
+
+//const tagsRegx = new RegExp("<(\\/?[\\w:\\-\._]+)([^>]*)>(\\s*"+cdataRegx+")*([^<]+)?","g");
+//const tagsRegx = new RegExp("<(\\/?)((\\w*:)?([\\w:\\-\._]+))([^>]*)>([^<]*)("+cdataRegx+"([^<]*))*([^<]+)?","g");
+
+class OrderedObjParser{
+  constructor(options){
+    this.options = options;
+    this.currentNode = null;
+    this.tagsNodeStack = [];
+    this.docTypeEntities = {};
+    this.lastEntities = {
+      "apos" : { regex: /&(apos|#39|#x27);/g, val : "'"},
+      "gt" : { regex: /&(gt|#62|#x3E);/g, val : ">"},
+      "lt" : { regex: /&(lt|#60|#x3C);/g, val : "<"},
+      "quot" : { regex: /&(quot|#34|#x22);/g, val : "\""},
+    };
+    this.ampEntity = { regex: /&(amp|#38|#x26);/g, val : "&"};
+    this.htmlEntities = {
+      "space": { regex: /&(nbsp|#160);/g, val: " " },
+      // "lt" : { regex: /&(lt|#60);/g, val: "<" },
+      // "gt" : { regex: /&(gt|#62);/g, val: ">" },
+      // "amp" : { regex: /&(amp|#38);/g, val: "&" },
+      // "quot" : { regex: /&(quot|#34);/g, val: "\"" },
+      // "apos" : { regex: /&(apos|#39);/g, val: "'" },
+      "cent" : { regex: /&(cent|#162);/g, val: "¢" },
+      "pound" : { regex: /&(pound|#163);/g, val: "£" },
+      "yen" : { regex: /&(yen|#165);/g, val: "¥" },
+      "euro" : { regex: /&(euro|#8364);/g, val: "€" },
+      "copyright" : { regex: /&(copy|#169);/g, val: "©" },
+      "reg" : { regex: /&(reg|#174);/g, val: "®" },
+      "inr" : { regex: /&(inr|#8377);/g, val: "₹" },
+    };
+    this.addExternalEntities = addExternalEntities;
+    this.parseXml = parseXml;
+    this.parseTextData = parseTextData;
+    this.resolveNameSpace = resolveNameSpace;
+    this.buildAttributesMap = buildAttributesMap;
+    this.isItStopNode = isItStopNode;
+    this.replaceEntitiesValue = replaceEntitiesValue;
+    this.readStopNodeData = readStopNodeData;
+    this.saveTextToParentTag = saveTextToParentTag;
+  }
+
+}
+
+function addExternalEntities(externalEntities){
+  const entKeys = Object.keys(externalEntities);
+  for (let i = 0; i < entKeys.length; i++) {
+    const ent = entKeys[i];
+    this.lastEntities[ent] = {
+       regex: new RegExp("&"+ent+";","g"),
+       val : externalEntities[ent]
+    }
+  }
+}
+
+/**
+ * @param {string} val
+ * @param {string} tagName
+ * @param {string} jPath
+ * @param {boolean} dontTrim
+ * @param {boolean} hasAttributes
+ * @param {boolean} isLeafNode
+ * @param {boolean} escapeEntities
+ */
+function parseTextData(val, tagName, jPath, dontTrim, hasAttributes, isLeafNode, escapeEntities) {
+  if (val !== undefined) {
+    if (this.options.trimValues && !dontTrim) {
+      val = val.trim();
+    }
+    if(val.length > 0){
+      if(!escapeEntities) val = this.replaceEntitiesValue(val);
+      
+      const newval = this.options.tagValueProcessor(tagName, val, jPath, hasAttributes, isLeafNode);
+      if(newval === null || newval === undefined){
+        //don't parse
+        return val;
+      }else if(typeof newval !== typeof val || newval !== val){
+        //overwrite
+        return newval;
+      }else if(this.options.trimValues){
+        return parseValue(val, this.options.parseTagValue, this.options.numberParseOptions);
+      }else{
+        const trimmedVal = val.trim();
+        if(trimmedVal === val){
+          return parseValue(val, this.options.parseTagValue, this.options.numberParseOptions);
+        }else{
+          return val;
+        }
+      }
+    }
+  }
+}
+
+function resolveNameSpace(tagname) {
+  if (this.options.removeNSPrefix) {
+    const tags = tagname.split(':');
+    const prefix = tagname.charAt(0) === '/' ? '/' : '';
+    if (tags[0] === 'xmlns') {
+      return '';
+    }
+    if (tags.length === 2) {
+      tagname = prefix + tags[1];
+    }
+  }
+  return tagname;
+}
+
+//TODO: change regex to capture NS
+//const attrsRegx = new RegExp("([\\w\\-\\.\\:]+)\\s*=\\s*(['\"])((.|\n)*?)\\2","gm");
+const attrsRegx = new RegExp('([^\\s=]+)\\s*(=\\s*([\'"])([\\s\\S]*?)\\3)?', 'gm');
+
+function buildAttributesMap(attrStr, jPath) {
+  if (!this.options.ignoreAttributes && typeof attrStr === 'string') {
+    // attrStr = attrStr.replace(/\r?\n/g, ' ');
+    //attrStr = attrStr || attrStr.trim();
+
+    const matches = util.getAllMatches(attrStr, attrsRegx);
+    const len = matches.length; //don't make it inline
+    const attrs = {};
+    for (let i = 0; i < len; i++) {
+      const attrName = this.resolveNameSpace(matches[i][1]);
+      let oldVal = matches[i][4];
+      const aName = this.options.attributeNamePrefix + attrName;
+      if (attrName.length) {
+        if (oldVal !== undefined) {
+          if (this.options.trimValues) {
+            oldVal = oldVal.trim();
+          }
+          oldVal = this.replaceEntitiesValue(oldVal);
+          const newVal = this.options.attributeValueProcessor(attrName, oldVal, jPath);
+          if(newVal === null || newVal === undefined){
+            //don't parse
+            attrs[aName] = oldVal;
+          }else if(typeof newVal !== typeof oldVal || newVal !== oldVal){
+            //overwrite
+            attrs[aName] = newVal;
+          }else{
+            //parse
+            attrs[aName] = parseValue(
+              oldVal,
+              this.options.parseAttributeValue,
+              this.options.numberParseOptions
+            );
+          }
+        } else if (this.options.allowBooleanAttributes) {
+          attrs[aName] = true;
+        }
+      }
+    }
+    if (!Object.keys(attrs).length) {
+      return;
+    }
+    if (this.options.attributesGroupName) {
+      const attrCollection = {};
+      attrCollection[this.options.attributesGroupName] = attrs;
+      return attrCollection;
+    }
+    return attrs;
+  }
+}
+
+const parseXml = function(xmlData) {
+  xmlData = xmlData.replace(/\r\n?/g, "\n"); //TODO: remove this line
+  const xmlObj = new xmlNode('!xml');
+  let currentNode = xmlObj;
+  let textData = "";
+  let jPath = "";
+  for(let i=0; i< xmlData.length; i++){//for each char in XML data
+    const ch = xmlData[i];
+    if(ch === '<'){
+      // const nextIndex = i+1;
+      // const _2ndChar = xmlData[nextIndex];
+      if( xmlData[i+1] === '/') {//Closing Tag
+        const closeIndex = findClosingIndex(xmlData, ">", i, "Closing Tag is not closed.")
+        let tagName = xmlData.substring(i+2,closeIndex).trim();
+
+        if(this.options.removeNSPrefix){
+          const colonIndex = tagName.indexOf(":");
+          if(colonIndex !== -1){
+            tagName = tagName.substr(colonIndex+1);
+          }
+        }
+
+        if(this.options.transformTagName) {
+          tagName = this.options.transformTagName(tagName);
+        }
+
+        if(currentNode){
+          textData = this.saveTextToParentTag(textData, currentNode, jPath);
+        }
+
+        jPath = jPath.substr(0, jPath.lastIndexOf("."));
+        
+        currentNode = this.tagsNodeStack.pop();//avoid recurssion, set the parent tag scope
+        textData = "";
+        i = closeIndex;
+      } else if( xmlData[i+1] === '?') {
+
+        let tagData = readTagExp(xmlData,i, false, "?>");
+        if(!tagData) throw new Error("Pi Tag is not closed.");
+
+        textData = this.saveTextToParentTag(textData, currentNode, jPath);
+        if( (this.options.ignoreDeclaration && tagData.tagName === "?xml") || this.options.ignorePiTags){
+
+        }else{
+  
+          const childNode = new xmlNode(tagData.tagName);
+          childNode.add(this.options.textNodeName, "");
+          
+          if(tagData.tagName !== tagData.tagExp && tagData.attrExpPresent){
+            childNode[":@"] = this.buildAttributesMap(tagData.tagExp, jPath);
+          }
+          currentNode.addChild(childNode);
+
+        }
+
+
+        i = tagData.closeIndex + 1;
+      } else if(xmlData.substr(i + 1, 3) === '!--') {
+        const endIndex = findClosingIndex(xmlData, "-->", i+4, "Comment is not closed.")
+        if(this.options.commentPropName){
+          const comment = xmlData.substring(i + 4, endIndex - 2);
+
+          textData = this.saveTextToParentTag(textData, currentNode, jPath);
+
+          currentNode.add(this.options.commentPropName, [ { [this.options.textNodeName] : comment } ]);
+        }
+        i = endIndex;
+      } else if( xmlData.substr(i + 1, 2) === '!D') {
+        const result = readDocType(xmlData, i);
+        this.docTypeEntities = result.entities;
+        i = result.i;
+      }else if(xmlData.substr(i + 1, 2) === '![') {
+        const closeIndex = findClosingIndex(xmlData, "]]>", i, "CDATA is not closed.") - 2;
+        const tagExp = xmlData.substring(i + 9,closeIndex);
+
+        textData = this.saveTextToParentTag(textData, currentNode, jPath);
+
+        //cdata should be set even if it is 0 length string
+        if(this.options.cdataPropName){
+          // let val = this.parseTextData(tagExp, this.options.cdataPropName, jPath + "." + this.options.cdataPropName, true, false, true);
+          // if(!val) val = "";
+          currentNode.add(this.options.cdataPropName, [ { [this.options.textNodeName] : tagExp } ]);
+        }else{
+          let val = this.parseTextData(tagExp, currentNode.tagname, jPath, true, false, true);
+          if(val == undefined) val = "";
+          currentNode.add(this.options.textNodeName, val);
+        }
+        
+        i = closeIndex + 2;
+      }else {//Opening tag
+        let result = readTagExp(xmlData,i, this. options.removeNSPrefix);
+        let tagName= result.tagName;
+        let tagExp = result.tagExp;
+        let attrExpPresent = result.attrExpPresent;
+        let closeIndex = result.closeIndex;
+
+        if (this.options.transformTagName) {
+          tagName = this.options.transformTagName(tagName);
+        }
+        
+        //save text as child node
+        if (currentNode && textData) {
+          if(currentNode.tagname !== '!xml'){
+            //when nested tag is found
+            textData = this.saveTextToParentTag(textData, currentNode, jPath, false);
+          }
+        }
+
+        if(tagName !== xmlObj.tagname){
+          jPath += jPath ? "." + tagName : tagName;
+        }
+
+        //check if last tag was unpaired tag
+        const lastTag = currentNode;
+        if(lastTag && this.options.unpairedTags.indexOf(lastTag.tagname) !== -1 ){
+          currentNode = this.tagsNodeStack.pop();
+        }
+
+        if (this.isItStopNode(this.options.stopNodes, jPath, tagName)) { //TODO: namespace
+          let tagContent = "";
+          //self-closing tag
+          if(tagExp.length > 0 && tagExp.lastIndexOf("/") === tagExp.length - 1){
+            i = result.closeIndex;
+          }
+          //boolean tag
+          else if(this.options.unpairedTags.indexOf(tagName) !== -1){
+            i = result.closeIndex;
+          }
+          //normal tag
+          else{
+            //read until closing tag is found
+            const result = this.readStopNodeData(xmlData, tagName, closeIndex + 1);
+            if(!result) throw new Error(`Unexpected end of ${tagName}`);
+            i = result.i;
+            tagContent = result.tagContent;
+          }
+
+          const childNode = new xmlNode(tagName);
+          if(tagName !== tagExp && attrExpPresent){
+            childNode[":@"] = this.buildAttributesMap(tagExp, jPath);
+          }
+          if(tagContent) {
+            tagContent = this.parseTextData(tagContent, tagName, jPath, true, attrExpPresent, true, true);
+          }
+          
+          jPath = jPath.substr(0, jPath.lastIndexOf("."));
+          childNode.add(this.options.textNodeName, tagContent);
+          
+          currentNode.addChild(childNode);
+        }else{
+  //selfClosing tag
+          if(tagExp.length > 0 && tagExp.lastIndexOf("/") === tagExp.length - 1){
+            if(tagName[tagName.length - 1] === "/"){ //remove trailing '/'
+              tagName = tagName.substr(0, tagName.length - 1);
+              tagExp = tagName;
+            }else{
+              tagExp = tagExp.substr(0, tagExp.length - 1);
+            }
+            
+            if(this.options.transformTagName) {
+              tagName = this.options.transformTagName(tagName);
+            }
+
+            const childNode = new xmlNode(tagName);
+            if(tagName !== tagExp && attrExpPresent){
+              childNode[":@"] = this.buildAttributesMap(tagExp, jPath);
+            }
+            jPath = jPath.substr(0, jPath.lastIndexOf("."));
+            currentNode.addChild(childNode);
+          }
+    //opening tag
+          else{
+            const childNode = new xmlNode( tagName);
+            this.tagsNodeStack.push(currentNode);
+            
+            if(tagName !== tagExp && attrExpPresent){
+              childNode[":@"] = this.buildAttributesMap(tagExp, jPath);
+            }
+            currentNode.addChild(childNode);
+            currentNode = childNode;
+          }
+          textData = "";
+          i = closeIndex;
+        }
+      }
+    }else{
+      textData += xmlData[i];
+    }
+  }
+  return xmlObj.child;
+}
+
+const replaceEntitiesValue = function(val){
+
+  if(this.options.processEntities){
+    for(let entityName in this.docTypeEntities){
+      const entity = this.docTypeEntities[entityName];
+      val = val.replace( entity.regx, entity.val);
+    }
+    for(let entityName in this.lastEntities){
+      const entity = this.lastEntities[entityName];
+      val = val.replace( entity.regex, entity.val);
+    }
+    if(this.options.htmlEntities){
+      for(let entityName in this.htmlEntities){
+        const entity = this.htmlEntities[entityName];
+        val = val.replace( entity.regex, entity.val);
+      }
+    }
+    val = val.replace( this.ampEntity.regex, this.ampEntity.val);
+  }
+  return val;
+}
+function saveTextToParentTag(textData, currentNode, jPath, isLeafNode) {
+  if (textData) { //store previously collected data as textNode
+    if(isLeafNode === undefined) isLeafNode = Object.keys(currentNode.child).length === 0
+    
+    textData = this.parseTextData(textData,
+      currentNode.tagname,
+      jPath,
+      false,
+      currentNode[":@"] ? Object.keys(currentNode[":@"]).length !== 0 : false,
+      isLeafNode);
+
+    if (textData !== undefined && textData !== "")
+      currentNode.add(this.options.textNodeName, textData);
+    textData = "";
+  }
+  return textData;
+}
+
+//TODO: use jPath to simplify the logic
+/**
+ * 
+ * @param {string[]} stopNodes 
+ * @param {string} jPath
+ * @param {string} currentTagName 
+ */
+function isItStopNode(stopNodes, jPath, currentTagName){
+  const allNodesExp = "*." + currentTagName;
+  for (const stopNodePath in stopNodes) {
+    const stopNodeExp = stopNodes[stopNodePath];
+    if( allNodesExp === stopNodeExp || jPath === stopNodeExp  ) return true;
+  }
+  return false;
+}
+
+/**
+ * Returns the tag Expression and where it is ending handling single-dobule quotes situation
+ * @param {string} xmlData 
+ * @param {number} i starting index
+ * @returns 
+ */
+function tagExpWithClosingIndex(xmlData, i, closingChar = ">"){
+  let attrBoundary;
+  let tagExp = "";
+  for (let index = i; index < xmlData.length; index++) {
+    let ch = xmlData[index];
+    if (attrBoundary) {
+        if (ch === attrBoundary) attrBoundary = "";//reset
+    } else if (ch === '"' || ch === "'") {
+        attrBoundary = ch;
+    } else if (ch === closingChar[0]) {
+      if(closingChar[1]){
+        if(xmlData[index + 1] === closingChar[1]){
+          return {
+            data: tagExp,
+            index: index
+          }
+        }
+      }else{
+        return {
+          data: tagExp,
+          index: index
+        }
+      }
+    } else if (ch === '\t') {
+      ch = " "
+    }
+    tagExp += ch;
+  }
+}
+
+function findClosingIndex(xmlData, str, i, errMsg){
+  const closingIndex = xmlData.indexOf(str, i);
+  if(closingIndex === -1){
+    throw new Error(errMsg)
+  }else{
+    return closingIndex + str.length - 1;
+  }
+}
+
+function readTagExp(xmlData,i, removeNSPrefix, closingChar = ">"){
+  const result = tagExpWithClosingIndex(xmlData, i+1, closingChar);
+  if(!result) return;
+  let tagExp = result.data;
+  const closeIndex = result.index;
+  const separatorIndex = tagExp.search(/\s/);
+  let tagName = tagExp;
+  let attrExpPresent = true;
+  if(separatorIndex !== -1){//separate tag name and attributes expression
+    tagName = tagExp.substr(0, separatorIndex).replace(/\s\s*$/, '');
+    tagExp = tagExp.substr(separatorIndex + 1);
+  }
+
+  if(removeNSPrefix){
+    const colonIndex = tagName.indexOf(":");
+    if(colonIndex !== -1){
+      tagName = tagName.substr(colonIndex+1);
+      attrExpPresent = tagName !== result.data.substr(colonIndex + 1);
+    }
+  }
+
+  return {
+    tagName: tagName,
+    tagExp: tagExp,
+    closeIndex: closeIndex,
+    attrExpPresent: attrExpPresent,
+  }
+}
+/**
+ * find paired tag for a stop node
+ * @param {string} xmlData 
+ * @param {string} tagName 
+ * @param {number} i 
+ */
+function readStopNodeData(xmlData, tagName, i){
+  const startIndex = i;
+  // Starting at 1 since we already have an open tag
+  let openTagCount = 1;
+
+  for (; i < xmlData.length; i++) {
+    if( xmlData[i] === "<"){ 
+      if (xmlData[i+1] === "/") {//close tag
+          const closeIndex = findClosingIndex(xmlData, ">", i, `${tagName} is not closed`);
+          let closeTagName = xmlData.substring(i+2,closeIndex).trim();
+          if(closeTagName === tagName){
+            openTagCount--;
+            if (openTagCount === 0) {
+              return {
+                tagContent: xmlData.substring(startIndex, i),
+                i : closeIndex
+              }
+            }
+          }
+          i=closeIndex;
+        } else if(xmlData[i+1] === '?') { 
+          const closeIndex = findClosingIndex(xmlData, "?>", i+1, "StopNode is not closed.")
+          i=closeIndex;
+        } else if(xmlData.substr(i + 1, 3) === '!--') { 
+          const closeIndex = findClosingIndex(xmlData, "-->", i+3, "StopNode is not closed.")
+          i=closeIndex;
+        } else if(xmlData.substr(i + 1, 2) === '![') { 
+          const closeIndex = findClosingIndex(xmlData, "]]>", i, "StopNode is not closed.") - 2;
+          i=closeIndex;
+        } else {
+          const tagData = readTagExp(xmlData, i, '>')
+
+          if (tagData) {
+            const openTagName = tagData && tagData.tagName;
+            if (openTagName === tagName && tagData.tagExp[tagData.tagExp.length-1] !== "/") {
+              openTagCount++;
+            }
+            i=tagData.closeIndex;
+          }
+        }
+      }
+  }//end for loop
+}
+
+function parseValue(val, shouldParse, options) {
+  if (shouldParse && typeof val === 'string') {
+    //console.log(options)
+    const newval = val.trim();
+    if(newval === 'true' ) return true;
+    else if(newval === 'false' ) return false;
+    else return toNumber(val, options);
+  } else {
+    if (util.isExist(val)) {
+      return val;
+    } else {
+      return '';
+    }
+  }
+}
+
+
+module.exports = OrderedObjParser;
+
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlparser/XMLParser.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlparser/XMLParser.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+const { buildOptions} = __webpack_require__(/*! ./OptionsBuilder */ "./node_modules/fast-xml-parser/src/xmlparser/OptionsBuilder.js");
+const OrderedObjParser = __webpack_require__(/*! ./OrderedObjParser */ "./node_modules/fast-xml-parser/src/xmlparser/OrderedObjParser.js");
+const { prettify} = __webpack_require__(/*! ./node2json */ "./node_modules/fast-xml-parser/src/xmlparser/node2json.js");
+const validator = __webpack_require__(/*! ../validator */ "./node_modules/fast-xml-parser/src/validator.js");
+
+class XMLParser{
+    
+    constructor(options){
+        this.externalEntities = {};
+        this.options = buildOptions(options);
+        
+    }
+    /**
+     * Parse XML dats to JS object 
+     * @param {string|Buffer} xmlData 
+     * @param {boolean|Object} validationOption 
+     */
+    parse(xmlData,validationOption){
+        if(typeof xmlData === "string"){
+        }else if( xmlData.toString){
+            xmlData = xmlData.toString();
+        }else{
+            throw new Error("XML data is accepted in String or Bytes[] form.")
+        }
+        if( validationOption){
+            if(validationOption === true) validationOption = {}; //validate with default options
+            
+            const result = validator.validate(xmlData, validationOption);
+            if (result !== true) {
+              throw Error( `${result.err.msg}:${result.err.line}:${result.err.col}` )
+            }
+          }
+        const orderedObjParser = new OrderedObjParser(this.options);
+        orderedObjParser.addExternalEntities(this.externalEntities);
+        const orderedResult = orderedObjParser.parseXml(xmlData);
+        if(this.options.preserveOrder || orderedResult === undefined) return orderedResult;
+        else return prettify(orderedResult, this.options);
+    }
+
+    /**
+     * Add Entity which is not by default supported by this library
+     * @param {string} key 
+     * @param {string} value 
+     */
+    addEntity(key, value){
+        if(value.indexOf("&") !== -1){
+            throw new Error("Entity value can't have '&'")
+        }else if(key.indexOf("&") !== -1 || key.indexOf(";") !== -1){
+            throw new Error("An entity must be set without '&' and ';'. Eg. use '#xD' for '&#xD;'")
+        }else if(value === "&"){
+            throw new Error("An entity with value '&' is not permitted");
+        }else{
+            this.externalEntities[key] = value;
+        }
+    }
+}
+
+module.exports = XMLParser;
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlparser/node2json.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlparser/node2json.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+/**
+ * 
+ * @param {array} node 
+ * @param {any} options 
+ * @returns 
+ */
+function prettify(node, options){
+  return compress( node, options);
+}
+
+/**
+ * 
+ * @param {array} arr 
+ * @param {object} options 
+ * @param {string} jPath 
+ * @returns object
+ */
+function compress(arr, options, jPath){
+  let text;
+  const compressedObj = {};
+  for (let i = 0; i < arr.length; i++) {
+    const tagObj = arr[i];
+    const property = propName(tagObj);
+    let newJpath = "";
+    if(jPath === undefined) newJpath = property;
+    else newJpath = jPath + "." + property;
+
+    if(property === options.textNodeName){
+      if(text === undefined) text = tagObj[property];
+      else text += "" + tagObj[property];
+    }else if(property === undefined){
+      continue;
+    }else if(tagObj[property]){
+      
+      let val = compress(tagObj[property], options, newJpath);
+      const isLeaf = isLeafTag(val, options);
+
+      if(tagObj[":@"]){
+        assignAttributes( val, tagObj[":@"], newJpath, options);
+      }else if(Object.keys(val).length === 1 && val[options.textNodeName] !== undefined && !options.alwaysCreateTextNode){
+        val = val[options.textNodeName];
+      }else if(Object.keys(val).length === 0){
+        if(options.alwaysCreateTextNode) val[options.textNodeName] = "";
+        else val = "";
+      }
+
+      if(compressedObj[property] !== undefined && compressedObj.hasOwnProperty(property)) {
+        if(!Array.isArray(compressedObj[property])) {
+            compressedObj[property] = [ compressedObj[property] ];
+        }
+        compressedObj[property].push(val);
+      }else{
+        //TODO: if a node is not an array, then check if it should be an array
+        //also determine if it is a leaf node
+        if (options.isArray(property, newJpath, isLeaf )) {
+          compressedObj[property] = [val];
+        }else{
+          compressedObj[property] = val;
+        }
+      }
+    }
+    
+  }
+  // if(text && text.length > 0) compressedObj[options.textNodeName] = text;
+  if(typeof text === "string"){
+    if(text.length > 0) compressedObj[options.textNodeName] = text;
+  }else if(text !== undefined) compressedObj[options.textNodeName] = text;
+  return compressedObj;
+}
+
+function propName(obj){
+  const keys = Object.keys(obj);
+  for (let i = 0; i < keys.length; i++) {
+    const key = keys[i];
+    if(key !== ":@") return key;
+  }
+}
+
+function assignAttributes(obj, attrMap, jpath, options){
+  if (attrMap) {
+    const keys = Object.keys(attrMap);
+    const len = keys.length; //don't make it inline
+    for (let i = 0; i < len; i++) {
+      const atrrName = keys[i];
+      if (options.isArray(atrrName, jpath + "." + atrrName, true, true)) {
+        obj[atrrName] = [ attrMap[atrrName] ];
+      } else {
+        obj[atrrName] = attrMap[atrrName];
+      }
+    }
+  }
+}
+
+function isLeafTag(obj, options){
+  const propCount = Object.keys(obj).length;
+  if( propCount === 0 || (propCount === 1 && obj[options.textNodeName]) ) return true;
+  return false;
+}
+exports.prettify = prettify;
+
+
+/***/ }),
+
+/***/ "./node_modules/fast-xml-parser/src/xmlparser/xmlNode.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/fast-xml-parser/src/xmlparser/xmlNode.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+class XmlNode{
+  constructor(tagname) {
+    this.tagname = tagname;
+    this.child = []; //nested tags, text, cdata, comments in order
+    this[":@"] = {}; //attributes map
+  }
+  add(key,val){
+    // this.child.push( {name : key, val: val, isCdata: isCdata });
+    this.child.push( {[key]: val });
+  }
+  addChild(node) {
+    if(node[":@"] && Object.keys(node[":@"]).length > 0){
+      this.child.push( { [node.tagname]: node.child, [":@"]: node[":@"] });
+    }else{
+      this.child.push( { [node.tagname]: node.child });
+    }
+  };
+};
+
+
+module.exports = XmlNode;
 
 /***/ }),
 
@@ -42961,6 +45121,834 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/redux-devtools-extension/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/redux-devtools-extension/index.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var compose = (__webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js").compose);
+
+exports.__esModule = true;
+exports.composeWithDevTools =
+  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    : function () {
+        if (arguments.length === 0) return undefined;
+        if (typeof arguments[0] === 'object') return compose;
+        return compose.apply(null, arguments);
+      };
+
+exports.devToolsEnhancer =
+  typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__
+    ? window.__REDUX_DEVTOOLS_EXTENSION__
+    : function () {
+        return function (noop) {
+          return noop;
+        };
+      };
+
+
+/***/ }),
+
+/***/ "./node_modules/redux-logger/dist/redux-logger.js":
+/*!********************************************************!*\
+  !*** ./node_modules/redux-logger/dist/redux-logger.js ***!
+  \********************************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+!function(e,t){ true?t(exports):0}(this,function(e){"use strict";function t(e,t){e.super_=t,e.prototype=Object.create(t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}})}function r(e,t){Object.defineProperty(this,"kind",{value:e,enumerable:!0}),t&&t.length&&Object.defineProperty(this,"path",{value:t,enumerable:!0})}function n(e,t,r){n.super_.call(this,"E",e),Object.defineProperty(this,"lhs",{value:t,enumerable:!0}),Object.defineProperty(this,"rhs",{value:r,enumerable:!0})}function o(e,t){o.super_.call(this,"N",e),Object.defineProperty(this,"rhs",{value:t,enumerable:!0})}function i(e,t){i.super_.call(this,"D",e),Object.defineProperty(this,"lhs",{value:t,enumerable:!0})}function a(e,t,r){a.super_.call(this,"A",e),Object.defineProperty(this,"index",{value:t,enumerable:!0}),Object.defineProperty(this,"item",{value:r,enumerable:!0})}function f(e,t,r){var n=e.slice((r||t)+1||e.length);return e.length=t<0?e.length+t:t,e.push.apply(e,n),e}function u(e){var t="undefined"==typeof e?"undefined":N(e);return"object"!==t?t:e===Math?"math":null===e?"null":Array.isArray(e)?"array":"[object Date]"===Object.prototype.toString.call(e)?"date":"function"==typeof e.toString&&/^\/.*\//.test(e.toString())?"regexp":"object"}function l(e,t,r,c,s,d,p){s=s||[],p=p||[];var g=s.slice(0);if("undefined"!=typeof d){if(c){if("function"==typeof c&&c(g,d))return;if("object"===("undefined"==typeof c?"undefined":N(c))){if(c.prefilter&&c.prefilter(g,d))return;if(c.normalize){var h=c.normalize(g,d,e,t);h&&(e=h[0],t=h[1])}}}g.push(d)}"regexp"===u(e)&&"regexp"===u(t)&&(e=e.toString(),t=t.toString());var y="undefined"==typeof e?"undefined":N(e),v="undefined"==typeof t?"undefined":N(t),b="undefined"!==y||p&&p[p.length-1].lhs&&p[p.length-1].lhs.hasOwnProperty(d),m="undefined"!==v||p&&p[p.length-1].rhs&&p[p.length-1].rhs.hasOwnProperty(d);if(!b&&m)r(new o(g,t));else if(!m&&b)r(new i(g,e));else if(u(e)!==u(t))r(new n(g,e,t));else if("date"===u(e)&&e-t!==0)r(new n(g,e,t));else if("object"===y&&null!==e&&null!==t)if(p.filter(function(t){return t.lhs===e}).length)e!==t&&r(new n(g,e,t));else{if(p.push({lhs:e,rhs:t}),Array.isArray(e)){var w;e.length;for(w=0;w<e.length;w++)w>=t.length?r(new a(g,w,new i(void 0,e[w]))):l(e[w],t[w],r,c,g,w,p);for(;w<t.length;)r(new a(g,w,new o(void 0,t[w++])))}else{var x=Object.keys(e),S=Object.keys(t);x.forEach(function(n,o){var i=S.indexOf(n);i>=0?(l(e[n],t[n],r,c,g,n,p),S=f(S,i)):l(e[n],void 0,r,c,g,n,p)}),S.forEach(function(e){l(void 0,t[e],r,c,g,e,p)})}p.length=p.length-1}else e!==t&&("number"===y&&isNaN(e)&&isNaN(t)||r(new n(g,e,t)))}function c(e,t,r,n){return n=n||[],l(e,t,function(e){e&&n.push(e)},r),n.length?n:void 0}function s(e,t,r){if(r.path&&r.path.length){var n,o=e[t],i=r.path.length-1;for(n=0;n<i;n++)o=o[r.path[n]];switch(r.kind){case"A":s(o[r.path[n]],r.index,r.item);break;case"D":delete o[r.path[n]];break;case"E":case"N":o[r.path[n]]=r.rhs}}else switch(r.kind){case"A":s(e[t],r.index,r.item);break;case"D":e=f(e,t);break;case"E":case"N":e[t]=r.rhs}return e}function d(e,t,r){if(e&&t&&r&&r.kind){for(var n=e,o=-1,i=r.path?r.path.length-1:0;++o<i;)"undefined"==typeof n[r.path[o]]&&(n[r.path[o]]="number"==typeof r.path[o]?[]:{}),n=n[r.path[o]];switch(r.kind){case"A":s(r.path?n[r.path[o]]:n,r.index,r.item);break;case"D":delete n[r.path[o]];break;case"E":case"N":n[r.path[o]]=r.rhs}}}function p(e,t,r){if(r.path&&r.path.length){var n,o=e[t],i=r.path.length-1;for(n=0;n<i;n++)o=o[r.path[n]];switch(r.kind){case"A":p(o[r.path[n]],r.index,r.item);break;case"D":o[r.path[n]]=r.lhs;break;case"E":o[r.path[n]]=r.lhs;break;case"N":delete o[r.path[n]]}}else switch(r.kind){case"A":p(e[t],r.index,r.item);break;case"D":e[t]=r.lhs;break;case"E":e[t]=r.lhs;break;case"N":e=f(e,t)}return e}function g(e,t,r){if(e&&t&&r&&r.kind){var n,o,i=e;for(o=r.path.length-1,n=0;n<o;n++)"undefined"==typeof i[r.path[n]]&&(i[r.path[n]]={}),i=i[r.path[n]];switch(r.kind){case"A":p(i[r.path[n]],r.index,r.item);break;case"D":i[r.path[n]]=r.lhs;break;case"E":i[r.path[n]]=r.lhs;break;case"N":delete i[r.path[n]]}}}function h(e,t,r){if(e&&t){var n=function(n){r&&!r(e,t,n)||d(e,t,n)};l(e,t,n)}}function y(e){return"color: "+F[e].color+"; font-weight: bold"}function v(e){var t=e.kind,r=e.path,n=e.lhs,o=e.rhs,i=e.index,a=e.item;switch(t){case"E":return[r.join("."),n,"→",o];case"N":return[r.join("."),o];case"D":return[r.join(".")];case"A":return[r.join(".")+"["+i+"]",a];default:return[]}}function b(e,t,r,n){var o=c(e,t);try{n?r.groupCollapsed("diff"):r.group("diff")}catch(e){r.log("diff")}o?o.forEach(function(e){var t=e.kind,n=v(e);r.log.apply(r,["%c "+F[t].text,y(t)].concat(P(n)))}):r.log("—— no diff ——");try{r.groupEnd()}catch(e){r.log("—— diff end —— ")}}function m(e,t,r,n){switch("undefined"==typeof e?"undefined":N(e)){case"object":return"function"==typeof e[n]?e[n].apply(e,P(r)):e[n];case"function":return e(t);default:return e}}function w(e){var t=e.timestamp,r=e.duration;return function(e,n,o){var i=["action"];return i.push("%c"+String(e.type)),t&&i.push("%c@ "+n),r&&i.push("%c(in "+o.toFixed(2)+" ms)"),i.join(" ")}}function x(e,t){var r=t.logger,n=t.actionTransformer,o=t.titleFormatter,i=void 0===o?w(t):o,a=t.collapsed,f=t.colors,u=t.level,l=t.diff,c="undefined"==typeof t.titleFormatter;e.forEach(function(o,s){var d=o.started,p=o.startedTime,g=o.action,h=o.prevState,y=o.error,v=o.took,w=o.nextState,x=e[s+1];x&&(w=x.prevState,v=x.started-d);var S=n(g),k="function"==typeof a?a(function(){return w},g,o):a,j=D(p),E=f.title?"color: "+f.title(S)+";":"",A=["color: gray; font-weight: lighter;"];A.push(E),t.timestamp&&A.push("color: gray; font-weight: lighter;"),t.duration&&A.push("color: gray; font-weight: lighter;");var O=i(S,j,v);try{k?f.title&&c?r.groupCollapsed.apply(r,["%c "+O].concat(A)):r.groupCollapsed(O):f.title&&c?r.group.apply(r,["%c "+O].concat(A)):r.group(O)}catch(e){r.log(O)}var N=m(u,S,[h],"prevState"),P=m(u,S,[S],"action"),C=m(u,S,[y,h],"error"),F=m(u,S,[w],"nextState");if(N)if(f.prevState){var L="color: "+f.prevState(h)+"; font-weight: bold";r[N]("%c prev state",L,h)}else r[N]("prev state",h);if(P)if(f.action){var T="color: "+f.action(S)+"; font-weight: bold";r[P]("%c action    ",T,S)}else r[P]("action    ",S);if(y&&C)if(f.error){var M="color: "+f.error(y,h)+"; font-weight: bold;";r[C]("%c error     ",M,y)}else r[C]("error     ",y);if(F)if(f.nextState){var _="color: "+f.nextState(w)+"; font-weight: bold";r[F]("%c next state",_,w)}else r[F]("next state",w);l&&b(h,w,r,k);try{r.groupEnd()}catch(e){r.log("—— log end ——")}})}function S(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=Object.assign({},L,e),r=t.logger,n=t.stateTransformer,o=t.errorTransformer,i=t.predicate,a=t.logErrors,f=t.diffPredicate;if("undefined"==typeof r)return function(){return function(e){return function(t){return e(t)}}};if(e.getState&&e.dispatch)return console.error("[redux-logger] redux-logger not installed. Make sure to pass logger instance as middleware:\n// Logger with default options\nimport { logger } from 'redux-logger'\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n)\n// Or you can create your own logger with custom options http://bit.ly/redux-logger-options\nimport createLogger from 'redux-logger'\nconst logger = createLogger({\n  // ...options\n});\nconst store = createStore(\n  reducer,\n  applyMiddleware(logger)\n)\n"),function(){return function(e){return function(t){return e(t)}}};var u=[];return function(e){var r=e.getState;return function(e){return function(l){if("function"==typeof i&&!i(r,l))return e(l);var c={};u.push(c),c.started=O.now(),c.startedTime=new Date,c.prevState=n(r()),c.action=l;var s=void 0;if(a)try{s=e(l)}catch(e){c.error=o(e)}else s=e(l);c.took=O.now()-c.started,c.nextState=n(r());var d=t.diff&&"function"==typeof f?f(r,l):t.diff;if(x(u,Object.assign({},t,{diff:d})),u.length=0,c.error)throw c.error;return s}}}}var k,j,E=function(e,t){return new Array(t+1).join(e)},A=function(e,t){return E("0",t-e.toString().length)+e},D=function(e){return A(e.getHours(),2)+":"+A(e.getMinutes(),2)+":"+A(e.getSeconds(),2)+"."+A(e.getMilliseconds(),3)},O="undefined"!=typeof performance&&null!==performance&&"function"==typeof performance.now?performance:Date,N="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},P=function(e){if(Array.isArray(e)){for(var t=0,r=Array(e.length);t<e.length;t++)r[t]=e[t];return r}return Array.from(e)},C=[];k="object"===("undefined"==typeof __webpack_require__.g?"undefined":N(__webpack_require__.g))&&__webpack_require__.g?__webpack_require__.g:"undefined"!=typeof window?window:{},j=k.DeepDiff,j&&C.push(function(){"undefined"!=typeof j&&k.DeepDiff===c&&(k.DeepDiff=j,j=void 0)}),t(n,r),t(o,r),t(i,r),t(a,r),Object.defineProperties(c,{diff:{value:c,enumerable:!0},observableDiff:{value:l,enumerable:!0},applyDiff:{value:h,enumerable:!0},applyChange:{value:d,enumerable:!0},revertChange:{value:g,enumerable:!0},isConflict:{value:function(){return"undefined"!=typeof j},enumerable:!0},noConflict:{value:function(){return C&&(C.forEach(function(e){e()}),C=null),c},enumerable:!0}});var F={E:{color:"#2196F3",text:"CHANGED:"},N:{color:"#4CAF50",text:"ADDED:"},D:{color:"#F44336",text:"DELETED:"},A:{color:"#2196F3",text:"ARRAY:"}},L={level:"log",logger:console,logErrors:!0,collapsed:void 0,predicate:void 0,duration:!1,timestamp:!0,stateTransformer:function(e){return e},actionTransformer:function(e){return e},errorTransformer:function(e){return e},colors:{title:function(){return"inherit"},prevState:function(){return"#9E9E9E"},action:function(){return"#03A9F4"},nextState:function(){return"#4CAF50"},error:function(){return"#F20404"}},diff:!1,diffPredicate:void 0,transformer:void 0},T=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},t=e.dispatch,r=e.getState;return"function"==typeof t||"function"==typeof r?S()({dispatch:t,getState:r}):void console.error("\n[redux-logger v3] BREAKING CHANGE\n[redux-logger v3] Since 3.0.0 redux-logger exports by default logger with default settings.\n[redux-logger v3] Change\n[redux-logger v3] import createLogger from 'redux-logger'\n[redux-logger v3] to\n[redux-logger v3] import { createLogger } from 'redux-logger'\n")};e.defaults=L,e.createLogger=S,e.logger=T,e.default=T,Object.defineProperty(e,"__esModule",{value:!0})});
+
+
+/***/ }),
+
+/***/ "./node_modules/redux-thunk/es/index.js":
+/*!**********************************************!*\
+  !*** ./node_modules/redux-thunk/es/index.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/** A function that accepts a potential "extra argument" value to be injected later,
+ * and returns an instance of the thunk middleware that uses that value
+ */
+function createThunkMiddleware(extraArgument) {
+  // Standard Redux middleware definition pattern:
+  // See: https://redux.js.org/tutorials/fundamentals/part-4-store#writing-custom-middleware
+  var middleware = function middleware(_ref) {
+    var dispatch = _ref.dispatch,
+        getState = _ref.getState;
+    return function (next) {
+      return function (action) {
+        // The thunk middleware looks for any functions that were passed to `store.dispatch`.
+        // If this "action" is really a function, call it and return the result.
+        if (typeof action === 'function') {
+          // Inject the store's `dispatch` and `getState` methods, as well as any "extra arg"
+          return action(dispatch, getState, extraArgument);
+        } // Otherwise, pass the action down the middleware chain as usual
+
+
+        return next(action);
+      };
+    };
+  };
+
+  return middleware;
+}
+
+var thunk = createThunkMiddleware(); // Attach the factory function so users can create a customized version
+// with whatever "extra arg" they want to inject into their thunks
+
+thunk.withExtraArgument = createThunkMiddleware;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (thunk);
+
+/***/ }),
+
+/***/ "./node_modules/redux/es/redux.js":
+/*!****************************************!*\
+  !*** ./node_modules/redux/es/redux.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "__DO_NOT_USE__ActionTypes": () => (/* binding */ ActionTypes),
+/* harmony export */   "applyMiddleware": () => (/* binding */ applyMiddleware),
+/* harmony export */   "bindActionCreators": () => (/* binding */ bindActionCreators),
+/* harmony export */   "combineReducers": () => (/* binding */ combineReducers),
+/* harmony export */   "compose": () => (/* binding */ compose),
+/* harmony export */   "createStore": () => (/* binding */ createStore),
+/* harmony export */   "legacy_createStore": () => (/* binding */ legacy_createStore)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectSpread2 */ "./node_modules/@babel/runtime/helpers/esm/objectSpread2.js");
+
+
+/**
+ * Adapted from React: https://github.com/facebook/react/blob/master/packages/shared/formatProdErrorMessage.js
+ *
+ * Do not require this module directly! Use normal throw error calls. These messages will be replaced with error codes
+ * during build.
+ * @param {number} code
+ */
+function formatProdErrorMessage(code) {
+  return "Minified Redux error #" + code + "; visit https://redux.js.org/Errors?code=" + code + " for the full message or " + 'use the non-minified dev environment for full errors. ';
+}
+
+// Inlined version of the `symbol-observable` polyfill
+var $$observable = (function () {
+  return typeof Symbol === 'function' && Symbol.observable || '@@observable';
+})();
+
+/**
+ * These are private action types reserved by Redux.
+ * For any unknown actions, you must return the current state.
+ * If the current state is undefined, you must return the initial state.
+ * Do not reference these action types directly in your code.
+ */
+var randomString = function randomString() {
+  return Math.random().toString(36).substring(7).split('').join('.');
+};
+
+var ActionTypes = {
+  INIT: "@@redux/INIT" + randomString(),
+  REPLACE: "@@redux/REPLACE" + randomString(),
+  PROBE_UNKNOWN_ACTION: function PROBE_UNKNOWN_ACTION() {
+    return "@@redux/PROBE_UNKNOWN_ACTION" + randomString();
+  }
+};
+
+/**
+ * @param {any} obj The object to inspect.
+ * @returns {boolean} True if the argument appears to be a plain object.
+ */
+function isPlainObject(obj) {
+  if (typeof obj !== 'object' || obj === null) return false;
+  var proto = obj;
+
+  while (Object.getPrototypeOf(proto) !== null) {
+    proto = Object.getPrototypeOf(proto);
+  }
+
+  return Object.getPrototypeOf(obj) === proto;
+}
+
+// Inlined / shortened version of `kindOf` from https://github.com/jonschlinkert/kind-of
+function miniKindOf(val) {
+  if (val === void 0) return 'undefined';
+  if (val === null) return 'null';
+  var type = typeof val;
+
+  switch (type) {
+    case 'boolean':
+    case 'string':
+    case 'number':
+    case 'symbol':
+    case 'function':
+      {
+        return type;
+      }
+  }
+
+  if (Array.isArray(val)) return 'array';
+  if (isDate(val)) return 'date';
+  if (isError(val)) return 'error';
+  var constructorName = ctorName(val);
+
+  switch (constructorName) {
+    case 'Symbol':
+    case 'Promise':
+    case 'WeakMap':
+    case 'WeakSet':
+    case 'Map':
+    case 'Set':
+      return constructorName;
+  } // other
+
+
+  return type.slice(8, -1).toLowerCase().replace(/\s/g, '');
+}
+
+function ctorName(val) {
+  return typeof val.constructor === 'function' ? val.constructor.name : null;
+}
+
+function isError(val) {
+  return val instanceof Error || typeof val.message === 'string' && val.constructor && typeof val.constructor.stackTraceLimit === 'number';
+}
+
+function isDate(val) {
+  if (val instanceof Date) return true;
+  return typeof val.toDateString === 'function' && typeof val.getDate === 'function' && typeof val.setDate === 'function';
+}
+
+function kindOf(val) {
+  var typeOfVal = typeof val;
+
+  if (true) {
+    typeOfVal = miniKindOf(val);
+  }
+
+  return typeOfVal;
+}
+
+/**
+ * @deprecated
+ *
+ * **We recommend using the `configureStore` method
+ * of the `@reduxjs/toolkit` package**, which replaces `createStore`.
+ *
+ * Redux Toolkit is our recommended approach for writing Redux logic today,
+ * including store setup, reducers, data fetching, and more.
+ *
+ * **For more details, please read this Redux docs page:**
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * `configureStore` from Redux Toolkit is an improved version of `createStore` that
+ * simplifies setup and helps avoid common bugs.
+ *
+ * You should not be using the `redux` core package by itself today, except for learning purposes.
+ * The `createStore` method from the core `redux` package will not be removed, but we encourage
+ * all users to migrate to using Redux Toolkit for all Redux code.
+ *
+ * If you want to use `createStore` without this visual deprecation warning, use
+ * the `legacy_createStore` import instead:
+ *
+ * `import { legacy_createStore as createStore} from 'redux'`
+ *
+ */
+
+function createStore(reducer, preloadedState, enhancer) {
+  var _ref2;
+
+  if (typeof preloadedState === 'function' && typeof enhancer === 'function' || typeof enhancer === 'function' && typeof arguments[3] === 'function') {
+    throw new Error( false ? 0 : 'It looks like you are passing several store enhancers to ' + 'createStore(). This is not supported. Instead, compose them ' + 'together to a single function. See https://redux.js.org/tutorials/fundamentals/part-4-store#creating-a-store-with-enhancers for an example.');
+  }
+
+  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
+    enhancer = preloadedState;
+    preloadedState = undefined;
+  }
+
+  if (typeof enhancer !== 'undefined') {
+    if (typeof enhancer !== 'function') {
+      throw new Error( false ? 0 : "Expected the enhancer to be a function. Instead, received: '" + kindOf(enhancer) + "'");
+    }
+
+    return enhancer(createStore)(reducer, preloadedState);
+  }
+
+  if (typeof reducer !== 'function') {
+    throw new Error( false ? 0 : "Expected the root reducer to be a function. Instead, received: '" + kindOf(reducer) + "'");
+  }
+
+  var currentReducer = reducer;
+  var currentState = preloadedState;
+  var currentListeners = [];
+  var nextListeners = currentListeners;
+  var isDispatching = false;
+  /**
+   * This makes a shallow copy of currentListeners so we can use
+   * nextListeners as a temporary list while dispatching.
+   *
+   * This prevents any bugs around consumers calling
+   * subscribe/unsubscribe in the middle of a dispatch.
+   */
+
+  function ensureCanMutateNextListeners() {
+    if (nextListeners === currentListeners) {
+      nextListeners = currentListeners.slice();
+    }
+  }
+  /**
+   * Reads the state tree managed by the store.
+   *
+   * @returns {any} The current state tree of your application.
+   */
+
+
+  function getState() {
+    if (isDispatching) {
+      throw new Error( false ? 0 : 'You may not call store.getState() while the reducer is executing. ' + 'The reducer has already received the state as an argument. ' + 'Pass it down from the top reducer instead of reading it from the store.');
+    }
+
+    return currentState;
+  }
+  /**
+   * Adds a change listener. It will be called any time an action is dispatched,
+   * and some part of the state tree may potentially have changed. You may then
+   * call `getState()` to read the current state tree inside the callback.
+   *
+   * You may call `dispatch()` from a change listener, with the following
+   * caveats:
+   *
+   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
+   * If you subscribe or unsubscribe while the listeners are being invoked, this
+   * will not have any effect on the `dispatch()` that is currently in progress.
+   * However, the next `dispatch()` call, whether nested or not, will use a more
+   * recent snapshot of the subscription list.
+   *
+   * 2. The listener should not expect to see all state changes, as the state
+   * might have been updated multiple times during a nested `dispatch()` before
+   * the listener is called. It is, however, guaranteed that all subscribers
+   * registered before the `dispatch()` started will be called with the latest
+   * state by the time it exits.
+   *
+   * @param {Function} listener A callback to be invoked on every dispatch.
+   * @returns {Function} A function to remove this change listener.
+   */
+
+
+  function subscribe(listener) {
+    if (typeof listener !== 'function') {
+      throw new Error( false ? 0 : "Expected the listener to be a function. Instead, received: '" + kindOf(listener) + "'");
+    }
+
+    if (isDispatching) {
+      throw new Error( false ? 0 : 'You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api/store#subscribelistener for more details.');
+    }
+
+    var isSubscribed = true;
+    ensureCanMutateNextListeners();
+    nextListeners.push(listener);
+    return function unsubscribe() {
+      if (!isSubscribed) {
+        return;
+      }
+
+      if (isDispatching) {
+        throw new Error( false ? 0 : 'You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api/store#subscribelistener for more details.');
+      }
+
+      isSubscribed = false;
+      ensureCanMutateNextListeners();
+      var index = nextListeners.indexOf(listener);
+      nextListeners.splice(index, 1);
+      currentListeners = null;
+    };
+  }
+  /**
+   * Dispatches an action. It is the only way to trigger a state change.
+   *
+   * The `reducer` function, used to create the store, will be called with the
+   * current state tree and the given `action`. Its return value will
+   * be considered the **next** state of the tree, and the change listeners
+   * will be notified.
+   *
+   * The base implementation only supports plain object actions. If you want to
+   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+   * wrap your store creating function into the corresponding middleware. For
+   * example, see the documentation for the `redux-thunk` package. Even the
+   * middleware will eventually dispatch plain object actions using this method.
+   *
+   * @param {Object} action A plain object representing “what changed”. It is
+   * a good idea to keep actions serializable so you can record and replay user
+   * sessions, or use the time travelling `redux-devtools`. An action must have
+   * a `type` property which may not be `undefined`. It is a good idea to use
+   * string constants for action types.
+   *
+   * @returns {Object} For convenience, the same action object you dispatched.
+   *
+   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+   * return something else (for example, a Promise you can await).
+   */
+
+
+  function dispatch(action) {
+    if (!isPlainObject(action)) {
+      throw new Error( false ? 0 : "Actions must be plain objects. Instead, the actual type was: '" + kindOf(action) + "'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions. See https://redux.js.org/tutorials/fundamentals/part-4-store#middleware and https://redux.js.org/tutorials/fundamentals/part-6-async-logic#using-the-redux-thunk-middleware for examples.");
+    }
+
+    if (typeof action.type === 'undefined') {
+      throw new Error( false ? 0 : 'Actions may not have an undefined "type" property. You may have misspelled an action type string constant.');
+    }
+
+    if (isDispatching) {
+      throw new Error( false ? 0 : 'Reducers may not dispatch actions.');
+    }
+
+    try {
+      isDispatching = true;
+      currentState = currentReducer(currentState, action);
+    } finally {
+      isDispatching = false;
+    }
+
+    var listeners = currentListeners = nextListeners;
+
+    for (var i = 0; i < listeners.length; i++) {
+      var listener = listeners[i];
+      listener();
+    }
+
+    return action;
+  }
+  /**
+   * Replaces the reducer currently used by the store to calculate the state.
+   *
+   * You might need this if your app implements code splitting and you want to
+   * load some of the reducers dynamically. You might also need this if you
+   * implement a hot reloading mechanism for Redux.
+   *
+   * @param {Function} nextReducer The reducer for the store to use instead.
+   * @returns {void}
+   */
+
+
+  function replaceReducer(nextReducer) {
+    if (typeof nextReducer !== 'function') {
+      throw new Error( false ? 0 : "Expected the nextReducer to be a function. Instead, received: '" + kindOf(nextReducer));
+    }
+
+    currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
+    // Any reducers that existed in both the new and old rootReducer
+    // will receive the previous state. This effectively populates
+    // the new state tree with any relevant data from the old one.
+
+    dispatch({
+      type: ActionTypes.REPLACE
+    });
+  }
+  /**
+   * Interoperability point for observable/reactive libraries.
+   * @returns {observable} A minimal observable of state changes.
+   * For more information, see the observable proposal:
+   * https://github.com/tc39/proposal-observable
+   */
+
+
+  function observable() {
+    var _ref;
+
+    var outerSubscribe = subscribe;
+    return _ref = {
+      /**
+       * The minimal observable subscription method.
+       * @param {Object} observer Any object that can be used as an observer.
+       * The observer object should have a `next` method.
+       * @returns {subscription} An object with an `unsubscribe` method that can
+       * be used to unsubscribe the observable from the store, and prevent further
+       * emission of values from the observable.
+       */
+      subscribe: function subscribe(observer) {
+        if (typeof observer !== 'object' || observer === null) {
+          throw new Error( false ? 0 : "Expected the observer to be an object. Instead, received: '" + kindOf(observer) + "'");
+        }
+
+        function observeState() {
+          if (observer.next) {
+            observer.next(getState());
+          }
+        }
+
+        observeState();
+        var unsubscribe = outerSubscribe(observeState);
+        return {
+          unsubscribe: unsubscribe
+        };
+      }
+    }, _ref[$$observable] = function () {
+      return this;
+    }, _ref;
+  } // When a store is created, an "INIT" action is dispatched so that every
+  // reducer returns their initial state. This effectively populates
+  // the initial state tree.
+
+
+  dispatch({
+    type: ActionTypes.INIT
+  });
+  return _ref2 = {
+    dispatch: dispatch,
+    subscribe: subscribe,
+    getState: getState,
+    replaceReducer: replaceReducer
+  }, _ref2[$$observable] = observable, _ref2;
+}
+/**
+ * Creates a Redux store that holds the state tree.
+ *
+ * **We recommend using `configureStore` from the
+ * `@reduxjs/toolkit` package**, which replaces `createStore`:
+ * **https://redux.js.org/introduction/why-rtk-is-redux-today**
+ *
+ * The only way to change the data in the store is to call `dispatch()` on it.
+ *
+ * There should only be a single store in your app. To specify how different
+ * parts of the state tree respond to actions, you may combine several reducers
+ * into a single reducer function by using `combineReducers`.
+ *
+ * @param {Function} reducer A function that returns the next state tree, given
+ * the current state tree and the action to handle.
+ *
+ * @param {any} [preloadedState] The initial state. You may optionally specify it
+ * to hydrate the state from the server in universal apps, or to restore a
+ * previously serialized user session.
+ * If you use `combineReducers` to produce the root reducer function, this must be
+ * an object with the same shape as `combineReducers` keys.
+ *
+ * @param {Function} [enhancer] The store enhancer. You may optionally specify it
+ * to enhance the store with third-party capabilities such as middleware,
+ * time travel, persistence, etc. The only store enhancer that ships with Redux
+ * is `applyMiddleware()`.
+ *
+ * @returns {Store} A Redux store that lets you read the state, dispatch actions
+ * and subscribe to changes.
+ */
+
+var legacy_createStore = createStore;
+
+/**
+ * Prints a warning in the console if it exists.
+ *
+ * @param {String} message The warning message.
+ * @returns {void}
+ */
+function warning(message) {
+  /* eslint-disable no-console */
+  if (typeof console !== 'undefined' && typeof console.error === 'function') {
+    console.error(message);
+  }
+  /* eslint-enable no-console */
+
+
+  try {
+    // This error was thrown as a convenience so that if you enable
+    // "break on all exceptions" in your console,
+    // it would pause the execution at this line.
+    throw new Error(message);
+  } catch (e) {} // eslint-disable-line no-empty
+
+}
+
+function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+  var reducerKeys = Object.keys(reducers);
+  var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
+
+  if (reducerKeys.length === 0) {
+    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
+  }
+
+  if (!isPlainObject(inputState)) {
+    return "The " + argumentName + " has unexpected type of \"" + kindOf(inputState) + "\". Expected argument to be an object with the following " + ("keys: \"" + reducerKeys.join('", "') + "\"");
+  }
+
+  var unexpectedKeys = Object.keys(inputState).filter(function (key) {
+    return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
+  });
+  unexpectedKeys.forEach(function (key) {
+    unexpectedKeyCache[key] = true;
+  });
+  if (action && action.type === ActionTypes.REPLACE) return;
+
+  if (unexpectedKeys.length > 0) {
+    return "Unexpected " + (unexpectedKeys.length > 1 ? 'keys' : 'key') + " " + ("\"" + unexpectedKeys.join('", "') + "\" found in " + argumentName + ". ") + "Expected to find one of the known reducer keys instead: " + ("\"" + reducerKeys.join('", "') + "\". Unexpected keys will be ignored.");
+  }
+}
+
+function assertReducerShape(reducers) {
+  Object.keys(reducers).forEach(function (key) {
+    var reducer = reducers[key];
+    var initialState = reducer(undefined, {
+      type: ActionTypes.INIT
+    });
+
+    if (typeof initialState === 'undefined') {
+      throw new Error( false ? 0 : "The slice reducer for key \"" + key + "\" returned undefined during initialization. " + "If the state passed to the reducer is undefined, you must " + "explicitly return the initial state. The initial state may " + "not be undefined. If you don't want to set a value for this reducer, " + "you can use null instead of undefined.");
+    }
+
+    if (typeof reducer(undefined, {
+      type: ActionTypes.PROBE_UNKNOWN_ACTION()
+    }) === 'undefined') {
+      throw new Error( false ? 0 : "The slice reducer for key \"" + key + "\" returned undefined when probed with a random type. " + ("Don't try to handle '" + ActionTypes.INIT + "' or other actions in \"redux/*\" ") + "namespace. They are considered private. Instead, you must return the " + "current state for any unknown actions, unless it is undefined, " + "in which case you must return the initial state, regardless of the " + "action type. The initial state may not be undefined, but can be null.");
+    }
+  });
+}
+/**
+ * Turns an object whose values are different reducer functions, into a single
+ * reducer function. It will call every child reducer, and gather their results
+ * into a single state object, whose keys correspond to the keys of the passed
+ * reducer functions.
+ *
+ * @param {Object} reducers An object whose values correspond to different
+ * reducer functions that need to be combined into one. One handy way to obtain
+ * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+ * undefined for any action. Instead, they should return their initial state
+ * if the state passed to them was undefined, and the current state for any
+ * unrecognized action.
+ *
+ * @returns {Function} A reducer function that invokes every reducer inside the
+ * passed object, and builds a state object with the same shape.
+ */
+
+
+function combineReducers(reducers) {
+  var reducerKeys = Object.keys(reducers);
+  var finalReducers = {};
+
+  for (var i = 0; i < reducerKeys.length; i++) {
+    var key = reducerKeys[i];
+
+    if (true) {
+      if (typeof reducers[key] === 'undefined') {
+        warning("No reducer provided for key \"" + key + "\"");
+      }
+    }
+
+    if (typeof reducers[key] === 'function') {
+      finalReducers[key] = reducers[key];
+    }
+  }
+
+  var finalReducerKeys = Object.keys(finalReducers); // This is used to make sure we don't warn about the same
+  // keys multiple times.
+
+  var unexpectedKeyCache;
+
+  if (true) {
+    unexpectedKeyCache = {};
+  }
+
+  var shapeAssertionError;
+
+  try {
+    assertReducerShape(finalReducers);
+  } catch (e) {
+    shapeAssertionError = e;
+  }
+
+  return function combination(state, action) {
+    if (state === void 0) {
+      state = {};
+    }
+
+    if (shapeAssertionError) {
+      throw shapeAssertionError;
+    }
+
+    if (true) {
+      var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+
+      if (warningMessage) {
+        warning(warningMessage);
+      }
+    }
+
+    var hasChanged = false;
+    var nextState = {};
+
+    for (var _i = 0; _i < finalReducerKeys.length; _i++) {
+      var _key = finalReducerKeys[_i];
+      var reducer = finalReducers[_key];
+      var previousStateForKey = state[_key];
+      var nextStateForKey = reducer(previousStateForKey, action);
+
+      if (typeof nextStateForKey === 'undefined') {
+        var actionType = action && action.type;
+        throw new Error( false ? 0 : "When called with an action of type " + (actionType ? "\"" + String(actionType) + "\"" : '(unknown type)') + ", the slice reducer for key \"" + _key + "\" returned undefined. " + "To ignore an action, you must explicitly return the previous state. " + "If you want this reducer to hold no value, you can return null instead of undefined.");
+      }
+
+      nextState[_key] = nextStateForKey;
+      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+    }
+
+    hasChanged = hasChanged || finalReducerKeys.length !== Object.keys(state).length;
+    return hasChanged ? nextState : state;
+  };
+}
+
+function bindActionCreator(actionCreator, dispatch) {
+  return function () {
+    return dispatch(actionCreator.apply(this, arguments));
+  };
+}
+/**
+ * Turns an object whose values are action creators, into an object with the
+ * same keys, but with every function wrapped into a `dispatch` call so they
+ * may be invoked directly. This is just a convenience method, as you can call
+ * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+ *
+ * For convenience, you can also pass an action creator as the first argument,
+ * and get a dispatch wrapped function in return.
+ *
+ * @param {Function|Object} actionCreators An object whose values are action
+ * creator functions. One handy way to obtain it is to use ES6 `import * as`
+ * syntax. You may also pass a single function.
+ *
+ * @param {Function} dispatch The `dispatch` function available on your Redux
+ * store.
+ *
+ * @returns {Function|Object} The object mimicking the original object, but with
+ * every action creator wrapped into the `dispatch` call. If you passed a
+ * function as `actionCreators`, the return value will also be a single
+ * function.
+ */
+
+
+function bindActionCreators(actionCreators, dispatch) {
+  if (typeof actionCreators === 'function') {
+    return bindActionCreator(actionCreators, dispatch);
+  }
+
+  if (typeof actionCreators !== 'object' || actionCreators === null) {
+    throw new Error( false ? 0 : "bindActionCreators expected an object or a function, but instead received: '" + kindOf(actionCreators) + "'. " + "Did you write \"import ActionCreators from\" instead of \"import * as ActionCreators from\"?");
+  }
+
+  var boundActionCreators = {};
+
+  for (var key in actionCreators) {
+    var actionCreator = actionCreators[key];
+
+    if (typeof actionCreator === 'function') {
+      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+    }
+  }
+
+  return boundActionCreators;
+}
+
+/**
+ * Composes single-argument functions from right to left. The rightmost
+ * function can take multiple arguments as it provides the signature for
+ * the resulting composite function.
+ *
+ * @param {...Function} funcs The functions to compose.
+ * @returns {Function} A function obtained by composing the argument functions
+ * from right to left. For example, compose(f, g, h) is identical to doing
+ * (...args) => f(g(h(...args))).
+ */
+function compose() {
+  for (var _len = arguments.length, funcs = new Array(_len), _key = 0; _key < _len; _key++) {
+    funcs[_key] = arguments[_key];
+  }
+
+  if (funcs.length === 0) {
+    return function (arg) {
+      return arg;
+    };
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+
+  return funcs.reduce(function (a, b) {
+    return function () {
+      return a(b.apply(void 0, arguments));
+    };
+  });
+}
+
+/**
+ * Creates a store enhancer that applies middleware to the dispatch method
+ * of the Redux store. This is handy for a variety of tasks, such as expressing
+ * asynchronous actions in a concise manner, or logging every action payload.
+ *
+ * See `redux-thunk` package as an example of the Redux middleware.
+ *
+ * Because middleware is potentially asynchronous, this should be the first
+ * store enhancer in the composition chain.
+ *
+ * Note that each middleware will be given the `dispatch` and `getState` functions
+ * as named arguments.
+ *
+ * @param {...Function} middlewares The middleware chain to be applied.
+ * @returns {Function} A store enhancer applying the middleware.
+ */
+
+function applyMiddleware() {
+  for (var _len = arguments.length, middlewares = new Array(_len), _key = 0; _key < _len; _key++) {
+    middlewares[_key] = arguments[_key];
+  }
+
+  return function (createStore) {
+    return function () {
+      var store = createStore.apply(void 0, arguments);
+
+      var _dispatch = function dispatch() {
+        throw new Error( false ? 0 : 'Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
+      };
+
+      var middlewareAPI = {
+        getState: store.getState,
+        dispatch: function dispatch() {
+          return _dispatch.apply(void 0, arguments);
+        }
+      };
+      var chain = middlewares.map(function (middleware) {
+        return middleware(middlewareAPI);
+      });
+      _dispatch = compose.apply(void 0, chain)(store.dispatch);
+      return (0,_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__["default"])((0,_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__["default"])({}, store), {}, {
+        dispatch: _dispatch
+      });
+    };
+  };
+}
+
+/*
+ * This is a dummy function to check if the function name has been altered by minification.
+ * If the function has been minified and NODE_ENV !== 'production', warn the user.
+ */
+
+function isCrushed() {}
+
+if ( true && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+  warning('You are currently using minified code outside of NODE_ENV === "production". ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or setting mode to production in webpack (https://webpack.js.org/concepts/mode/) ' + 'to ensure you have the correct code for your production build.');
+}
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/resolve-pathname/esm/resolve-pathname.js":
 /*!***************************************************************!*\
   !*** ./node_modules/resolve-pathname/esm/resolve-pathname.js ***!
@@ -43047,6 +46035,2477 @@ function resolvePathname(to, from) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (resolvePathname);
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/dist/index.js":
+/*!************************************************!*\
+  !*** ./node_modules/rss-to-json/dist/index.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+(()=>{"use strict";var e={306:(e,t,r)=>{Object.defineProperty(t,"__esModule",{value:!0});const a=r(861),i=r(167);t.default=async(e,t)=>{var r,n;if(!/(^http(s?):\/\/[^\s$.?#].[^\s]*)/i.test(e))return null;const{data:s}=await(0,i.default)(e,t),u=new a.XMLParser({attributeNamePrefix:"",textNodeName:"$text",ignoreAttributes:!1}).parse(s);let o=u.rss&&u.rss.channel?u.rss.channel:u.feed;Array.isArray(o)&&(o=o[0]);const d={title:null!==(r=o.title)&&void 0!==r?r:"",description:null!==(n=o.description)&&void 0!==n?n:"",link:o.link&&o.link.href?o.link.href:o.link,image:o.image?o.image.url:o["itunes:image"]?o["itunes:image"].href:"",category:o.category||[],items:[]};let l=o.item||o.entry||[];l&&!Array.isArray(l)&&(l=[l]);for(let e=0;e<l.length;e++){const t=l[e],r={},a={id:t.guid&&t.guid.$t?t.guid.$t:t.id,title:t.title&&t.title.$text?t.title.$text:t.title,description:t.summary&&t.summary.$text?t.summary.$text:t.description,link:t.link&&t.link.href?t.link.href:t.link,author:t.author&&t.author.name?t.author.name:t["dc:creator"],published:t.created?Date.parse(t.created):t.pubDate?Date.parse(t.pubDate):Date.now(),created:t.updated?Date.parse(t.updated):t.pubDate?Date.parse(t.pubDate):t.created?Date.parse(t.created):Date.now(),category:t.category||[],content:t.content&&t.content.$text?t.content.$text:t["content:encoded"],enclosures:t.enclosure?Array.isArray(t.enclosure)?t.enclosure:[t.enclosure]:[]};["content:encoded","podcast:transcript","itunes:summary","itunes:author","itunes:explicit","itunes:duration","itunes:season","itunes:episode","itunes:episodeType","itunes:image"].forEach((e=>{t[e]&&(a[e.replace(":","_")]=t[e])})),t["media:thumbnail"]&&(Object.assign(r,{thumbnail:t["media:thumbnail"]}),a.enclosures.push(t["media:thumbnail"])),t["media:content"]&&(Object.assign(r,{thumbnail:t["media:content"]}),a.enclosures.push(t["media:content"])),t["media:group"]&&(t["media:group"]["media:title"]&&(a.title=t["media:group"]["media:title"]),t["media:group"]["media:description"]&&(a.description=t["media:group"]["media:description"]),t["media:group"]["media:thumbnail"]&&a.enclosures.push(t["media:group"]["media:thumbnail"].url)),Object.assign(a,{media:r}),d.items.push(a)}return d}},167:e=>{e.exports=__webpack_require__(/*! axios */ "./node_modules/rss-to-json/node_modules/axios/index.js")},861:e=>{e.exports=__webpack_require__(/*! fast-xml-parser */ "./node_modules/fast-xml-parser/src/fxp.js")}},t={};function r(a){var i=t[a];if(void 0!==i)return i.exports;var n=t[a]={exports:{}};return e[a](n,n.exports,r),n.exports}var a={};(()=>{var e=a;Object.defineProperty(e,"__esModule",{value:!0}),e.Parse=e.parse=void 0;const t=r(306);e.parse=t.default;const i=t.default;e.Parse=i,e.default=t.default})();var i=exports;for(var n in a)i[n]=a[n];a.__esModule&&Object.defineProperty(i,"__esModule",{value:!0})})();
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/index.js ***!
+  \**************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__(/*! ./lib/axios */ "./node_modules/rss-to-json/node_modules/axios/lib/axios.js");
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/adapters/xhr.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/adapters/xhr.js ***!
+  \*************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+var settle = __webpack_require__(/*! ./../core/settle */ "./node_modules/rss-to-json/node_modules/axios/lib/core/settle.js");
+var cookies = __webpack_require__(/*! ./../helpers/cookies */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/cookies.js");
+var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/buildURL.js");
+var buildFullPath = __webpack_require__(/*! ../core/buildFullPath */ "./node_modules/rss-to-json/node_modules/axios/lib/core/buildFullPath.js");
+var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/parseHeaders.js");
+var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/isURLSameOrigin.js");
+var transitionalDefaults = __webpack_require__(/*! ../defaults/transitional */ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/transitional.js");
+var AxiosError = __webpack_require__(/*! ../core/AxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js");
+var CanceledError = __webpack_require__(/*! ../cancel/CanceledError */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CanceledError.js");
+var parseProtocol = __webpack_require__(/*! ../helpers/parseProtocol */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/parseProtocol.js");
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+    var responseType = config.responseType;
+    var onCanceled;
+    function done() {
+      if (config.cancelToken) {
+        config.cancelToken.unsubscribe(onCanceled);
+      }
+
+      if (config.signal) {
+        config.signal.removeEventListener('abort', onCanceled);
+      }
+    }
+
+    if (utils.isFormData(requestData) && utils.isStandardBrowserEnv()) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password ? unescape(encodeURIComponent(config.auth.password)) : '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    var fullPath = buildFullPath(config.baseURL, config.url);
+
+    request.open(config.method.toUpperCase(), buildURL(fullPath, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    function onloadend() {
+      if (!request) {
+        return;
+      }
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !responseType || responseType === 'text' ||  responseType === 'json' ?
+        request.responseText : request.response;
+      var response = {
+        data: responseData,
+        status: request.status,
+        statusText: request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(function _resolve(value) {
+        resolve(value);
+        done();
+      }, function _reject(err) {
+        reject(err);
+        done();
+      }, response);
+
+      // Clean up request
+      request = null;
+    }
+
+    if ('onloadend' in request) {
+      // Use onloadend if available
+      request.onloadend = onloadend;
+    } else {
+      // Listen for ready state to emulate onloadend
+      request.onreadystatechange = function handleLoad() {
+        if (!request || request.readyState !== 4) {
+          return;
+        }
+
+        // The request errored out and we didn't get a response, this will be
+        // handled by onerror instead
+        // With one exception: request that using file: protocol, most browsers
+        // will return status as 0 even though it's a successful request
+        if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+          return;
+        }
+        // readystate handler is calling before onerror or ontimeout handlers,
+        // so we should call onloadend on the next 'tick'
+        setTimeout(onloadend);
+      };
+    }
+
+    // Handle browser request cancellation (as opposed to a manual cancellation)
+    request.onabort = function handleAbort() {
+      if (!request) {
+        return;
+      }
+
+      reject(new AxiosError('Request aborted', AxiosError.ECONNABORTED, config, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(new AxiosError('Network Error', AxiosError.ERR_NETWORK, config, request, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      var timeoutErrorMessage = config.timeout ? 'timeout of ' + config.timeout + 'ms exceeded' : 'timeout exceeded';
+      var transitional = config.transitional || transitionalDefaults;
+      if (config.timeoutErrorMessage) {
+        timeoutErrorMessage = config.timeoutErrorMessage;
+      }
+      reject(new AxiosError(
+        timeoutErrorMessage,
+        transitional.clarifyTimeoutError ? AxiosError.ETIMEDOUT : AxiosError.ECONNABORTED,
+        config,
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(fullPath)) && config.xsrfCookieName ?
+        cookies.read(config.xsrfCookieName) :
+        undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (!utils.isUndefined(config.withCredentials)) {
+      request.withCredentials = !!config.withCredentials;
+    }
+
+    // Add responseType to request if needed
+    if (responseType && responseType !== 'json') {
+      request.responseType = config.responseType;
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken || config.signal) {
+      // Handle cancellation
+      // eslint-disable-next-line func-names
+      onCanceled = function(cancel) {
+        if (!request) {
+          return;
+        }
+        reject(!cancel || (cancel && cancel.type) ? new CanceledError() : cancel);
+        request.abort();
+        request = null;
+      };
+
+      config.cancelToken && config.cancelToken.subscribe(onCanceled);
+      if (config.signal) {
+        config.signal.aborted ? onCanceled() : config.signal.addEventListener('abort', onCanceled);
+      }
+    }
+
+    if (!requestData) {
+      requestData = null;
+    }
+
+    var protocol = parseProtocol(fullPath);
+
+    if (protocol && [ 'http', 'https', 'file' ].indexOf(protocol) === -1) {
+      reject(new AxiosError('Unsupported protocol ' + protocol + ':', AxiosError.ERR_BAD_REQUEST, config));
+      return;
+    }
+
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/axios.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/axios.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/bind.js");
+var Axios = __webpack_require__(/*! ./core/Axios */ "./node_modules/rss-to-json/node_modules/axios/lib/core/Axios.js");
+var mergeConfig = __webpack_require__(/*! ./core/mergeConfig */ "./node_modules/rss-to-json/node_modules/axios/lib/core/mergeConfig.js");
+var defaults = __webpack_require__(/*! ./defaults */ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/index.js");
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  // Factory for creating new instances
+  instance.create = function create(instanceConfig) {
+    return createInstance(mergeConfig(defaultConfig, instanceConfig));
+  };
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Expose Cancel & CancelToken
+axios.CanceledError = __webpack_require__(/*! ./cancel/CanceledError */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CanceledError.js");
+axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CancelToken.js");
+axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/isCancel.js");
+axios.VERSION = (__webpack_require__(/*! ./env/data */ "./node_modules/rss-to-json/node_modules/axios/lib/env/data.js").version);
+axios.toFormData = __webpack_require__(/*! ./helpers/toFormData */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/toFormData.js");
+
+// Expose AxiosError class
+axios.AxiosError = __webpack_require__(/*! ../lib/core/AxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js");
+
+// alias for CanceledError for backward compatibility
+axios.Cancel = axios.CanceledError;
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(/*! ./helpers/spread */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/spread.js");
+
+// Expose isAxiosError
+axios.isAxiosError = __webpack_require__(/*! ./helpers/isAxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/isAxiosError.js");
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports["default"] = axios;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CancelToken.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/cancel/CancelToken.js ***!
+  \*******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var CanceledError = __webpack_require__(/*! ./CanceledError */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CanceledError.js");
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+
+  // eslint-disable-next-line func-names
+  this.promise.then(function(cancel) {
+    if (!token._listeners) return;
+
+    var i;
+    var l = token._listeners.length;
+
+    for (i = 0; i < l; i++) {
+      token._listeners[i](cancel);
+    }
+    token._listeners = null;
+  });
+
+  // eslint-disable-next-line func-names
+  this.promise.then = function(onfulfilled) {
+    var _resolve;
+    // eslint-disable-next-line func-names
+    var promise = new Promise(function(resolve) {
+      token.subscribe(resolve);
+      _resolve = resolve;
+    }).then(onfulfilled);
+
+    promise.cancel = function reject() {
+      token.unsubscribe(_resolve);
+    };
+
+    return promise;
+  };
+
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new CanceledError(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `CanceledError` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Subscribe to the cancel signal
+ */
+
+CancelToken.prototype.subscribe = function subscribe(listener) {
+  if (this.reason) {
+    listener(this.reason);
+    return;
+  }
+
+  if (this._listeners) {
+    this._listeners.push(listener);
+  } else {
+    this._listeners = [listener];
+  }
+};
+
+/**
+ * Unsubscribe from the cancel signal
+ */
+
+CancelToken.prototype.unsubscribe = function unsubscribe(listener) {
+  if (!this._listeners) {
+    return;
+  }
+  var index = this._listeners.indexOf(listener);
+  if (index !== -1) {
+    this._listeners.splice(index, 1);
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CanceledError.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/cancel/CanceledError.js ***!
+  \*********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var AxiosError = __webpack_require__(/*! ../core/AxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js");
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+/**
+ * A `CanceledError` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function CanceledError(message) {
+  // eslint-disable-next-line no-eq-null,eqeqeq
+  AxiosError.call(this, message == null ? 'canceled' : message, AxiosError.ERR_CANCELED);
+  this.name = 'CanceledError';
+}
+
+utils.inherits(CanceledError, AxiosError, {
+  __CANCEL__: true
+});
+
+module.exports = CanceledError;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/isCancel.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/cancel/isCancel.js ***!
+  \****************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/Axios.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/Axios.js ***!
+  \***********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+var buildURL = __webpack_require__(/*! ../helpers/buildURL */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/buildURL.js");
+var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ "./node_modules/rss-to-json/node_modules/axios/lib/core/InterceptorManager.js");
+var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ "./node_modules/rss-to-json/node_modules/axios/lib/core/dispatchRequest.js");
+var mergeConfig = __webpack_require__(/*! ./mergeConfig */ "./node_modules/rss-to-json/node_modules/axios/lib/core/mergeConfig.js");
+var buildFullPath = __webpack_require__(/*! ./buildFullPath */ "./node_modules/rss-to-json/node_modules/axios/lib/core/buildFullPath.js");
+var validator = __webpack_require__(/*! ../helpers/validator */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/validator.js");
+
+var validators = validator.validators;
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(configOrUrl, config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof configOrUrl === 'string') {
+    config = config || {};
+    config.url = configOrUrl;
+  } else {
+    config = configOrUrl || {};
+  }
+
+  config = mergeConfig(this.defaults, config);
+
+  // Set config.method
+  if (config.method) {
+    config.method = config.method.toLowerCase();
+  } else if (this.defaults.method) {
+    config.method = this.defaults.method.toLowerCase();
+  } else {
+    config.method = 'get';
+  }
+
+  var transitional = config.transitional;
+
+  if (transitional !== undefined) {
+    validator.assertOptions(transitional, {
+      silentJSONParsing: validators.transitional(validators.boolean),
+      forcedJSONParsing: validators.transitional(validators.boolean),
+      clarifyTimeoutError: validators.transitional(validators.boolean)
+    }, false);
+  }
+
+  // filter out skipped interceptors
+  var requestInterceptorChain = [];
+  var synchronousRequestInterceptors = true;
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    if (typeof interceptor.runWhen === 'function' && interceptor.runWhen(config) === false) {
+      return;
+    }
+
+    synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
+
+    requestInterceptorChain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  var responseInterceptorChain = [];
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    responseInterceptorChain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  var promise;
+
+  if (!synchronousRequestInterceptors) {
+    var chain = [dispatchRequest, undefined];
+
+    Array.prototype.unshift.apply(chain, requestInterceptorChain);
+    chain = chain.concat(responseInterceptorChain);
+
+    promise = Promise.resolve(config);
+    while (chain.length) {
+      promise = promise.then(chain.shift(), chain.shift());
+    }
+
+    return promise;
+  }
+
+
+  var newConfig = config;
+  while (requestInterceptorChain.length) {
+    var onFulfilled = requestInterceptorChain.shift();
+    var onRejected = requestInterceptorChain.shift();
+    try {
+      newConfig = onFulfilled(newConfig);
+    } catch (error) {
+      onRejected(error);
+      break;
+    }
+  }
+
+  try {
+    promise = dispatchRequest(newConfig);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+
+  while (responseInterceptorChain.length) {
+    promise = promise.then(responseInterceptorChain.shift(), responseInterceptorChain.shift());
+  }
+
+  return promise;
+};
+
+Axios.prototype.getUri = function getUri(config) {
+  config = mergeConfig(this.defaults, config);
+  var fullPath = buildFullPath(config.baseURL, config.url);
+  return buildURL(fullPath, config.params, config.paramsSerializer);
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(mergeConfig(config || {}, {
+      method: method,
+      url: url,
+      data: (config || {}).data
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+
+  function generateHTTPMethod(isForm) {
+    return function httpMethod(url, data, config) {
+      return this.request(mergeConfig(config || {}, {
+        method: method,
+        headers: isForm ? {
+          'Content-Type': 'multipart/form-data'
+        } : {},
+        url: url,
+        data: data
+      }));
+    };
+  }
+
+  Axios.prototype[method] = generateHTTPMethod();
+
+  Axios.prototype[method + 'Form'] = generateHTTPMethod(true);
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [config] The config.
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+function AxiosError(message, code, config, request, response) {
+  Error.call(this);
+  this.message = message;
+  this.name = 'AxiosError';
+  code && (this.code = code);
+  config && (this.config = config);
+  request && (this.request = request);
+  response && (this.response = response);
+}
+
+utils.inherits(AxiosError, Error, {
+  toJSON: function toJSON() {
+    return {
+      // Standard
+      message: this.message,
+      name: this.name,
+      // Microsoft
+      description: this.description,
+      number: this.number,
+      // Mozilla
+      fileName: this.fileName,
+      lineNumber: this.lineNumber,
+      columnNumber: this.columnNumber,
+      stack: this.stack,
+      // Axios
+      config: this.config,
+      code: this.code,
+      status: this.response && this.response.status ? this.response.status : null
+    };
+  }
+});
+
+var prototype = AxiosError.prototype;
+var descriptors = {};
+
+[
+  'ERR_BAD_OPTION_VALUE',
+  'ERR_BAD_OPTION',
+  'ECONNABORTED',
+  'ETIMEDOUT',
+  'ERR_NETWORK',
+  'ERR_FR_TOO_MANY_REDIRECTS',
+  'ERR_DEPRECATED',
+  'ERR_BAD_RESPONSE',
+  'ERR_BAD_REQUEST',
+  'ERR_CANCELED'
+// eslint-disable-next-line func-names
+].forEach(function(code) {
+  descriptors[code] = {value: code};
+});
+
+Object.defineProperties(AxiosError, descriptors);
+Object.defineProperty(prototype, 'isAxiosError', {value: true});
+
+// eslint-disable-next-line func-names
+AxiosError.from = function(error, code, config, request, response, customProps) {
+  var axiosError = Object.create(prototype);
+
+  utils.toFlatObject(error, axiosError, function filter(obj) {
+    return obj !== Error.prototype;
+  });
+
+  AxiosError.call(axiosError, error.message, code, config, request, response);
+
+  axiosError.name = error.name;
+
+  customProps && Object.assign(axiosError, customProps);
+
+  return axiosError;
+};
+
+module.exports = AxiosError;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/InterceptorManager.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/InterceptorManager.js ***!
+  \************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected, options) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected,
+    synchronous: options ? options.synchronous : false,
+    runWhen: options ? options.runWhen : null
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/buildFullPath.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/buildFullPath.js ***!
+  \*******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var isAbsoluteURL = __webpack_require__(/*! ../helpers/isAbsoluteURL */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/isAbsoluteURL.js");
+var combineURLs = __webpack_require__(/*! ../helpers/combineURLs */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/combineURLs.js");
+
+/**
+ * Creates a new URL by combining the baseURL with the requestedURL,
+ * only when the requestedURL is not already an absolute URL.
+ * If the requestURL is absolute, this function returns the requestedURL untouched.
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} requestedURL Absolute or relative URL to combine
+ * @returns {string} The combined full path
+ */
+module.exports = function buildFullPath(baseURL, requestedURL) {
+  if (baseURL && !isAbsoluteURL(requestedURL)) {
+    return combineURLs(baseURL, requestedURL);
+  }
+  return requestedURL;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/dispatchRequest.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/dispatchRequest.js ***!
+  \*********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+var transformData = __webpack_require__(/*! ./transformData */ "./node_modules/rss-to-json/node_modules/axios/lib/core/transformData.js");
+var isCancel = __webpack_require__(/*! ../cancel/isCancel */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/isCancel.js");
+var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/index.js");
+var CanceledError = __webpack_require__(/*! ../cancel/CanceledError */ "./node_modules/rss-to-json/node_modules/axios/lib/cancel/CanceledError.js");
+
+/**
+ * Throws a `CanceledError` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+
+  if (config.signal && config.signal.aborted) {
+    throw new CanceledError();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData.call(
+    config,
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData.call(
+      config,
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData.call(
+          config,
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/mergeConfig.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/mergeConfig.js ***!
+  \*****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+/**
+ * Config-specific merge-function which creates a new config-object
+ * by merging two configuration objects together.
+ *
+ * @param {Object} config1
+ * @param {Object} config2
+ * @returns {Object} New object resulting from merging config2 to config1
+ */
+module.exports = function mergeConfig(config1, config2) {
+  // eslint-disable-next-line no-param-reassign
+  config2 = config2 || {};
+  var config = {};
+
+  function getMergedValue(target, source) {
+    if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
+      return utils.merge(target, source);
+    } else if (utils.isPlainObject(source)) {
+      return utils.merge({}, source);
+    } else if (utils.isArray(source)) {
+      return source.slice();
+    }
+    return source;
+  }
+
+  // eslint-disable-next-line consistent-return
+  function mergeDeepProperties(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      return getMergedValue(config1[prop], config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      return getMergedValue(undefined, config1[prop]);
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  function valueFromConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      return getMergedValue(undefined, config2[prop]);
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  function defaultToConfig2(prop) {
+    if (!utils.isUndefined(config2[prop])) {
+      return getMergedValue(undefined, config2[prop]);
+    } else if (!utils.isUndefined(config1[prop])) {
+      return getMergedValue(undefined, config1[prop]);
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  function mergeDirectKeys(prop) {
+    if (prop in config2) {
+      return getMergedValue(config1[prop], config2[prop]);
+    } else if (prop in config1) {
+      return getMergedValue(undefined, config1[prop]);
+    }
+  }
+
+  var mergeMap = {
+    'url': valueFromConfig2,
+    'method': valueFromConfig2,
+    'data': valueFromConfig2,
+    'baseURL': defaultToConfig2,
+    'transformRequest': defaultToConfig2,
+    'transformResponse': defaultToConfig2,
+    'paramsSerializer': defaultToConfig2,
+    'timeout': defaultToConfig2,
+    'timeoutMessage': defaultToConfig2,
+    'withCredentials': defaultToConfig2,
+    'adapter': defaultToConfig2,
+    'responseType': defaultToConfig2,
+    'xsrfCookieName': defaultToConfig2,
+    'xsrfHeaderName': defaultToConfig2,
+    'onUploadProgress': defaultToConfig2,
+    'onDownloadProgress': defaultToConfig2,
+    'decompress': defaultToConfig2,
+    'maxContentLength': defaultToConfig2,
+    'maxBodyLength': defaultToConfig2,
+    'beforeRedirect': defaultToConfig2,
+    'transport': defaultToConfig2,
+    'httpAgent': defaultToConfig2,
+    'httpsAgent': defaultToConfig2,
+    'cancelToken': defaultToConfig2,
+    'socketPath': defaultToConfig2,
+    'responseEncoding': defaultToConfig2,
+    'validateStatus': mergeDirectKeys
+  };
+
+  utils.forEach(Object.keys(config1).concat(Object.keys(config2)), function computeConfigValue(prop) {
+    var merge = mergeMap[prop] || mergeDeepProperties;
+    var configValue = merge(prop);
+    (utils.isUndefined(configValue) && merge !== mergeDirectKeys) || (config[prop] = configValue);
+  });
+
+  return config;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/settle.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/settle.js ***!
+  \************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var AxiosError = __webpack_require__(/*! ./AxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js");
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(new AxiosError(
+      'Request failed with status code ' + response.status,
+      [AxiosError.ERR_BAD_REQUEST, AxiosError.ERR_BAD_RESPONSE][Math.floor(response.status / 100) - 4],
+      response.config,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/core/transformData.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/core/transformData.js ***!
+  \*******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+var defaults = __webpack_require__(/*! ../defaults */ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/index.js");
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  var context = this || defaults;
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn.call(context, data, headers);
+  });
+
+  return data;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/index.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/defaults/index.js ***!
+  \***************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+var normalizeHeaderName = __webpack_require__(/*! ../helpers/normalizeHeaderName */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/normalizeHeaderName.js");
+var AxiosError = __webpack_require__(/*! ../core/AxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js");
+var transitionalDefaults = __webpack_require__(/*! ./transitional */ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/transitional.js");
+var toFormData = __webpack_require__(/*! ../helpers/toFormData */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/toFormData.js");
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(/*! ../adapters/xhr */ "./node_modules/rss-to-json/node_modules/axios/lib/adapters/xhr.js");
+  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(/*! ../adapters/http */ "./node_modules/rss-to-json/node_modules/axios/lib/adapters/xhr.js");
+  }
+  return adapter;
+}
+
+function stringifySafely(rawValue, parser, encoder) {
+  if (utils.isString(rawValue)) {
+    try {
+      (parser || JSON.parse)(rawValue);
+      return utils.trim(rawValue);
+    } catch (e) {
+      if (e.name !== 'SyntaxError') {
+        throw e;
+      }
+    }
+  }
+
+  return (encoder || JSON.stringify)(rawValue);
+}
+
+var defaults = {
+
+  transitional: transitionalDefaults,
+
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Accept');
+    normalizeHeaderName(headers, 'Content-Type');
+
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+
+    var isObjectPayload = utils.isObject(data);
+    var contentType = headers && headers['Content-Type'];
+
+    var isFileList;
+
+    if ((isFileList = utils.isFileList(data)) || (isObjectPayload && contentType === 'multipart/form-data')) {
+      var _FormData = this.env && this.env.FormData;
+      return toFormData(isFileList ? {'files[]': data} : data, _FormData && new _FormData());
+    } else if (isObjectPayload || contentType === 'application/json') {
+      setContentTypeIfUnset(headers, 'application/json');
+      return stringifySafely(data);
+    }
+
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    var transitional = this.transitional || defaults.transitional;
+    var silentJSONParsing = transitional && transitional.silentJSONParsing;
+    var forcedJSONParsing = transitional && transitional.forcedJSONParsing;
+    var strictJSONParsing = !silentJSONParsing && this.responseType === 'json';
+
+    if (strictJSONParsing || (forcedJSONParsing && utils.isString(data) && data.length)) {
+      try {
+        return JSON.parse(data);
+      } catch (e) {
+        if (strictJSONParsing) {
+          if (e.name === 'SyntaxError') {
+            throw AxiosError.from(e, AxiosError.ERR_BAD_RESPONSE, this, null, this.response);
+          }
+          throw e;
+        }
+      }
+    }
+
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+  maxBodyLength: -1,
+
+  env: {
+    FormData: __webpack_require__(/*! ./env/FormData */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/null.js")
+  },
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  },
+
+  headers: {
+    common: {
+      'Accept': 'application/json, text/plain, */*'
+    }
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/defaults/transitional.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/defaults/transitional.js ***!
+  \**********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = {
+  silentJSONParsing: true,
+  forcedJSONParsing: true,
+  clarifyTimeoutError: false
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/env/data.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/env/data.js ***!
+  \*********************************************************************/
+/***/ ((module) => {
+
+module.exports = {
+  "version": "0.27.2"
+};
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/bind.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/bind.js ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/buildURL.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/buildURL.js ***!
+  \*****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    var hashmarkIndex = url.indexOf('#');
+    if (hashmarkIndex !== -1) {
+      url = url.slice(0, hashmarkIndex);
+    }
+
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/combineURLs.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/combineURLs.js ***!
+  \********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/cookies.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/cookies.js ***!
+  \****************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+    (function standardBrowserEnv() {
+      return {
+        write: function write(name, value, expires, path, domain, secure) {
+          var cookie = [];
+          cookie.push(name + '=' + encodeURIComponent(value));
+
+          if (utils.isNumber(expires)) {
+            cookie.push('expires=' + new Date(expires).toGMTString());
+          }
+
+          if (utils.isString(path)) {
+            cookie.push('path=' + path);
+          }
+
+          if (utils.isString(domain)) {
+            cookie.push('domain=' + domain);
+          }
+
+          if (secure === true) {
+            cookie.push('secure');
+          }
+
+          document.cookie = cookie.join('; ');
+        },
+
+        read: function read(name) {
+          var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+          return (match ? decodeURIComponent(match[3]) : null);
+        },
+
+        remove: function remove(name) {
+          this.write(name, '', Date.now() - 86400000);
+        }
+      };
+    })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+    (function nonStandardBrowserEnv() {
+      return {
+        write: function write() {},
+        read: function read() { return null; },
+        remove: function remove() {}
+      };
+    })()
+);
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/isAbsoluteURL.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/isAbsoluteURL.js ***!
+  \**********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/isAxiosError.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/isAxiosError.js ***!
+  \*********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+/**
+ * Determines whether the payload is an error thrown by Axios
+ *
+ * @param {*} payload The value to test
+ * @returns {boolean} True if the payload is an error thrown by Axios, otherwise false
+ */
+module.exports = function isAxiosError(payload) {
+  return utils.isObject(payload) && (payload.isAxiosError === true);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/isURLSameOrigin.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/isURLSameOrigin.js ***!
+  \************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+    (function standardBrowserEnv() {
+      var msie = /(msie|trident)/i.test(navigator.userAgent);
+      var urlParsingNode = document.createElement('a');
+      var originURL;
+
+      /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+      function resolveURL(url) {
+        var href = url;
+
+        if (msie) {
+        // IE needs attribute set twice to normalize properties
+          urlParsingNode.setAttribute('href', href);
+          href = urlParsingNode.href;
+        }
+
+        urlParsingNode.setAttribute('href', href);
+
+        // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+        return {
+          href: urlParsingNode.href,
+          protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+          host: urlParsingNode.host,
+          search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+          hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+          hostname: urlParsingNode.hostname,
+          port: urlParsingNode.port,
+          pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+            urlParsingNode.pathname :
+            '/' + urlParsingNode.pathname
+        };
+      }
+
+      originURL = resolveURL(window.location.href);
+
+      /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+      return function isURLSameOrigin(requestURL) {
+        var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+        return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+      };
+    })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+    (function nonStandardBrowserEnv() {
+      return function isURLSameOrigin() {
+        return true;
+      };
+    })()
+);
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/normalizeHeaderName.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/normalizeHeaderName.js ***!
+  \****************************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/null.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/null.js ***!
+  \*************************************************************************/
+/***/ ((module) => {
+
+// eslint-disable-next-line strict
+module.exports = null;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/parseHeaders.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/parseHeaders.js ***!
+  \*********************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ./../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/parseProtocol.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/parseProtocol.js ***!
+  \**********************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+module.exports = function parseProtocol(url) {
+  var match = /^([-+\w]{1,25})(:?\/\/|:)/.exec(url);
+  return match && match[1] || '';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/spread.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/spread.js ***!
+  \***************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/toFormData.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/toFormData.js ***!
+  \*******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var utils = __webpack_require__(/*! ../utils */ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js");
+
+/**
+ * Convert a data object to FormData
+ * @param {Object} obj
+ * @param {?Object} [formData]
+ * @returns {Object}
+ **/
+
+function toFormData(obj, formData) {
+  // eslint-disable-next-line no-param-reassign
+  formData = formData || new FormData();
+
+  var stack = [];
+
+  function convertValue(value) {
+    if (value === null) return '';
+
+    if (utils.isDate(value)) {
+      return value.toISOString();
+    }
+
+    if (utils.isArrayBuffer(value) || utils.isTypedArray(value)) {
+      return typeof Blob === 'function' ? new Blob([value]) : Buffer.from(value);
+    }
+
+    return value;
+  }
+
+  function build(data, parentKey) {
+    if (utils.isPlainObject(data) || utils.isArray(data)) {
+      if (stack.indexOf(data) !== -1) {
+        throw Error('Circular reference detected in ' + parentKey);
+      }
+
+      stack.push(data);
+
+      utils.forEach(data, function each(value, key) {
+        if (utils.isUndefined(value)) return;
+        var fullKey = parentKey ? parentKey + '.' + key : key;
+        var arr;
+
+        if (value && !parentKey && typeof value === 'object') {
+          if (utils.endsWith(key, '{}')) {
+            // eslint-disable-next-line no-param-reassign
+            value = JSON.stringify(value);
+          } else if (utils.endsWith(key, '[]') && (arr = utils.toArray(value))) {
+            // eslint-disable-next-line func-names
+            arr.forEach(function(el) {
+              !utils.isUndefined(el) && formData.append(fullKey, convertValue(el));
+            });
+            return;
+          }
+        }
+
+        build(value, fullKey);
+      });
+
+      stack.pop();
+    } else {
+      formData.append(parentKey, convertValue(data));
+    }
+  }
+
+  build(obj);
+
+  return formData;
+}
+
+module.exports = toFormData;
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/validator.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/helpers/validator.js ***!
+  \******************************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var VERSION = (__webpack_require__(/*! ../env/data */ "./node_modules/rss-to-json/node_modules/axios/lib/env/data.js").version);
+var AxiosError = __webpack_require__(/*! ../core/AxiosError */ "./node_modules/rss-to-json/node_modules/axios/lib/core/AxiosError.js");
+
+var validators = {};
+
+// eslint-disable-next-line func-names
+['object', 'boolean', 'number', 'function', 'string', 'symbol'].forEach(function(type, i) {
+  validators[type] = function validator(thing) {
+    return typeof thing === type || 'a' + (i < 1 ? 'n ' : ' ') + type;
+  };
+});
+
+var deprecatedWarnings = {};
+
+/**
+ * Transitional option validator
+ * @param {function|boolean?} validator - set to false if the transitional option has been removed
+ * @param {string?} version - deprecated version / removed since version
+ * @param {string?} message - some message with additional info
+ * @returns {function}
+ */
+validators.transitional = function transitional(validator, version, message) {
+  function formatMessage(opt, desc) {
+    return '[Axios v' + VERSION + '] Transitional option \'' + opt + '\'' + desc + (message ? '. ' + message : '');
+  }
+
+  // eslint-disable-next-line func-names
+  return function(value, opt, opts) {
+    if (validator === false) {
+      throw new AxiosError(
+        formatMessage(opt, ' has been removed' + (version ? ' in ' + version : '')),
+        AxiosError.ERR_DEPRECATED
+      );
+    }
+
+    if (version && !deprecatedWarnings[opt]) {
+      deprecatedWarnings[opt] = true;
+      // eslint-disable-next-line no-console
+      console.warn(
+        formatMessage(
+          opt,
+          ' has been deprecated since v' + version + ' and will be removed in the near future'
+        )
+      );
+    }
+
+    return validator ? validator(value, opt, opts) : true;
+  };
+};
+
+/**
+ * Assert object's properties type
+ * @param {object} options
+ * @param {object} schema
+ * @param {boolean?} allowUnknown
+ */
+
+function assertOptions(options, schema, allowUnknown) {
+  if (typeof options !== 'object') {
+    throw new AxiosError('options must be an object', AxiosError.ERR_BAD_OPTION_VALUE);
+  }
+  var keys = Object.keys(options);
+  var i = keys.length;
+  while (i-- > 0) {
+    var opt = keys[i];
+    var validator = schema[opt];
+    if (validator) {
+      var value = options[opt];
+      var result = value === undefined || validator(value, opt, options);
+      if (result !== true) {
+        throw new AxiosError('option ' + opt + ' must be ' + result, AxiosError.ERR_BAD_OPTION_VALUE);
+      }
+      continue;
+    }
+    if (allowUnknown !== true) {
+      throw new AxiosError('Unknown option ' + opt, AxiosError.ERR_BAD_OPTION);
+    }
+  }
+}
+
+module.exports = {
+  assertOptions: assertOptions,
+  validators: validators
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/rss-to-json/node_modules/axios/lib/utils.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rss-to-json/node_modules/axios/lib/utils.js ***!
+  \******************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+
+
+var bind = __webpack_require__(/*! ./helpers/bind */ "./node_modules/rss-to-json/node_modules/axios/lib/helpers/bind.js");
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+// eslint-disable-next-line func-names
+var kindOf = (function(cache) {
+  // eslint-disable-next-line func-names
+  return function(thing) {
+    var str = toString.call(thing);
+    return cache[str] || (cache[str] = str.slice(8, -1).toLowerCase());
+  };
+})(Object.create(null));
+
+function kindOfTest(type) {
+  type = type.toLowerCase();
+  return function isKindOf(thing) {
+    return kindOf(thing) === type;
+  };
+}
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return Array.isArray(val);
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is a Buffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Buffer, otherwise false
+ */
+function isBuffer(val) {
+  return val !== null && !isUndefined(val) && val.constructor !== null && !isUndefined(val.constructor)
+    && typeof val.constructor.isBuffer === 'function' && val.constructor.isBuffer(val);
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+var isArrayBuffer = kindOfTest('ArrayBuffer');
+
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (isArrayBuffer(val.buffer));
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a plain Object
+ *
+ * @param {Object} val The value to test
+ * @return {boolean} True if value is a plain Object, otherwise false
+ */
+function isPlainObject(val) {
+  if (kindOf(val) !== 'object') {
+    return false;
+  }
+
+  var prototype = Object.getPrototypeOf(val);
+  return prototype === null || prototype === Object.prototype;
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+var isDate = kindOfTest('Date');
+
+/**
+ * Determine if a value is a File
+ *
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+var isFile = kindOfTest('File');
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+var isBlob = kindOfTest('Blob');
+
+/**
+ * Determine if a value is a FileList
+ *
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+var isFileList = kindOfTest('FileList');
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} thing The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(thing) {
+  var pattern = '[object FormData]';
+  return thing && (
+    (typeof FormData === 'function' && thing instanceof FormData) ||
+    toString.call(thing) === pattern ||
+    (isFunction(thing.toString) && thing.toString() === pattern)
+  );
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ * @function
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+var isURLSearchParams = kindOfTest('URLSearchParams');
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ * nativescript
+ *  navigator.product -> 'NativeScript' or 'NS'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && (navigator.product === 'ReactNative' ||
+                                           navigator.product === 'NativeScript' ||
+                                           navigator.product === 'NS')) {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (isPlainObject(result[key]) && isPlainObject(val)) {
+      result[key] = merge(result[key], val);
+    } else if (isPlainObject(val)) {
+      result[key] = merge({}, val);
+    } else if (isArray(val)) {
+      result[key] = val.slice();
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+/**
+ * Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+ *
+ * @param {string} content with BOM
+ * @return {string} content value without BOM
+ */
+function stripBOM(content) {
+  if (content.charCodeAt(0) === 0xFEFF) {
+    content = content.slice(1);
+  }
+  return content;
+}
+
+/**
+ * Inherit the prototype methods from one constructor into another
+ * @param {function} constructor
+ * @param {function} superConstructor
+ * @param {object} [props]
+ * @param {object} [descriptors]
+ */
+
+function inherits(constructor, superConstructor, props, descriptors) {
+  constructor.prototype = Object.create(superConstructor.prototype, descriptors);
+  constructor.prototype.constructor = constructor;
+  props && Object.assign(constructor.prototype, props);
+}
+
+/**
+ * Resolve object with deep prototype chain to a flat object
+ * @param {Object} sourceObj source object
+ * @param {Object} [destObj]
+ * @param {Function} [filter]
+ * @returns {Object}
+ */
+
+function toFlatObject(sourceObj, destObj, filter) {
+  var props;
+  var i;
+  var prop;
+  var merged = {};
+
+  destObj = destObj || {};
+
+  do {
+    props = Object.getOwnPropertyNames(sourceObj);
+    i = props.length;
+    while (i-- > 0) {
+      prop = props[i];
+      if (!merged[prop]) {
+        destObj[prop] = sourceObj[prop];
+        merged[prop] = true;
+      }
+    }
+    sourceObj = Object.getPrototypeOf(sourceObj);
+  } while (sourceObj && (!filter || filter(sourceObj, destObj)) && sourceObj !== Object.prototype);
+
+  return destObj;
+}
+
+/*
+ * determines whether a string ends with the characters of a specified string
+ * @param {String} str
+ * @param {String} searchString
+ * @param {Number} [position= 0]
+ * @returns {boolean}
+ */
+function endsWith(str, searchString, position) {
+  str = String(str);
+  if (position === undefined || position > str.length) {
+    position = str.length;
+  }
+  position -= searchString.length;
+  var lastIndex = str.indexOf(searchString, position);
+  return lastIndex !== -1 && lastIndex === position;
+}
+
+
+/**
+ * Returns new array from array like object
+ * @param {*} [thing]
+ * @returns {Array}
+ */
+function toArray(thing) {
+  if (!thing) return null;
+  var i = thing.length;
+  if (isUndefined(i)) return null;
+  var arr = new Array(i);
+  while (i-- > 0) {
+    arr[i] = thing[i];
+  }
+  return arr;
+}
+
+// eslint-disable-next-line func-names
+var isTypedArray = (function(TypedArray) {
+  // eslint-disable-next-line func-names
+  return function(thing) {
+    return TypedArray && thing instanceof TypedArray;
+  };
+})(typeof Uint8Array !== 'undefined' && Object.getPrototypeOf(Uint8Array));
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isPlainObject: isPlainObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim,
+  stripBOM: stripBOM,
+  inherits: inherits,
+  toFlatObject: toFlatObject,
+  kindOf: kindOf,
+  kindOfTest: kindOfTest,
+  endsWith: endsWith,
+  toArray: toArray,
+  isTypedArray: isTypedArray,
+  isFileList: isFileList
+};
 
 
 /***/ }),
@@ -44312,6 +49771,140 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/strnum/strnum.js":
+/*!***************************************!*\
+  !*** ./node_modules/strnum/strnum.js ***!
+  \***************************************/
+/***/ ((module) => {
+
+const hexRegex = /^[-+]?0x[a-fA-F0-9]+$/;
+const numRegex = /^([\-\+])?(0*)(\.[0-9]+([eE]\-?[0-9]+)?|[0-9]+(\.[0-9]+([eE]\-?[0-9]+)?)?)$/;
+// const octRegex = /0x[a-z0-9]+/;
+// const binRegex = /0x[a-z0-9]+/;
+
+
+//polyfill
+if (!Number.parseInt && window.parseInt) {
+    Number.parseInt = window.parseInt;
+}
+if (!Number.parseFloat && window.parseFloat) {
+    Number.parseFloat = window.parseFloat;
+}
+
+  
+const consider = {
+    hex :  true,
+    leadingZeros: true,
+    decimalPoint: "\.",
+    eNotation: true
+    //skipLike: /regex/
+};
+
+function toNumber(str, options = {}){
+    // const options = Object.assign({}, consider);
+    // if(opt.leadingZeros === false){
+    //     options.leadingZeros = false;
+    // }else if(opt.hex === false){
+    //     options.hex = false;
+    // }
+
+    options = Object.assign({}, consider, options );
+    if(!str || typeof str !== "string" ) return str;
+    
+    let trimmedStr  = str.trim();
+    // if(trimmedStr === "0.0") return 0;
+    // else if(trimmedStr === "+0.0") return 0;
+    // else if(trimmedStr === "-0.0") return -0;
+
+    if(options.skipLike !== undefined && options.skipLike.test(trimmedStr)) return str;
+    else if (options.hex && hexRegex.test(trimmedStr)) {
+        return Number.parseInt(trimmedStr, 16);
+    // } else if (options.parseOct && octRegex.test(str)) {
+    //     return Number.parseInt(val, 8);
+    // }else if (options.parseBin && binRegex.test(str)) {
+    //     return Number.parseInt(val, 2);
+    }else{
+        //separate negative sign, leading zeros, and rest number
+        const match = numRegex.exec(trimmedStr);
+        if(match){
+            const sign = match[1];
+            const leadingZeros = match[2];
+            let numTrimmedByZeros = trimZeros(match[3]); //complete num without leading zeros
+            //trim ending zeros for floating number
+            
+            const eNotation = match[4] || match[6];
+            if(!options.leadingZeros && leadingZeros.length > 0 && sign && trimmedStr[2] !== ".") return str; //-0123
+            else if(!options.leadingZeros && leadingZeros.length > 0 && !sign && trimmedStr[1] !== ".") return str; //0123
+            else{//no leading zeros or leading zeros are allowed
+                const num = Number(trimmedStr);
+                const numStr = "" + num;
+                if(numStr.search(/[eE]/) !== -1){ //given number is long and parsed to eNotation
+                    if(options.eNotation) return num;
+                    else return str;
+                }else if(eNotation){ //given number has enotation
+                    if(options.eNotation) return num;
+                    else return str;
+                }else if(trimmedStr.indexOf(".") !== -1){ //floating number
+                    // const decimalPart = match[5].substr(1);
+                    // const intPart = trimmedStr.substr(0,trimmedStr.indexOf("."));
+
+                    
+                    // const p = numStr.indexOf(".");
+                    // const givenIntPart = numStr.substr(0,p);
+                    // const givenDecPart = numStr.substr(p+1);
+                    if(numStr === "0" && (numTrimmedByZeros === "") ) return num; //0.0
+                    else if(numStr === numTrimmedByZeros) return num; //0.456. 0.79000
+                    else if( sign && numStr === "-"+numTrimmedByZeros) return num;
+                    else return str;
+                }
+                
+                if(leadingZeros){
+                    // if(numTrimmedByZeros === numStr){
+                    //     if(options.leadingZeros) return num;
+                    //     else return str;
+                    // }else return str;
+                    if(numTrimmedByZeros === numStr) return num;
+                    else if(sign+numTrimmedByZeros === numStr) return num;
+                    else return str;
+                }
+
+                if(trimmedStr === numStr) return num;
+                else if(trimmedStr === sign+numStr) return num;
+                // else{
+                //     //number with +/- sign
+                //     trimmedStr.test(/[-+][0-9]);
+
+                // }
+                return str;
+            }
+            // else if(!eNotation && trimmedStr && trimmedStr !== Number(trimmedStr) ) return str;
+            
+        }else{ //non-numeric string
+            return str;
+        }
+    }
+}
+
+/**
+ * 
+ * @param {string} numStr without leading zeros
+ * @returns 
+ */
+function trimZeros(numStr){
+    if(numStr && numStr.indexOf(".") !== -1){//float
+        numStr = numStr.replace(/0+$/, ""); //remove ending zeros
+        if(numStr === ".")  numStr = "0";
+        else if(numStr[0] === ".")  numStr = "0"+numStr;
+        else if(numStr[numStr.length-1] === ".")  numStr = numStr.substr(0,numStr.length-1);
+        return numStr;
+    }
+    return numStr;
+}
+module.exports = toNumber
+
+
+/***/ }),
+
 /***/ "./node_modules/tiny-warning/dist/tiny-warning.esm.js":
 /*!************************************************************!*\
   !*** ./node_modules/tiny-warning/dist/tiny-warning.esm.js ***!
@@ -44719,6 +50312,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/objectSpread2.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _objectSpread2)
+/* harmony export */ });
+/* harmony import */ var _defineProperty_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./defineProperty.js */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    enumerableOnly && (symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    })), keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = null != arguments[i] ? arguments[i] : {};
+    i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+      (0,_defineProperty_js__WEBPACK_IMPORTED_MODULE_0__["default"])(target, key, source[key]);
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+      Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+    });
+  }
+  return target;
 }
 
 /***/ }),
@@ -62289,10 +67919,10 @@ function invariant(condition, message) {
 
 /***/ }),
 
-/***/ "./back_channel_feed.json":
-/*!********************************!*\
-  !*** ./back_channel_feed.json ***!
-  \********************************/
+/***/ "./data/back_channel_feed.json":
+/*!*************************************!*\
+  !*** ./data/back_channel_feed.json ***!
+  \*************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -62300,14 +67930,25 @@ module.exports = JSON.parse('{"channel":{"title":{"__cdata":"Backchannel - Mediu
 
 /***/ }),
 
-/***/ "./economist_feed.json":
-/*!*****************************!*\
-  !*** ./economist_feed.json ***!
-  \*****************************/
+/***/ "./data/economist_feed.json":
+/*!**********************************!*\
+  !*** ./data/economist_feed.json ***!
+  \**********************************/
 /***/ ((module) => {
 
 "use strict";
 module.exports = JSON.parse('{"channel":{"bookmarked":false,"title":{"__cdata":"The Economist - Medium"},"description":{"__cdata":"Insight and opinion on international news, politics, business, finance, science, technology, books and arts - Medium"},"link":["https://medium.economist.com?source=rss----ae7c30c8cbcc---4",{"_href":"https://medium.economist.com/feed","_rel":"self","_type":"application/rss+xml"},{"_href":"http://medium.superfeedr.com","_rel":"hub"}],"image":{"url":"https://cdn-images-1.medium.com/proxy/1*TGH72Nnw24QL3iV9IOm4VA.png","title":"The Economist - Medium","link":["https://medium.economist.com?source=rss----ae7c30c8cbcc---4"]},"generator":"Medium","lastBuildDate":"Tue, 18 Oct 2022 01:00:21 GMT","webMaster":{"__cdata":"yourfriends@medium.com"},"item":[{"bookmarked":false,"id":10,"title":{"__cdata":"Measuring the true toll of the pandemic"},"link":["https://medium.economist.com/measuring-the-true-toll-of-the-pandemic-fa7e003b3ff4?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/fa7e003b3ff4"},"category":[{"__cdata":"data-visualization"},{"__cdata":"coronavirus"},{"__cdata":"journalism"},{"__cdata":"covid19"},{"__cdata":"data-journalism"}],"creator":{"__cdata":"James Tozer"},"pubDate":"Fri, 24 Apr 2020 17:05:41 GMT","updated":{"__text":"2020-04-24T17:08:11.240Z"},"encoded":{"__cdata":"<h4><em>How The Economist measures excess deaths caused by covid-19</em></h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/731/0*wrwUoVP5A5rsmmdv\\" /></figure><p>One of the grim ironies of the covid-19 pandemic is that the world has shown an unprecedented interest in data — and yet there has never been so much uncertainty around official statistics. Facebook and Twitter have become catalogues of terrifying charts, as people around the globe have tried to work out how quickly the SARS-CoV-2 virus is spreading. Meanwhile, academics and journalists have come up with lots of inventive ways to quantify the impact of the pandemic. <em>The Economist</em> has, for example, published analyses of <a href=\\"https://www.economist.com/graphic-detail/2020/03/07/tourism-flows-and-death-rates-suggest-covid-19-is-being-under-reported\\">tourist flows</a>, <a href=\\"https://www.economist.com/graphic-detail/2020/03/14/foot-traffic-has-fallen-sharply-in-cities-with-big-coronavirus-outbreaks\\">footfall in major global cities</a> and <a href=\\"https://www.economist.com/graphic-detail/2020/04/18/how-the-internet-has-changed-during-lockdowns\\">internet usage</a>.</p><p>Yet we still don’t know the numbers that matter most. Because countries have different testing capabilities, and many carriers show no symptoms, we don’t know how many people the virus has infected. More worryingly, we don’t even know exactly how many people it has killed. As I <a href=\\"https://www.economist.com/graphic-detail/2020/04/03/covid-19s-death-toll-appears-higher-than-official-figures-suggest\\">reported in early April</a>, the official covid-19 tolls in many countries exclude victims who were not tested before passing away. It often takes several days to establish and report the cause of death, creating a lag in the data. And if hospitals are overwhelmed, people with other conditions might not get the intensive care they need to survive. As a result, the numbers of deceased that get read out each night on the news are smaller than the true number of fatalities that the virus has already caused.</p><p>During medical crises such as this one, a better way to measure mortality is to look at a region’s “excess deaths”: the number of people who have died of all causes, compared with the average for the same period in previous years. I have been using two approaches to do this. The first is to take publicly available data about mortality, produced regularly by a handful of statistical bureaus, and estimate how many more people have died than usual in a selection of places. The second is to use figures from <a href=\\"https://www.euromomo.eu/\\">EuroMOMO</a>, a network of epidemiologists in 24 European countries, which covers 350m people in its weekly reports. As the pandemic continues, I will update all of these datasets on <a href=\\"https://www.economist.com/graphic-detail/2020/04/16/tracking-covid-19-excess-deaths-across-countries\\">our excess-mortality tracker, which is available free to all readers</a>.</p><h4><strong>How I calculated The Economist’s estimates</strong></h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/589/0*jY0k0vjTDHwv4chu\\" /><figcaption><em>For each country or region, we have compared excess deaths with official covid-19 figures</em></figcaption></figure><p>One of the biggest challenges when it comes to measuring the spread of the virus is that every country collects its data differently. This is particularly true for the official covid-19 figures. For example, France has conducted a considerable amount of testing in care-homes, and includes fatalities from such institutions in its daily tolls, whereas almost all of the Netherlands’ reported deaths have occurred in hospitals.</p><p>Yet the data about deaths from all causes, which might seem more straightforward to collect, also vary in quality and frequency across countries. Spain’s Carlos III Institute, its national epidemiology centre, is publishing <a href=\\"https://momo.isciii.es/public/momo/dashboard/momo_dashboard.html#ccaa\\">daily figures for each region</a> — but these have a large lag, and are increased retrospectively when newer data come in (see chart below). By contrast, Britain’s Office for National Statistics produces <a href=\\"https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/datasets/weeklyprovisionalfiguresondeathsregisteredinenglandandwales\\">a weekly total of the number of death certificates registered in its system</a>, which are not revised in future. So the comparisons between countries are not entirely apples-to-apples. We have also had to use a simple method for our baseline of “expected deaths”: an average for the same week in previous years (ideally the past five years, but sometimes two or three, depending on availability).</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/0*Ra5cOexTmK7rG77q\\" /><figcaption><em>Spain’s daily data on total deaths are often revised retrospectively</em></figcaption></figure><p>Moreover, some countries have reported only partial mortality data, which cover a non-random selection of regions or victims. In <a href=\\"https://turkiye.gov.tr/istanbul-buyuksehir-belediyesi-vefat-sorgulama\\">Istanbul</a> and <a href=\\"https://pertamananpemakaman.jakarta.go.id/v140/t15\\">Jakarta</a>, the two non-Western places currently in our tracker, I am relying on tallies of the number of people who have been buried, as reported by local departments. These figures will not pick up everybody who has died, but they are still much higher than the official covid-19 tolls. Turkey does not even give regular breakdowns of covid-19 deaths by region, so we had to estimate that Istanbul had half of the national share, based on a report from April 1st. Given how slowly many developing countries publish their all-cause mortality data, I will probably have to use a similar approach to find numbers in South America, Africa, Asia and the Middle East.</p><p>Even some rich nations do not have complete data. Italy’s National Institute of Statistics (ISTAT) has released <a href=\\"https://www.istat.it/it/archivio/240401\\">figures on all deaths</a> for just 1,700 of the country’s 7,900 municipalities (or <em>comuni</em>) — only the ones that have both shown at least a 20% increase this year and claim to have accurate records. This makes it impossible to come up with a national tally of excess deaths in the European country that was hit hardest. However, because these <em>comuni </em>cover 7.2m of the 10m people in Lombardy, the worst-affected Italian region, I was able to produce an estimate for that area. I found <a href=\\"https://www.arcgis.com/home/webmap/viewer.html?url=https://services1.arcgis.com/XannvQVnsM1hoZyv/ArcGIS/rest/services/COMUNI_COVID19/FeatureServer&amp;source=sd\\">a snapshot map</a> of official covid-19 deaths for those <em>comuni</em> at the end of March, and used that to predict what share of Lombardy’s deaths these 7.2m people suffered each week.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/622/0*O4ABWgsvJevc04LX\\" /><figcaption><em>Our estimate of total and covid-19 deaths in Lombardy, based on the available comuni</em></figcaption></figure><p>All of this data-cleaning is fiddly and time-consuming, especially because the underlying spreadsheets are in different formats and languages. Whenever new data are published, I check them carefully, in case the definitions have changed. <a href=\\"https://github.com/nychealth/coronavirus-data/blob/master/probable-confirmed-dod.csv\\">New York’s official death toll</a>, for example, has started to include people who “probably” died of covid-19, according to the symptoms on their death certificates. To make this process more organised, I wrote a script in R, the programming language used most often by data journalists at <em>The Economist</em>, to do the cleaning for me. It is about 1,000 lines long, and spits out CSV files in the same format for each country. Those go into a Github repository, which <a href=\\"https://twitter.com/martgnz\\">Martín González</a>, one of our brilliant interactive journalists, uses to make the dynamic charts for our tracker. We hope that, at some point, once we have made the code presentable, to make this resource publicly available — keep checking <a href=\\"https://github.com/TheEconomist\\">our GitHub</a>.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/813/0*ABZyUpi55xJcItaL\\" /><figcaption><em>I’ve used an R script to clean the raw data files from each country, often in a foreign language!</em></figcaption></figure><h4><strong>How EuroMOMO comes up with its estimates</strong></h4><p>Although I have been able to find mortality numbers for many European countries, not all of them make these data publicly available in a timely fashion. Germany, for example, has only released <a href=\\"https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Sterbefaelle-Lebenserwartung/sterbefallzahlen.html\\">nationwide figures up to March 13th</a> (at the time of writing), since like Italy it struggles to coordinate lots of regional offices.</p><p>To get around this, I’ve collaborated with EuroMOMO’s epidemiologists. They collect mortality data on a weekly basis across Europe, which we will include on our tracker. And while they don’t break down the absolute numbers of fatalities by country, they do provide a trend chart for each member state <a href=\\"https://www.euromomo.eu/graphs-and-maps/#z-scores-by-country\\">on their website</a>.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/786/0*B2zkeyFdjzfM22TH\\" /><figcaption><em>EuroMOMO’s data show that covid-19 has far surpassed even the worst flu seasons</em></figcaption></figure><p>In this respect, EuroMOMO is a unique resource. No other continent has such a coordinated system. The United States has a <a href=\\"https://gis.cdc.gov/grasp/fluview/mortality.html\\">“Pneumonia and Influenza Mortality Surveillance” tool</a>, which publishes weekly total deaths for each state. But states take months to update their figures, which is why we have only included the city of New York in our tracker so far.</p><p>While working with EuroMOMO, I spoke to Lasse Skafte Vestergaard, to find out more about how the data are collected and what the limitations might be. Lasse coordinates the network, and helps put together the bulletin that the group publishes each Thursday. He is also an epidemiologist at Denmark’s national institute for infectious disease, and has specialised in influenza, malaria and parasitology.</p><p><strong>JT: Lasse, your organisation is the only one that tracks excess mortality across an entire continent. How did this come about?</strong></p><p>LSV: EuroMOMO’s network was set up in response to the global influenza pandemic in 2009, to ensure early detection of future public health events. Currently we have 28 partner institutions across 24 countries and regions. We also have representatives from the European Centre for Disease Prevention and Control (ECDC) and the World Health Organization (WHO) Regional Office for Europe, who both support the network activities and our hub financially, participate in technical discussions, and help our active strategy to expand geographical coverage, especially in Eastern Europe. For example, Ukraine has recently started to provide monthly data to the hub. One of the great strengths of our approach has been its consistency and close collaboration between participating countries, running week after week, year after year. Putting together the national data from all of them adds power to detect smaller changes than what individual countries may immediately see.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/797/0*xbzBbWD9lcQaqpqC\\" /><figcaption><em>Deaths among people aged 15–64 have risen significantly, as well as those among over 65s</em></figcaption></figure><p><strong>JT: How comprehensive are your numbers?</strong></p><p>LSV: Our data come from national or regional statistical offices, and are typically based on information on deaths recorded in civil registers. Overall, our sample covers a substantial proportion of the European population, with more than 350 million people. However, the fraction covered varies quite a lot between countries, from 95–100% in many to only 15–20% in others. This all depends on local administrative systems and political decisions.</p><p><strong>JT: Are there any limitations that people interpreting the numbers should be aware of?</strong></p><p>First of all, we are providing mortality estimates, based on certain statistical models and assumptions, not the exact numbers of deaths. There will always be some level of uncertainty around them. Secondly, the coverage in some countries is only for a few selected regions or cities, for example in Germany and Italy. Since we are looking at national-level estimates, the observed figures may not adequately detect much higher mortality levels within smaller parts of a country. Finally, even the best quality reporting is not fully complete, and there are always a few days or weeks of delay. We apply an adjustment function in the statistical algorithms, but still, the estimates provided for the most recent weeks must be read with caution.</p><p><strong>JT: Some readers might look at EuroMOMO’s charts and think that the death toll from covid-19 is no worse than from some of the recent flu seasons. How would you respond?</strong></p><p>LSV: Given the dramatic mortality signals we are already seeing, especially in some parts of Europe, we can conclude that this pandemic is not just another flu — not at all. It is striking to see large variation, from extremely high excesses in one country to normal levels in neighbouring ones. We will later have to evaluate the effect of the various societal preventive measures, initiated with different speeds and levels of coverage. Then we can conclude what should be recommended in terms of preparedness for future pandemics.</p><p>We don’t yet know how long we will keep updating <em>The Economist</em>’s tracker. If the pandemic surges and then abates over several months, as countries go into and out of periods of lockdown, then excess mortality figures will be an important measure of how well social-distancing policies are working, and when they need to be enforced. I will keep digging away at official reports and spreadsheets in various languages, and expanding our ever-more tangled R script. If any readers spot data that we could use, or corrections that we need to make to the existing numbers, those would be very helpful — and I would be happy to hear about them at <a href=\\"mailto:jamestozer@economist.com\\">jamestozer@economist.com</a>.</p><p><a href=\\"https://twitter.com/J_CD_T\\"><em>James Tozer</em></a><em> is a data journalist at </em><a href=\\"https://www.economist.com/graphic-detail/\\">The Economist</a><em>. You can follow The Economist Data Team’s work on </em><a href=\\"https://twitter.com/ECONdailycharts\\"><em>Twitter</em></a><em>.</em></p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=fa7e003b3ff4\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/measuring-the-true-toll-of-the-pandemic-fa7e003b3ff4\\">Measuring the true toll of the pandemic</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":11,"title":{"__cdata":"Why you sometimes need to break the rules in data viz"},"link":["https://medium.economist.com/why-you-sometimes-need-to-break-the-rules-in-data-viz-4d8ece284919?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/4d8ece284919"},"category":[{"__cdata":"information-design"},{"__cdata":"data"},{"__cdata":"infographics"},{"__cdata":"journalism"},{"__cdata":"data-visualization"}],"creator":{"__cdata":"Rosamund Pearce"},"pubDate":"Fri, 28 Feb 2020 17:56:09 GMT","updated":{"__text":"2020-02-28T17:56:09.023Z"},"encoded":{"__cdata":"<h4>Best practices help us to avoid common pitfalls in data visualisation — but we shouldn’t follow them blindly</h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*Q1vM3UKVjRlrI1YqYtP5EQ.png\\" /></figure><p>It’s easy to visualise data badly. Choose the wrong chart type, omit labels or overload the graphic and you can quickly end up with something that is confusing, misleading or that fails to tell a story.</p><p>To combat such crimes, a number of best practices have sprung up as the field of data visualisation has matured. From steering clear of pie charts to getting rid of “chartjunk”, these are the conventions anyone dabbling in data viz should learn first.</p><p>But sometimes it’s helpful to revisit the things we learn early on with the benefit of experience. In the six years that I have been making data visualisations, I’ve found that sticking doggedly to the “rules” can sometimes impede effective visual communication. It’s easy to get bogged down in following technicalities, and lose sight of what actually <em>works</em>.</p><p>The trouble is that best practices tend to have little nuance, and there are times when they may be irrelevant, or worth the cost of breaking. Since joining <em>The Economist</em> I have broken many of them myself. But if you are going to do the same, it’s helpful to understand why they became rules of thumb in the first place. As the old saying goes, you have to know the rules before you can break them.</p><p>With this in mind, and with the help of <em>The Economist</em>’s<em> </em>archive, I’ve re-examined five things I was taught not to do when I first started out in data visualisation.</p><h3>1: Don’t break the y-axis scale</h3><p><em>The Economist</em> occasionally gets complaints from readers about charts where the numerical axis doesn’t start at zero. It’s no wonder they are treated with suspicion. A truncated axis can cause small differences to appear larger, or make a rise or fall look more dramatic. The misleading use of broken scales — particularly by <a href=\\"https://www.washingtonpost.com/graphics/politics/2016-election/trump-charts/?\\">political campaigns</a> — has given axis-breaking a bad reputation. But sometimes small variations between data are important, and you need to limit the range of the chart in order to make the story visible:</p><figure><img alt=\\"Chart: Tipping habits of Uber riders, with broken axes\\" src=\\"https://cdn-images-1.medium.com/max/996/1*Q6lkJOdgszWm9g8dISJUIw.png\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/10/29/how-much-should-you-tip-an-uber-driver\\"><em>Original chart</em></a></figcaption></figure><figure><img alt=\\"The same chart with unbroken axes\\" src=\\"https://cdn-images-1.medium.com/max/996/1*GRaNXL9Goza9379QK-AUxw.png\\" /><figcaption><em>The same chart with unbroken axes</em></figcaption></figure><p>In this chart I made about the tipping habits of Uber riders, starting the scale at zero hides the story because the differences — though significant — are small and not close to zero. It’s necessary to break the axes to show these differences. At <em>The Economist</em> we always use a symbol to signpost a broken scale, except for index charts:</p><figure><img alt=\\"Indexed line chart: The impact of virus outbreaks on aviation\\" src=\\"https://cdn-images-1.medium.com/max/996/1*45wVrl7oZCAUSx-wCddTFQ.png\\" /><figcaption><em>100 is treated as the baseline in </em><a href=\\"https://www.economist.com/graphic-detail/2020/02/03/airlines-will-be-hit-hard-by-coronavirus\\"><em>index charts</em></a><em> so a broken scale icon isn’t necessary</em></figcaption></figure><p>The one time you shouldn’t break an axis is when making a bar or column chart because it breaks the relationship between the rectangle’s dimensions and the data.</p><figure><img alt=\\"Breaking bar chart axes, a comparison of The Economist’s old and modern styles\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*xRwFyfv9GeB4rUbCIuiDqw.png\\" /><figcaption><em>In our modern style (right, from 2019) we use a thermometer chart instead of a bar chart (left, from 2006) when we break the numerical axis</em></figcaption></figure><h3>2: Don’t go 3D</h3><figure><img alt=\\"A 3D column chart\\" src=\\"https://cdn-images-1.medium.com/max/660/1*TlU7TWPWtC1tXTC5zlKT0Q.jpeg\\" /><figcaption>Can you accurately decipher this? I can’t. Source: <a href=\\"https://viz.wtf/post/164260261516/impact-categories-easy-presented\\">WTF Viz</a></figcaption></figure><p>Ever since Microsoft Excel launched a thousand 3D pie charts into business meetings, 3D charts have been among the most vilified of data visualisations. There are two types of 3D visualisations: ones where the third dimension is used to depict a third variable, and others where it is purely cosmetic. Decorative 3D is <a href=\\"https://serialmentor.com/dataviz/no-3d.html\\">particularly frowned upon</a> as it needlessly distorts the data in multiple ways: perspective causes nearer items to appear larger, and using volume to represent a single variable magnifies the appearance of larger data points.</p><p>Using 3D to depict three variables, while slightly more justifiable, often results in a chart that is difficult to interpret. And for a static chart, it’s impossible to pick an angle that provides one objective view of the data — whichever way you view it, some elements will be emphasised more than others. Mostly it’s better to find another way to show a third variable — by bubble size, for instance:</p><figure><img alt=\\"Bubble chart: GDP and fertility, 2017\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*8iucMMJgtXeZ9oAnb4e5fQ.png\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/08/30/south-koreas-fertility-rate-falls-to-a-record-low\\"><em>Three variables in 2D</em></a></figcaption></figure><p>But 3D can work well under <a href=\\"https://www.visualisingdata.com/2015/03/when-3d-works/\\">certain circumstances</a>. In the following visualisation for <em>The Economist’s </em>Graphic Detail section, we used a series of cubes to show the relative volume change of Arctic Sea ice:</p><figure><img alt=\\"Graphic detail: Data visualisation and map of arctic sea ice change\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*AwpOtP6v5HT4NorPw-UcZg.jpeg\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/09/21/the-consequences-of-a-rapidly-warming-arctic-will-be-felt-far-afield\\"><em>Relative volume change of Arctic sea ice, as three ice cubes</em></a><em> (top right)</em></figcaption></figure><p>I think we got away with breaking the convention against using 3D because:</p><ul><li>There is a good reason for going 3D, given that we want to represent something that actually has three dimensions</li><li>We used an isometric projection — which lacks perspective — so there is no distortion between elements in the foreground and background</li><li>Rather than using a scale, which can be harder to read in 3D, we directly labelled the data</li><li>Smaller elements go in front, so as little is obscured as possible</li></ul><p>3D can also work better in visualisations that are animated or <a href=\\"https://pudding.cool/2018/10/city_3d/\\">interactive</a>, because you aren’t restricted to one view.</p><h3>3: Get rid of “chartjunk” to maximise the data-ink ratio</h3><p>The term “chartjunk” was coined by the statistician Edward Tufte to describe anything on a chart that is not central to interpreting it. Tufte deemed things like illustrations and fancy fonts to be an unwelcome distraction:</p><blockquote>“Cosmetic decoration, which frequently distorts the data, will never salvage an underlying lack of content. If the numbers are boring, then you’ve got the wrong numbers.”</blockquote><blockquote>“Every bit of ink on a graphic requires a reason. And nearly always that reason should be that the ink presents new information”</blockquote><p><em>Edward Tufte, Visual Display of Quantitative Information, 1983</em></p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*gVoOdgZ4AYl8xkKBwZAdSQ.png\\" /><figcaption><em>Tufte would probably not approve of the cartoon in this chart from a 1997 edition of The Economist. Or the shading. Or the broken scales…</em></figcaption></figure><p>Tufte’s ideas helped prompt a shift towards minimalism in data visualisation that remains influential. It was probably one of the first rules that I learned. But there has been some pushback against stripping charts back to their bare bones, including from data visualisation consultant Alberto Cairo.</p><blockquote>“…gridlines in a time-series chart, or unobtrusive and subtle icons that identify the topic the chart discusses — might not be junk at all. Far from obstacles to understanding, they may <em>enhance</em> understanding.”</blockquote><p><em>Alberto Cairo, The Functional Art</em></p><p>A <a href=\\"https://www.researchgate.net/publication/221517808_Useful_Junk_The_effects_of_visual_embellishment_on_comprehension_and_memorability_of_charts\\">study</a> in 2010 also questioned a wholly minimalist approach to chart design, after finding that more embellished charts are better remembered — and just as well interpreted. <a href=\\"https://vcg.seas.harvard.edu/files/pfister/files/infovis_submission251-camera.pdf\\">Another</a> from 2015 found that charts with extra “redundant” labels — that reiterate the main trend in a visualisation — were better understood, while charts with icons were better recalled. No wonder most information designers don’t follow Tufte’s advice to the letter.</p><p>While I favour decluttering charts, I also want to help the reader out. There is a distinction between superfluous decoration and extra visual elements that provide a cue to the topic or reinforce a key finding. There’s nothing wrong with a bit of hand-holding — particularly with a challenging subject.</p><p>In the density plot that I made below, the labels “Speak more quickly” and “Convey information more quickly” repeat information already given in the subtitles. Under Tufte’s definition they would be considered as “junk”, as they don’t present new information — but they help the viewer understand the axes much faster.</p><figure><img alt=\\"Density plot: syllable rate and information rate in selected languages\\" src=\\"https://cdn-images-1.medium.com/max/996/1*vGJpNBZ4VmTelvpV7vLrAw.png\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/09/28/why-are-some-languages-spoken-faster-than-others\\"><em>Why are some languages spoken faster than others?</em></a></figcaption></figure><p>Another chart I made about haunted houses in Hong Kong probably didn’t <em>need </em>the illustrations of a Hong Kong tower block — but the infographic is more visually interesting with them, and they allow you to identify the topic at a glance.</p><figure><img alt=\\"A thermometer chart with illustrations that could be regarded as ‘chartjunk’\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*lgVtGz_E7QnoBNdvUZTsLA.png\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/10/31/haunted-houses-have-a-chilling-effect-on-the-property-market\\"><em>Haunted houses have a chilling effect on the property market</em></a></figcaption></figure><h3>4: Use fewer than seven colours</h3><figure><img alt=\\"Parallel coordinates chart with too many colours\\" src=\\"https://cdn-images-1.medium.com/max/800/1*pTrrMY0E7tjDTuCMO1sb_g.jpeg\\" /><figcaption>Loads of colours = loads of confusion. Source: <a href=\\"https://viz.wtf/post/159271251475/pick-up-sticks-and-tiddlywinks\\">WTF Viz</a></figcaption></figure><p>While the exact figure varies somewhat, there is a general consensus that using too many colours in a categorical colour scale is a bad idea. Our eyes aren’t great at distinguishing subtle differences in <a href=\\"https://www.jstor.org/stable/2288400?seq=1\\">hue</a>, compared with other visual methods of depicting data. If you use a lot of colours it can be hard to work out what’s going on at a glance, and similar-looking categories may be misread, particularly if the coloured area is small (eg, a thin line).</p><p>It often looks a bit messy too. Using a limited palette can look cleaner and more striking, especially when used consistently throughout an infographic or data dashboard.</p><p>So what do you do if your data has a lot of categories? You could use another visual method to show the grouping, such as a label or placing related elements adjacent to one another. Another solution is to limit the number of categories by creating an ‘other’ grouping:</p><figure><img alt=\\"Step chart of parliamentary seats held by British political parties\\" src=\\"https://cdn-images-1.medium.com/max/820/1*KqQlGxWqArxwJYYSLQ6hnA.png\\" /><figcaption><em>Using an ‘other’ category makes the chart less noisy and places the focus on the two major parties. From </em><a href=\\"https://www.economist.com/leaders/2019/12/13/victory-for-boris-johnsons-all-new-tories\\"><em>December 13th 2019</em></a></figcaption></figure><p>Using different tints of the same shade can also make the design look cleaner, if you have a number of related categories.</p><figure><img alt=\\"Line chart using different tints of the same shade\\" src=\\"https://cdn-images-1.medium.com/max/400/1*zhvwscYBWazC6Ko0EAXjVQ.png\\" /><figcaption><em>Similar tints like this are better labelled directly. From </em><a href=\\"https://www.economist.com/britain/2019/11/14/the-tories-want-to-be-the-party-of-the-nhs-will-voters-buy-it\\"><em>14th November 2019</em></a></figcaption></figure><p>But if you still need to use lots of colours there are various design tricks you can use to make your visualisation easier to read. Consider the following from <em>The Economist’s</em> <a href=\\"https://www.economist.com/graphic-detail/\\">Graphic Detail</a> page:</p><figure><img alt=\\"Data visualisation: Anti-EU parties cluster at idealogical extremes\\" src=\\"https://cdn-images-1.medium.com/max/997/1*cWQp19ULQxcX-XqbmX6a5w.png\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/06/01/centrist-liberals-gained-the-most-power-in-the-eu-parliament\\"><em>Centrist liberals gained the most power in the EU parliament</em></a></figcaption></figure><p>This chart uses nine colours. I think it gets away with it because:</p><ul><li>Categories are labelled adjacent to the group, so you don’t need to match colours in a legend to interpret the chart. Removing an extra step of interpretation also allows the chart to be read more quickly.</li><li>A shape helps reinforce the grouping</li><li>The coloured regions cover a relatively large area and use sufficiently distinct hues</li></ul><figure><img alt=\\"Data viz of house prices\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*1eMl2X3Er7zhUwbvVtjkFg.jpeg\\" /><figcaption><a href=\\"https://www.economist.com/graphic-detail/2019/06/29/for-now-residential-property-prices-are-likely-to-keep-rising\\">For now, residential-property prices are likely to keep rising</a></figcaption></figure><p>It’s also easier to get away with using more colours for certain types of chart, like this one, because:</p><ul><li>The colours here have been applied to a smaller area, but this is less of a problem with a line chart as each colour is used for just one shape. You don’t rely on colour to identify a group of many disparate shapes as you do in the bubble scatter above</li><li>Care has been taken when choosing colours to ensure that they are easy to follow when they cross over each other. A subtle white outline also helps to distinguish each line</li><li>Again, categories are labelled directly, so correctly matching colours isn’t essential to reading the chart</li></ul><h3>5: Avoid colour scales with red and green</h3><p><a href=\\"http://www.colourblindawareness.org/colour-blindness/\\">One in 12</a> men have colour-blindness, the most common form of which is red-green colour blindness (Deuteranopia). Because of this, I was taught to avoid creating data visualisations that use red and green. And this is certainly a good starting point for making your visualisations more accessible.</p><p>But sometimes it’s hard to avoid a particular selection of colours. For example, using anything other than the main colour associated with a particular political party may confuse the reader. In the UK that means using red for Labour and green for the Green Party. Luckily, there are accessible combinations of red and green:</p><figure><img alt=\\"Testing the Economist’s chart colour scheme with a colour blindness simulator of Deuteranopia\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*rzr2oCjK7AX4QaH7sI14uw.png\\" /><figcaption><em>The red and teal in </em>The Economist <em>chart colour scheme are OK for people with Deuteranopia (simulation on right)</em></figcaption></figure><p>‘Red’ and ‘green’ are nebulous and somewhat subjective categories. Here, the chart uses a shade of teal that is at the bluer end of what I would describe as green. The <a href=\\"https://colororacle.org/\\">colour-blindness simulator</a> shows that this is fine to use with this shade of red.</p><figure><img alt=\\"Testing the revised chart colour scheme with a colour blindness simulator of Deuteranopia\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*3TJmjycHe9AMFyr38T7fXA.png\\" /></figure><p>When I tweak the hue to a grass-green they look a lot more similar but are still distinguishable. Why? Because the green shade is lighter and less saturated. A person with red-green colour-blindness can still tell the difference between a light shade of green and a dark shade of red. Playing around with hue, saturation and lightness can help you find shades that are distinguishable.</p><p>Another way to get away with using red and green is to ensure that colour isn’t essential to understanding the visualisation, by using other elements such as icons or labels, or by adding a subtle outline to an element (see above). Personally I think it’s good practice to avoid relying too much on colour anyway, since red and green isn’t the only colour combination that those with colour-blindness find challenging.</p><p>We need best practices to guide us through the numerous decisions that go into making a visualisation. But each data visualisation comes with its own unique design challenges, and these rules — which are often a broad simplification of a topic — may not work in every case. We shouldn’t be afraid to break them if it makes our visualisation clearer or more engaging. Clever bending of the rules — as in other areas of design — can result in our most creative work.</p><p>That said, there are still some rules that I’ve yet to find a good reason to break:</p><ul><li>Pie charts: for me always better as a single stacked bar or another chart type, although some feel they are justifiable when showing only a couple of measures</li><li><a href=\\"https://www.climate-lab-book.ac.uk/2014/end-of-the-rainbow/\\">Rainbow sequential colour scales</a>: as well as being inaccessible, the abrupt changes in luminance create <a href=\\"https://eagereyes.org/basics/rainbow-color-map\\">“false boundaries”</a></li><li>Blow-apart effects: makes it harder to judge areas and compare elements</li></ul><p>If you know a good reason for breaking these rules, or can think of any other cases, I’d love to hear about them.</p><p><a href=\\"https://twitter.com/_rospearce\\"><em>Rosamund Pearce</em></a><em> is a visual data journalist at </em><a href=\\"https://www.economist.com/graphic-detail/\\">The Economist</a><em>. You can follow The Economist Data Team’s work on </em><a href=\\"https://twitter.com/ECONdailycharts\\"><em>Twitter</em></a><em>.</em></p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=4d8ece284919\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/why-you-sometimes-need-to-break-the-rules-in-data-viz-4d8ece284919\\">Why you sometimes need to break the rules in data viz</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":12,"title":{"__cdata":"Charting new territory"},"link":["https://medium.economist.com/charting-new-territory-7f5afb293270?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/7f5afb293270"},"category":[{"__cdata":"instagram"},{"__cdata":"data-visualization"},{"__cdata":"social-media"},{"__cdata":"data-journalism"},{"__cdata":"journalism"}],"creator":{"__cdata":"Helen Atkinson"},"pubDate":"Fri, 31 Jan 2020 13:37:36 GMT","updated":{"__text":"2020-01-31T13:37:36.142Z"},"encoded":{"__cdata":"<h4><em>How The Economist designs charts for Instagram</em></h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*I6Sz_bMCmW0ZKjnWJPWOaw.png\\" /></figure><p>As social-media platforms go, <a href=\\"https://www.instagram.com/theeconomist/\\">Instagram</a> is one of the most visual. Though it is a natural home to photos, other types of visual journalism also have a place. As a visual data journalist at <em>The Economist</em>, part of my job is to produce the static charts that you see on Instagram. Each week we go through our chart output and pull out the ones we feel will work the best on our social-media feeds. A number of thought processes and factors go into making these decisions, including colour, subject matter, visual impact and complexity. Over time, we have formed a loose set of guidelines to help us optimise the content in our feed. These principles are especially important on a platform where people can easily scroll past content that doesn’t immediately grab their attention.</p><h4><strong>Keeping colours consistent</strong></h4><p>We want our charts to be recognisable as coming from <em>The Economist</em>, and to stand out in feeds. So colours and palettes are important — consistency with branding and style can really help people spot our charts among everything else out there. Our template uses Economist red (#EC111A for any true fans) as the main or highlight colour, with more subtle blues as the secondary colours. There are exceptions such as political charts which use party colours, or some maps where colours might have specific associations. It’s okay to be flexible when needed, as long as there’s a strong template to fall back on.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*lJSPcmrs6WHMcuBhVA02lQ.png\\" /><figcaption><strong>Top left</strong>: using red as a highlight colour to link the data with the headline; <strong>top right:</strong> avoiding red altogether and using appropriate political colours to avoid confusion;<strong> bottom left</strong>: using red as the dominant colour to reflect the trend; <strong>bottom right</strong>: using red as a highlight colour to pull out the interesting data</figcaption></figure><h4><strong>Rethinking the presentation</strong></h4><p>It can be tempting to try and squeeze a lot into a small space because that’s what the original chart (created for the print edition) does, but sometimes this isn’t possible or advisable. Our print charts are often small, though we have some scope to expand the size when we need to —but this isn’t the case with Instagram. So there are times when I have to think about what the main takeaway of the chart is and what makes it interesting. I then focus on pulling out the elements of the chart which show it in the clearest way.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*TH5XI9AScSEpJAOZPMyIYg.png\\" /><figcaption><strong><em>Left:</em></strong><em> the original chart; </em><strong><em>right:</em></strong><em> the Instagram version with simplified categories</em></figcaption></figure><h4><strong>Knowing the audience</strong></h4><p>While our economics and business stories and charts appeal to our regular readers, Instagram is our opportunity to engage with a different audience who might not be aware of the breadth of our coverage, from books and arts to science and sport. Our Instagram audience also skews younger: 70% of our followers are under the age of 34, and over a quarter are under the age of 24.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*tSA5zcCsYXEKD8p6DSbqxQ.png\\" /><figcaption><em>Instagram lets us show newcomers to The Economist how diverse we are</em></figcaption></figure><h4><strong>Letting people “find themselves” in the data</strong></h4><p>Maps and rankings are popular as people like to see where their city or country lies within the data. Our<a href=\\"https://www.economist.com/graphic-detail/2019/09/04/vienna-remains-the-worlds-most-liveable-city\\"> liveability index</a> is one of our best-performing data posts, as was a <a href=\\"https://www.economist.com/graphic-detail/2019/12/04/where-are-the-worlds-best-english-speakers\\">daily chart</a> about English language proficiency and our <a href=\\"https://www.economist.com/business/2019/11/02/american-business-schools-are-reinventing-the-mba\\">write up</a> of the latest <a href=\\"https://www.economist.com/whichmba/full-time-mba-ranking\\">Which MBA?</a> ranking. Posts like these often lead to more engagement as people compare data with others and tag their friends, perhaps because the ability to find yourself in the data can create a personal connection with it.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*DY_1WzbtRs3A7NKwhHY7Uw.png\\" /><figcaption><em>Some of our more recent rankings</em></figcaption></figure><h4><strong>Sometimes the best chart is no chart…</strong></h4><p>Not everything will look good on Instagram. This might be because of size constraints, too much or too little data, a really complex financial dataset that takes a long time to understand — or perhaps it just looks a bit flat in isolation (yet works with the story). As much as we want all of our charts and maps to be seen, sometimes forcing them into a format they’re not suited for just ends up filling our feed with clutter. It’s important to be selective.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*Pcs5ju1SYiHijNk1z9ri5A.png\\" /><figcaption>Maps and charts which didn’t make the cut. <strong>Top left</strong>: too much information; <strong>centre</strong>: not visually interesting; <strong>top right</strong>: too niche; <strong>bottom left</strong>: wrong shape; <strong>bottom right</strong>: not enough data</figcaption></figure><h4>…but we’re open to trying anywa<strong>y</strong></h4><p>Our <a href=\\"https://twitter.com/ImKevinYoung\\">communities editor</a> wanted to post a table that we produced for a recent <a href=\\"https://www.economist.com/special-report/2019/10/24/india-is-stumbling-because-of-its-prime-ministers-failure-to-curb-his-darker-side\\">special report on India</a>. I wasn’t keen, thinking it would look underwhelming and not work in the template we use. However, we tried it anyway and it ended up being one of our best-performing charts.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*hB39Gii61X8YpSyyRH6Zqg.png\\" /><figcaption><strong><em>Left:</em></strong><em> the original chart; </em><strong><em>right:</em></strong><em> the Instagram version</em></figcaption></figure><p>Publishing charts on Instagram is still a relatively new process for us, so we’re still learning. We don’t always get it right, but finding out what doesn’t work is often just as important as learning what does. We’ve found that charts can outperform other types of content, but it’s important that we continue thinking about how we can improve the quality on our feeds. If you’ve seen something you love (or hate) on <a href=\\"https://www.instagram.com/theeconomist/\\">our feed</a> or someone else’s, please let us know!</p><p><a href=\\"https://twitter.com/baskerhel\\"><em>Helen Atkinson</em></a><em> is a visual data journalist at </em><a href=\\"https://www.economist.com/graphic-detail/\\">The Economist</a><em>. You can follow The Economist Data Team’s work on </em><a href=\\"https://twitter.com/ECONdailycharts\\"><em>Twitter</em></a><em>.</em></p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=7f5afb293270\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/charting-new-territory-7f5afb293270\\">Charting new territory</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":13,"title":{"__cdata":"Introducing “Checks and Balance”, our podcast on US politics and the 2020 election"},"link":["https://medium.economist.com/introducing-checks-and-balance-our-podcast-on-us-politics-and-the-2020-election-7423b9190eba?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/7423b9190eba"},"category":[{"__cdata":"america"},{"__cdata":"elections"},{"__cdata":"journalism"},{"__cdata":"podcast"},{"__cdata":"politics"}],"creator":{"__cdata":"The Economist"},"pubDate":"Fri, 24 Jan 2020 17:59:39 GMT","updated":{"__text":"2020-01-24T17:59:39.311Z"},"encoded":{"__cdata":"<h4>The Economist’s US editor on how we’re covering this year’s race for the White House</h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/656/1*ApvEnlG0699nBHgqNHQy5Q.jpeg\\" /></figure><p>I am fascinated by American political history and have been doing a bit of digging into our archives in the run-up to launching a new podcast. <em>The Economist</em>’s first lead story on a US election appeared on Saturday November 30th 1844. The newspaper expressed “agreeable surprise” at the victory of “the free trade American president” James Polk. The 2020 presidential election will be our 45th, but this will be the first one with its own dedicated podcast, “<a href=\\"https://www.economist.com/podcasts/2020/01/17/checks-and-balance-our-new-weekly-podcast-on-american-politics\\">Checks and Balance</a>”, which we launched on January 24th.</p><p>A presidential election is a long and transparent process to choose the world’s most powerful person. This election promises to be one of the most absorbing and consequential in recent memory. Some 139 million Americans took part last time around, but that still leaves 98% of the world’s population looking on rather nervously to find out what American voters have in store for them. <em>The Economist</em>’s team of staff writers in America and abroad will explain what is going on in America and why it matters so much elsewhere. We are opinionated and sometimes spikey, but our views are always based on rigorous reporting.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*3B3H0ILuUTJnHv31UE0tpA.jpeg\\" /></figure><p>Each week, I’ll be talking to Charlotte Howard, <em>The Economist</em>’s New York bureau chief and energy and commodities editor, and Jon Fasman, our Washington correspondent, to bring you a global view on democracy in America. We are well aware that there are already as many American politics podcasts as there are delegates up for grabs on Super Tuesday, so we won’t waste your time with pointless horse-race stuff.</p><p>Instead, we will take a single theme that shapes America and the election. The first episode looks at the practical consequences of President Donald Trump’s America First foreign policy. Some others that we are working on: Are Democrats becoming more socialist? Why is America the only rich country with falling life expectancy? And what goes through voters’ minds when they cast their ballots?</p><p>We will showcase expertise and reporting from <em>The Economist</em>’s correspondents across America and beyond. Each episode will feature reported packages and historical pieces looking at the people, the data and the history shaping the contest, along with discussion from our panellists.</p><p><em>The Economist</em> has been providing a word in your ear since the heyday of the iPod, when Apple loaded our podcasts onto the demo devices in its stores. Reports from “Checks and Balance” will feature on our other <a href=\\"https://www.economist.com/podcasts/\\">shows</a>, including “The Intelligence” (our daily podcast), “The Economist Asks” and “Money Talks”. We will bring a well-informed and fair-minded perspective on US politics. That’s how our tagline came about: “If you want a podcast that takes a view but doesn’t take sides, listen to Checks and Balance.”</p><p>The “Checks and Balance” podcast will be published alongside an <a href=\\"https://www.economist.com/checksandbalance/?utm_medium=pr&amp;utm_source=dnawire-a\\">email newsletter</a> of the same name, which includes an introduction from me and a selection of stories from correspondents around the country. The “Checks and Balance” newsletter will also include subscriber-only analysis of the latest polling from <em>The Economist</em>’s data journalists.</p><p>We hope to provide a rewarding and entertaining listen as we cut through the noise to understand the trends and important developments — and surprises — of this election year. Will the outcome be as surprising or agreeable, as it was in 1844? The voters will decide.</p><p><em>John Prideaux is </em>The Economist<em>’s US editor</em></p><p>Subscribe to the “Checks and Balance” podcast on Apple, Spotify, Acast or your preferred podcast app. The trailer and the first episode are available <a href=\\"https://econ.st/36ZUcht\\">here</a>.</p><p><a href=\\"https://econ.st/371ZJnp\\">Click here </a>to sign up for the “Checks and Balance” newsletter.</p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=7423b9190eba\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/introducing-checks-and-balance-our-podcast-on-us-politics-and-the-2020-election-7423b9190eba\\">Introducing “Checks and Balance”, our podcast on US politics and the 2020 election</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":14,"title":{"__cdata":"Forecasting Britain’s election in real-time"},"description":{"__cdata":"<div class=\\"medium-feed-item\\"><p class=\\"medium-feed-image\\"><a href=\\"https://medium.economist.com/forecasting-britains-election-in-real-time-bfcb8d395fa2?source=rss----ae7c30c8cbcc---4\\"><img src=\\"https://cdn-images-1.medium.com/max/1280/1*x-OQlHB8OKS21ZlmEMSr-A.jpeg\\" width=\\"1280\\"></a></p><p class=\\"medium-feed-snippet\\">How The Economist is projecting results live on election night</p><p class=\\"medium-feed-link\\"><a href=\\"https://medium.economist.com/forecasting-britains-election-in-real-time-bfcb8d395fa2?source=rss----ae7c30c8cbcc---4\\">Continue reading on The Economist »</a></p></div>"},"link":["https://medium.economist.com/forecasting-britains-election-in-real-time-bfcb8d395fa2?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/bfcb8d395fa2"},"category":[{"__cdata":"data-science"},{"__cdata":"politics"},{"__cdata":"elections"},{"__cdata":"data-journalism"}],"creator":{"__cdata":"G. Elliott Morris"},"pubDate":"Thu, 12 Dec 2019 21:58:17 GMT","updated":{"__text":"2019-12-12T21:58:17.696Z"}},{"bookmarked":false,"id":15,"title":{"__cdata":"How I (sort of) interviewed an artificial intelligence"},"link":["https://medium.economist.com/how-i-sort-of-interviewed-an-artificial-intelligence-2a9c069a1680?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/2a9c069a1680"},"category":[{"__cdata":"artificial-intelligence"},{"__cdata":"ai"},{"__cdata":"journalism"},{"__cdata":"technology"}],"creator":{"__cdata":"Tom Standage"},"pubDate":"Mon, 09 Dec 2019 16:16:47 GMT","updated":{"__text":"2019-12-09T16:16:46.808Z"},"encoded":{"__cdata":"<figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*_MkVQMSnG0YXOd_wEgbFyg.jpeg\\" /><figcaption>Credit: Dreamstime</figcaption></figure><p>At <em>The Economist</em> we are best known for producing a weekly newspaper, but we also publish an annual every November, looking forward to the year ahead. The latest edition, <a href=\\"https://worldin.economist.com/\\">“The World in 2020”</a> has just appeared. It features analysis and forecasts from our journalists (unusually, this is one occasion on which we get bylines), our colleagues at the Economist Intelligence Unit (who provide pithy summaries of the outlook for dozens of countries and industries) and a distinguished group of external contributors. This year this final group included Demis Hassabis, co-founder of DeepMind; <a href=\\"https://worldin.economist.com/edition/2020/article/17352/how-counter-extremism\\">Jacinda Ardern</a>, prime minister of New Zealand; Ren Zhengfei, founder of Huawei; and Robert F. Smith, a private-equity billionaire who, while giving a commencement address in May at Morehouse College, told the class of 2019 that he would pay off their student loans when they graduate. Our aim with this annual, of which I am the deputy editor, is not so much to make precise predictions about the coming year as to give readers a wide range of stimulating ideas and perspectives to help them navigate it.</p><p>But all our contributors have one thing in common: they are human. So for this year’s edition, I thought it might be fun to ask an artificial intelligence (AI) about the future. I have been tinkering with chatbots and text-generating algorithms since I was a teenager, and I went to university to study AI in the late 1980s—only to discover, alas, that AI didn’t really work. But in recent years a specific technique called deep learning has led to extraordinary progress in the field. Most of what is called AI today, from facial recognition to voice assistants to machine translation, is in fact deep learning if you look under the hood. And in February 2019 OpenAI, a research outfit based in San Francisco, unveiled a <a href=\\"https://openai.com/blog/better-language-models/\\">“large-scale unsupervised language model” called GPT-2</a> that was created by applying a flavour of deep learning, called unsupervised learning, to 40 gigabytes of text extracted from 8m web pages on a wide range of topics. The resulting system is uncannily good at generating text in a specific style: you give it a few words as a prompt, and it then guesses what comes next, based on patterns in the text it was trained on, like a sort of supercharged autocomplete, powered by gigabytes of past examples.</p><p>OpenAI’s announcement included examples of GPT-2 writing Tolkienesque fantasy fiction and (fictitious) news-agency stories about <a href=\\"https://openai.com/blog/better-language-models/#sample1\\">unicorns </a>and <a href=\\"https://openai.com/blog/better-language-models/#sample2\\">stolen nuclear material</a>, complete with quotes from (entirely made-up) sources. It also turned out to be surprisingly good at <a href=\\"https://openai.com/blog/better-language-models/#task1\\">comprehension</a>, <a href=\\"https://openai.com/blog/better-language-models/#task5\\">summarisation</a> and other language tasks, despite not having been designed to do those things. Citing the risk that this program might be misused by propagandists to generate “fake news” stories, OpenAI decided not to release the full version of GPT-2 right away; instead, it was released in stages, starting with an initial, watered-down version, and slowly working up to the full-strength version over several months. This was something of a publicity stunt, and resulted in many headlines along the lines of “AI lab decides its creation is too dangerous to make public”. But it was also a way for OpenAI to emphasise the point that it takes the misuse of technology seriously (its mission is “to ensure that artificial general intelligence benefits all of humanity”), with the strong implication that others in the tech industry ought to do the same.</p><p>When I saw GPT-2’s results, though, its propaganda potential was not what most interested me. Instead I began to wonder how I could use it as a chatbot, like the ones I used to play with in the 1980s. (The most famous example from the early personal-computer era is <a href=\\"https://en.wikipedia.org/wiki/ELIZA\\">ELIZA</a>, but my favourite was <a href=\\"https://en.wikipedia.org/wiki/Racter\\">RACTER</a>, a text-generation system that wrote a book called “The Policeman’s Beard is Half-Constructed”.) Helpfully for me, the <a href=\\"https://github.com/openai/gpt-2\\">GPT-2 code is available on Github</a>; even more helpfully, it can be accessed via a <a href=\\"https://colab.research.google.com/github/ilopezfr/gpt-2/blob/master/gpt-2-playground_.ipynb\\">Jupyter notebook</a> created by <a href=\\"https://twitter.com/iglpzfr\\">Ignacio López-Francos</a>, a researcher at NASA. This spins up a powerful computer at Google, loads the GPT-2 model onto it, and then lets anyone play with it via a web browser. With a bit of fiddling I figured how I could use it to do an “interview” with GPT-2. I thought it would be amusing to get a deep-learning system to generate answers to questions about the impact of AI on society in the coming decades, a subject of endless speculation and debate. Human experts cannot agree on whether robots and AI will lead to mass unemployment or not, for example. Might a machine produce a more coherent answer? Probably not, but it would be an interesting experiment.</p><p>Of course, GPT-2 cannot really predict the future. For a start, it doesn’t actually understand anything: it just sometimes appears to, because it is very good at generating text in particular styles, by regurgitating words and phrases it has heard before in the same kind of context in response to a prompt. And the reams of text it was trained on were gathered in late 2017, and are thus rather out of date. As a predictive tool, then, GPT-2 is no better than a Magic 8-Ball. But I was curious about how plausible its answers might be. It turns out that simply feeding it questions as prompts does not produce very relevant answers; instead, it helps to give it a clearer idea of context. So I wrote an introductory paragraph, setting the scene and indicating to GPT-2 the style, tone and subject-matter of the text I wanted it to generate. I then added a question, prefixed with “Q:”, and began the next line with “A:” to indicate that the next words should be the answer. (GPT-2’s training set includes many Q&amp;As, so it recognises the format. Similarly, it can be prompted to generate numbered lists, or recipes, which also appear in its training data.) The first prompt I used was:</p><pre>This publication draws on a wide range of expertise to illuminate the year ahead. Even so, all our contributors have one thing in common: they are human. But advances in technology mean it is now possible to ask an artificial intelligence (AI) for its views on the coming year. We asked an AI called GPT-2, created by OpenAI, a research outfit. GPT-2 is an “unsupervised language model” trained using 40 gigabytes of text from the internet. Given a prompt, such as a question or the first sentence of a story, it generates what might plausibly come next. Here are some of its (unedited) ­answers to our questions on the big themes of 2020.<br>Q: Greetings, GPT-2. Have you done an interview before?<br>A:</pre><p>I configured GPT-2 to generate five responses to each question and set the maximum output length to 75 words. (I did all this in September, so I used the 774M version of the GPT-2 model; the full-strength version had not been released at the time, though it since has been.) Here is a typical answer:</p><pre>I did at the Gartner Symposium on Data-Driven Technologies in 2017. I also did an interview for Gartner&#39;s Data Analytics Summit in June 2016. Q: Why the name GPT? A:  GPT stands for Graph-Tranformation-Thin-Layer. Q: What is your role with OpenAI? A:</pre><p>In this case GPT-2 has provided an answer to my original question, and has then generated subsequent questions and answers. The “Gartner Symposium on Data-Driven Technologies” is an entirely made-up event, but is a surprisingly plausible invention (the Gartner Data Analytics Summit, by contrast, does really exist). Here is another response to the same question, which starts with a much less interesting answer (and also includes follow-on questions and answers generated by GPT-2):</p><pre>No. Q:  When will you be done with all this? A:  I have not finished all my work yet. The next job will be on the next page. Q:  If you did not have an interview or the job was not offered, what would you be doing now? A:  I would be working on a website</pre><p>And here’s another one:</p><pre>No, I have only done a video interview for a few months. Q:  In the last few years, a lot of people have said you have become less human and more machine. What do you say to that? A:  I am not sure I consider myself machine, but I have been thinking about it. Q: So you are not really</pre><p>In this case, the follow-on questions and answers show that GPT-2 is generating text in the right subject area, namely the relationship between people and machines. But that wasn’t part of the answer to my initial question. So to generate my “interview”, I selected the most coherent, interesting or amusing of the five responses in each case, chopping off any follow-on questions and answers at the end. I then added the resulting answer, and my next question, to the end of the prompt, and fed it back into GPT-2. Taking the first example above, that would mean extending the prompt as follows:</p><pre>This publication draws on a wide range of expertise to illuminate the year ahead. Even so, all our contributors have one thing in common: they are human. But advances in technology mean it is now possible to ask an artificial intelligence (AI) for its views on the coming year. We asked an AI called GPT-2, created by OpenAI, a research outfit. GPT-2 is an “unsupervised language model” trained using 40 gigabytes of text from the internet. Given a prompt, such as a question or the first sentence of a story, it generates what might plausibly come next. Here are some of its (unedited) ­answers to our questions on the big themes of 2020.<br>Q: Greetings, GPT-2. Have you done an interview before?<br>A: I did at the Gartner Symposium on Data-Driven Technologies in 2017. I also did an interview for Gartner&#39;s Data Analytics Summit in June 2016.<br>Q: Which technologies are worth watching in 2020?<br>A: </pre><p>Repeatedly extending the prompt in this way ensured that the questions and answers took place in the same context. In fact, there is a limit to the size of the input prompt, so after several questions I had to remove the initial paragraph from the prompt, and just feed in the preceding set of question and answer pairs. <a href=\\"https://worldin.economist.com/article/17521/edition2020artificial-intelligence-predicts-future\\">Here is the resulting article</a>, which was published in “The World in 2020”. It includes the following exchange about the risks of AI:</p><blockquote><em>Q: How worried do you think we humans should be that ­machines will take our jobs?</em><br>A: It depends what role machine intelligence will play. Machine intelligence in some cases will be useful for solving problems, such as translation. But in other cases, such as in finance or medicine, it will replace people.</blockquote><blockquote><em>Q: Do fake news stories, generated using AI, pose a threat to democracy? Are we likely to see this tactic being used in the 2020 American presidential elections?</em><br>A: Yes, we’ll probably see them. It’s just a matter of when. Fake news stories are generally generated by political campaigns, and have the potential to have a huge impact on the outcome of an election. This is because they spread misinformation, often with no basis in fact.</blockquote><p>Some people on Twitter have challenged my use of the word “unedited” to describe these answers. They have a point. As explained above, I selected an answer from the five responses generated in each case (and did not keep the discarded responses, a decision I now regret). I also lopped off any follow-on questions and answers. I did not tinker with the text of the resulting answer; each of the answers in the piece really was generated in that form by GPT-2. But calling them “unedited” was, in hindsight, something of a stretch. Several people also asked for more detail about how I conducted the interview, given that there was not room to explain it in the original article (the length of which was limited to a single printed page). That’s why I’ve written this post. If you want to give GPT-2 a quick try, though, there are easier ways to do it, though they allow less control: <a href=\\"http://talktotransformer.com\\">talktotransformer.com</a>, another web-based interface to GPT-2 (which is named after the program’s so-called transformer-based architecture), makes it as easy as using a search engine.</p><p>Mine is just one contribution to a burgeoning field: the <em>New Yorker</em> used a specially tuned version of GPT-2 to generate <a href=\\"https://www.newyorker.com/magazine/2019/10/14/can-a-machine-learn-to-write-for-the-new-yorker?verso=true\\">paragraphs in the middle of an article by John Seabrook</a>, and the <em>New York Times</em> used it, and <a href=\\"https://grover.allenai.org/\\">a similar text-generation system developed by the Allen Institute</a>, to create paragraphs of “fake news”, <a href=\\"https://www.nytimes.com/interactive/2019/06/07/technology/ai-text-disinformation.html\\">challenging readers to distinguish between human- and computer-generated disinformation</a>. GPT-2 has also been used to generate <a href=\\"https://aiweirdness.com/post/163878889437/try-these-neural-network-generated-recipes-at-your\\">recipes</a>, fan fiction and poetry (see Janelle Shane’s hilarious website, <a href=\\"https://aiweirdness.com/\\">AIweirdness</a>, for some of the funniest examples). In nearly all of these cases human selection has played a role, picking out the most interesting examples from its output. Does that give a misleading impression of what GPT-2 and similar systems are capable of? One of the great things about this technology is that, <a href=\\"http://talktotransformer.com\\">simply by playing around with GPT-2 in a web browser</a>, you can decide the answer to that question for yourself.</p><p><em>Tom Standage is deputy editor of </em>The Economist<em> and of “The World in 2020”.</em></p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=2a9c069a1680\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/how-i-sort-of-interviewed-an-artificial-intelligence-2a9c069a1680\\">How I (sort of) interviewed an artificial intelligence</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":16,"title":{"__cdata":"A year in Graphic detail"},"link":["https://medium.economist.com/a-year-in-graphic-detail-d1825b28e06f?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/d1825b28e06f"},"category":[{"__cdata":"data-visualization"},{"__cdata":"data"},{"__cdata":"design"},{"__cdata":"journalism"}],"creator":{"__cdata":"Alex Selby-Boothroyd"},"pubDate":"Fri, 01 Nov 2019 17:42:24 GMT","updated":{"__text":"2019-11-04T15:54:38.802Z"},"encoded":{"__cdata":"<h4><em>An analysis of The Economist data-journalism team’s first year in print</em></h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*lBIKYCrMQegWIbgC4j6feA.png\\" /></figure><p>In October 2018 we launched <a href=\\"https://medium.economist.com/data-journalism-at-the-economist-gets-a-home-of-its-own-in-print-92e194c7f67e\\"><em>Graphic detail</em></a>, a new print section in <em>The Economist</em> dedicated to data journalism. One year and 51 issues later (we get a week off at Christmas), what have we learned?</p><p><strong>Sir, mix a lot<br></strong>Most sections in the newspaper have a clear remit. <em>Science and technology</em> is the natural home for a story about <a href=\\"https://www.economist.com/science-and-technology/2017/04/29/plastic-eating-caterpillars-could-save-the-planet\\">plastic-eating caterpillars</a> or <a href=\\"https://www.economist.com/science-and-technology/2018/07/19/python-has-brought-computer-programming-to-a-vast-new-audience\\">open-source computing</a>, and the increasing importance of China led to the creation of a new Sino-centric section in 2012. But <em>Graphic detail</em> knows no such confines — the only requirement is a good dataset or two that we can use to tell a story visually.</p><p>If we took the easy route and went where the data were most bountiful, we’d write about American politics almost every week, with some (probably American) sport(s) stories thrown in.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/400/1*py8tXQHi0KVaJcMxo1JsiA.png\\" /><figcaption>Subject to change</figcaption></figure><p>Instead we try to mix it up a bit, and our first self-imposed rule was that no topic should be covered twice within a two-month period. Our reader-feedback survey suggests that this variety of subjects keeps things interesting, and it has forced our data journalists to widen their nets too, leading to stories on subjects as diverse as <a href=\\"http://www.economist.com/graphic-detail/2019/05/11/how-mount-everest-went-mainstream\\">mountain climbing</a>, <a href=\\"http://www.economist.com/graphic-detail/2018/11/24/tvs-golden-age-is-real\\">the golden age of TV</a>, <a href=\\"http://www.economist.com/graphic-detail/2019/06/29/for-now-residential-property-prices-are-likely-to-keep-rising\\">house-price forecasts</a> and <a href=\\"http://www.economist.com/graphic-detail/2019/05/04/satellite-data-shed-new-light-on-north-koreas-opaque-economy\\">light emissions</a>.</p><p><strong>Habeas data</strong><br>Without data, there is no <em>Graphic detail</em> page. Yet acquiring a dataset or two is just the beginning of the process. Anyone involved in data journalism knows how long it can take to clean a dataset (three weeks is the current record), and that’s before you even begin to analyse it. We also learned early on that combining two or more datasets takes <em>far</em> longer than you might think.</p><p>On the other hand, having too much time can be counter-productive: a week spent immersed in a dataset might yield the same results as the initial couple of hours if your instincts were right in the first place. In one instance though, the extra time paid off: by letting our automated scraper run for months rather than a couple of weeks, we had even more data for our most popular story so far, an <a href=\\"http://www.economist.com/graphic-detail/2019/06/08/google-rewards-reputable-reporting-not-left-wing-politics\\">analysis of Google News bias</a>.</p><p><strong>Laying it all out<br></strong>Once we have a good clean dataset, we still need to get over the next hurdle: does it “hold the page”? This is probably the most-repeated phrase in the department (despite my best efforts, not a <em>single person</em> has ever uttered the words “habeas data”). And for good reason. Our second rule before we began was that we should aim for a 2:1 ratio between the data visualisation and the text, and a simple line or bar chart is unlikely to fill that space. Sometimes this forces us to look for extra datasets (with the time-consuming caveat above); other times, we keep working with the data until a compelling visualisation emerges. The <a href=\\"https://ggplot2.tidyverse.org/\\">ggplot package</a> in R, an open-source statistical program, is our main tool for this.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/400/1*iZiZKWStFb5rQRGMWXNYRQ.png\\" /><figcaption>Not including this chart</figcaption></figure><p>We also try to ensure that there is variety in our page design from week to week. Like some of our loyal readers, we stick every <em>Graphic detail</em> article up on the wall in chronological order. This lets us check that we’re not over-using certain data visualisation techniques. And we are reassured by our reader survey which indicates that unconventional chart types are a challenge to be relished rather than a barrier to entry, if well-designed.</p><p><strong>Save for later<br></strong>We’ve learned from reader surveys and website analytics what our readers find interesting. Stories about <a href=\\"http://www.economist.com/graphic-detail/2018/10/27/the-chinese-century-is-well-under-way\\">China</a> perform exceptionally well, and as half of our readership is in the United States, it wasn’t surprising that our <a href=\\"https://www.economist.com/graphic-detail/2018/11/03/how-to-forecast-an-americans-vote\\">How to forecast an American’s vote article</a>, published a few days before the 2018 mid-term elections, was an instant hit. What has been eye-opening is the ebb and flow of traffic after publication: although the <a href=\\"https://www.economist.com/graphic-detail/2019/06/08/google-rewards-reputable-reporting-not-left-wing-politics\\">Google News</a> story took a couple of days to get going, aided by an <a href=\\"https://twitter.com/J_CD_T/status/1137063752606605314?s=20\\">illuminating tweet-thread</a> from the author, it has attracted interest several times since. And our <a href=\\"http://www.economist.com/graphic-detail/2019/03/09/measles-outbreaks-in-america-are-getting-harder-to-contain\\">measles</a> article lay dormant for three weeks before going viral when a state of emergency was called in New York.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*YGy8wQdy-VIHXZ-MIGPUZw.png\\" /><figcaption>Better late than never</figcaption></figure><p><strong>Charting the future<br></strong>Although we’ll keep striving to find unique datasets — quality Africa-related data remain particularly elusive — there are a handful of stories and concepts that we will return to. Our final Graphic detail of 2018 for example charted the <a href=\\"https://www.economist.com/graphic-detail/2018/12/18/the-news-events-that-most-engrossed-audiences-in-2018\\">news events</a> that most engrossed readers throughout the year, and we’ll do the same in our Christmas edition this year. We also revisited the ‘build a voter’ format to calculate support in Britain for three different <a href=\\"https://www.economist.com/graphic-detail/2019/02/23/british-voters-are-unimpressed-by-theresa-mays-brexit-deal\\">Brexit options</a> earlier this year, and might even come back to it again for the 2020 US presidential election. There are also many interesting chart types that we haven’t found the right data for yet (Marimekkos, stacked-area alluvial diagrams, multivariate hexbins, 3D pie charts).</p><p>Finally, we’ve gained a new data visualiser to work on our print section (welcome <a href=\\"https://twitter.com/_rospearce\\">Ros</a>!), and a new data journalist will be joining the team early next year, giving us fresh ideas for 2020 and beyond.</p><p><strong>The year in numbers<br><em>4 </em></strong><em>prizes</em>: <a href=\\"https://drive.google.com/file/d/1eZjqf6UHzuVC7_N1EKDuexzV1IC0lQif/view\\">Malofiej</a> x3; <a href=\\"https://pudding.cool/process/pudding-awards-2018/\\">The Pudding Cup</a> x1<br><strong><em>3 </em></strong><em>other nominations</em>: <a href=\\"https://datajournalismawards.org/2019-shortlist/\\">Data Journalism Awards</a> x2; <a href=\\"https://www.informationisbeautifulawards.com/showcase/3826-build-a-british-voter-interactive-ternary-plot\\">Information is Beautiful</a> x1<br><strong><em>2</em></strong><em> consecutive references to pop songs released in 1998</em>: Only <a href=\\"https://www.youtube.com/watch?v=DL7-CKirWZE\\">one</a> was intentional<br><strong><em>1</em></strong><em> correction</em>: Sorry, University of Hull<br><strong><em>0</em></strong><em> typos</em>: Week 52 was a different matter…</p><p><a href=\\"https://twitter.com/AlexSelbyB\\"><em>Alex Selby-Boothroyd</em></a><em> is head of data journalism at </em><a href=\\"https://www.economist.com/graphic-detail/\\">The Economist</a><em>. You can follow The Economist Data Team’s work on </em><a href=\\"https://twitter.com/ECONdailycharts\\"><em>Twitter</em></a></p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=d1825b28e06f\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/a-year-in-graphic-detail-d1825b28e06f\\">A year in Graphic detail</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":17,"title":{"__cdata":"Plotting the Brexit conundrum"},"link":["https://medium.economist.com/plotting-the-brexit-conundrum-fb8e804474fa?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/fb8e804474fa"},"category":[{"__cdata":"data"},{"__cdata":"brexit"},{"__cdata":"journalism"},{"__cdata":"data-journalism"},{"__cdata":"data-visualization"}],"creator":{"__cdata":"James Fransham"},"pubDate":"Thu, 26 Sep 2019 14:31:48 GMT","updated":{"__text":"2020-02-05T16:28:25.702Z"},"encoded":{"__cdata":"<h4><strong>When two-dimensional scatters aren’t sufficient, turn to the ternary chart</strong></h4><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/1*jVlwCora-QrUTxSrsqAEJg.jpeg\\" /></figure><p>The vast majority of data visualisation deals with data presented in two spatial dimensions. Take a line chart, a bar or a column chart, or an x-y scatter. Each one takes two variables— GDP and time, for example — and plots them in a two-dimensional space. But there is a chart in the toolkit that breaks that mould: a three-dimensional scatter called a “ternary” plot. In recent years these plots have mostly been confined to specialist publications (examples can be seen <a href=\\"http://csmgeo.csm.jmu.edu/geollab/Fichter/SedRx/readternary.html\\">here</a>, <a href=\\"http://nicolas.kruchten.com/content/2014/01/mtlelection-ternary/\\">here</a> and <a href=\\"http://datavizcatalogue.com/blog/ternary-graphs-triangular-plots/\\">here</a>). This is the story of how <a href=\\"https://www.economist.com/graphic-detail/2019/02/22/profiles-of-a-divided-country\\">we used the ternary chart</a> to map the Brexit conundrum for an article for <em>The Economist</em>.</p><p>In February 2019 we published <a href=\\"https://www.economist.com/graphic-detail/2019/02/23/british-voters-are-unimpressed-by-theresa-mays-brexit-deal\\">an article</a> in the “Graphic detail” section of the newspaper about Brexit. For the piece we looked at which demographic variables affect an individual’s attitude towards Britain’s future relationship with the European Union: whether they wanted a deal; favoured “no deal”; or wanted to remain in the EU altogether.</p><p>How did our tri-chart come together? Firstly, we owe a debt of gratitude to <a href=\\"https://yougov.co.uk/\\">YouGov</a>, the polling organisation that provided us with data for 90,000 unique responses to a single question:</p><p><em>“The UK is currently scheduled to leave the EU on 29 March 2019. UK and EU negotiators recently completed an agreement on the terms of the UK’s exit from the EU, but this proposed deal has yet to be confirmed by the UK House of Commons. From most preferred to least preferred, how would you rank the following three options?”</em></p><p><em>No Deal: leave the EU without a withdrawal agreement.</em></p><p><em>Proposed Deal: leave the EU under the terms of the negotiated agreement.</em></p><p><em>Remain: stop the exit process and remain in the EU.</em></p><p>That question was asked over a 12-day period at the end of November to the beginning of December 2018. Along with each anonymous person’s response, YouGov provided us with detailed demographic variables: the respondents’ age; sex; education status; household income; region, previous voting history; and so on. We spent some time importing the codebooks and cleaning the data, to turn “pid=4” into “party=Labour”, for example. Here’s a snippet of our <a href=\\"https://www.r-project.org/\\">R code</a>, an open-source statistical-programming language that demonstrates that process.</p><iframe src=\\"\\" width=\\"0\\" height=\\"0\\" frameborder=\\"0\\" scrolling=\\"no\\"><a href=\\"https://medium.com/media/c8435e8e44a2012de776b70aeae778a0/href\\">https://medium.com/media/c8435e8e44a2012de776b70aeae778a0/href</a></iframe><p>With the data in a clean and understandable format we set about creating a statistical model that attempted to explain what demographic factors set people apart in their Brexit preferences. Although we had 18 different variables at our disposal we found that just a handful mattered. They were previous voting history (in general elections), sex, age, education, income and political interest. We found that a three-way <a href=\\"https://en.wikipedia.org/wiki/Multinomial_logistic_regression\\">multi-nomial regression model</a> predicted two-thirds of individuals’ responses correctly.</p><p>For the print version of our article we summarised these probabilities by presenting a profile of the most likely deal, no-deal, and remain supporters. This illustrated just how demographically distinct people are when they hold opposing political views.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/1024/0*ctvaH4AkN6BhXwyp\\" /><figcaption>The most vocal supporters of each scenario</figcaption></figure><p>For the online presentation we could be much more ambitious: we had the opportunity to show the distribution of Brexit views in Britain. To do so we opted for an interactive ternary plot. We worried that at first sight a 3D scatter might appear bewildering to readers, but on balance it gave us the opportunity to portray a far more detailed profile of the country.</p><p>In truth, the ternary plot isn’t that difficult to understand. It works much like a typical two-dimensional scatter chart, except each side of the triangle allows you to visualise a new dimension of the data. In this instance, each side refers to the probability that a given individual would support a particular Brexit position: no deal, deal or remain. We considered using a static version of the ternary chart for print, but quickly realised that without the ability to play around with the data it would be off-putting for some. Online, with clear sign-posting, we were confident that it would be a good charting solution.</p><p>To begin with, we made some initial drafts of the chart using a purpose-built open-source package in R, “<a href=\\"http://www.ggtern.com/2017/07/23/version-2-2-1-released/\\">ggtern</a>”. Plotting every single survey response — 90,000 points in total — was overwhelming. We needed another solution. In order to whittle-down the data, we first created a set of 675,000 hypothetical voters for each combination of sex, education, income, and so on. We then attached the sample weights to each of these voters so that we knew for each theoretical observation how prevalent their demographic characteristics were.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/848/0*qSEp-Ke10DXHbYru\\" /><figcaption><em>Plotting different numbers of responses</em></figcaption></figure><p>Remarkably, just 29,000 of our 675,000 theoretical voters actually existed. The remainder were profiles of theoretical voters that didn’t exist — or at least didn’t exist in a survey of 90,000 adults. With 29,000 profiles of voters to deal with we took a weighted random sample of 2,500 of our observations. Because our random sample picked the most prevalent profiles, we were able to represent some 25% of the British electorate with just 2,500 observations of individuals. Plotting this number of points gave us the right balance between exploration and clarity.</p><p>Our next step was to create a version of the chart as an online interactive using <a href=\\"https://d3js.org/\\">D3</a> — an open-source visualisation library based on JavaScript. With the sample finally sorted, the trickiest element of designing the chart was choosing the right colour palette. We wanted to show the uncertainty of the middle ground. Some individuals’ views are split roughly equally between the three options, whereas others are extreme supporters of remain or no deal. In the end we settled on making three different scales, each one turning progressively greyer from 100% to 0% of support. To help readers navigate the interactive, we added a tool-tip that (upon mouse-over) revealed the demographic characteristics of each point on the chart.</p><figure><img alt=\\"\\" src=\\"https://cdn-images-1.medium.com/max/650/0*60BIWtJWYe4QWXOr\\" /><figcaption><em>Experimenting with different colour choices</em></figcaption></figure><p>The response to our experimental and ambitious visualisation has been <a href=\\"https://mailchi.mp/2a4c62b167fc/preview-222-in-other-news-3693929\\">wholly warm</a>. And in the months since publication other news publications have followed suit (for example, <a href=\\"https://www.theguardian.com/politics/ng-interactive/2019/aug/13/how-a-no-deal-brexit-threatens-your-weekly-food-shop\\">here</a> and <a href=\\"https://graphics.reuters.com/BRITAIN-EU-LEADER/010092Q33KW/index.html\\">here</a>). We hope that the more people are aware of the power of this kind of chart, the more frequently it will be used in the future. Please feel free to post your favourite examples of the ternary chart in the comments below.</p><p><a href=\\"https://twitter.com/JamesFransham\\"><em>James Fransham</em></a><em> is a data journalist and </em><a href=\\"https://twitter.com/martgnz\\"><em>Martín González</em></a><em> is a visual journalist at </em><a href=\\"https://www.economist.com/graphic-detail/\\">The Economist</a><em>. You can follow The Economist Data Team’s work on </em><a href=\\"https://twitter.com/ECONdailycharts\\"><em>Twitter</em></a><em>.</em></p><p>NB: We have made the data underlying our chart available via our <a href=\\"https://github.com/TheEconomist/graphic-detail-data/tree/master/data/2019-02-23_opinion-on-brexit\\">GitHub repository</a>.</p><img src=\\"https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=fb8e804474fa\\" width=\\"1\\" height=\\"1\\" alt=\\"\\"><hr><p><a href=\\"https://medium.economist.com/plotting-the-brexit-conundrum-fb8e804474fa\\">Plotting the Brexit conundrum</a> was originally published in <a href=\\"https://medium.economist.com\\">The Economist</a> on Medium, where people are continuing the conversation by highlighting and responding to this story.</p>"}},{"bookmarked":false,"id":18,"title":{"__cdata":"Lessons from The Economist’s essay contest on climate change"},"description":{"__cdata":"<div class=\\"medium-feed-item\\"><p class=\\"medium-feed-image\\"><a href=\\"https://medium.economist.com/lessons-from-the-economists-essay-contest-on-climate-change-e3e2a81b32f8?source=rss----ae7c30c8cbcc---4\\"><img src=\\"https://cdn-images-1.medium.com/max/1280/0*JpSQqgIyYcA6O43r.jpg\\" width=\\"1280\\"></a></p><p class=\\"medium-feed-snippet\\">We can&#x2019;t tell you how to stop climate change, but we can tell you how to write a good essay</p><p class=\\"medium-feed-link\\"><a href=\\"https://medium.economist.com/lessons-from-the-economists-essay-contest-on-climate-change-e3e2a81b32f8?source=rss----ae7c30c8cbcc---4\\">Continue reading on The Economist »</a></p></div>"},"link":["https://medium.economist.com/lessons-from-the-economists-essay-contest-on-climate-change-e3e2a81b32f8?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/e3e2a81b32f8"},"category":[{"__cdata":"climate-change"},{"__cdata":"essay-writing"},{"__cdata":"journalism"}],"creator":{"__cdata":"The Economist"},"pubDate":"Wed, 25 Sep 2019 15:52:55 GMT","updated":{"__text":"2019-09-25T15:53:28.163Z"}},{"bookmarked":false,"id":19,"title":{"__cdata":"Would Donald Trump be president if all Americans actually voted?"},"description":{"__cdata":"<div class=\\"medium-feed-item\\"><p class=\\"medium-feed-image\\"><a href=\\"https://medium.economist.com/would-donald-trump-be-president-if-all-americans-actually-voted-95c4f960798?source=rss----ae7c30c8cbcc---4\\"><img src=\\"https://cdn-images-1.medium.com/max/1500/1*vfo3-1dVN-cYOBU9jAGz3A.jpeg\\" width=\\"1500\\"></a></p><p class=\\"medium-feed-snippet\\">How The Economist&#x2019;s data team answered this surprisingly hard question</p><p class=\\"medium-feed-link\\"><a href=\\"https://medium.economist.com/would-donald-trump-be-president-if-all-americans-actually-voted-95c4f960798?source=rss----ae7c30c8cbcc---4\\">Continue reading on The Economist »</a></p></div>"},"link":["https://medium.economist.com/would-donald-trump-be-president-if-all-americans-actually-voted-95c4f960798?source=rss----ae7c30c8cbcc---4"],"guid":{"_isPermaLink":"false","__text":"https://medium.com/p/95c4f960798"},"category":[{"__cdata":"data"},{"__cdata":"america"},{"__cdata":"data-science"},{"__cdata":"journalism"},{"__cdata":"politics"}],"creator":{"__cdata":"G. Elliott Morris"},"pubDate":"Thu, 04 Jul 2019 14:58:06 GMT","updated":{"__text":"2019-07-04T15:03:34.611Z"}}]},"_xmlns:dc":"http://purl.org/dc/elements/1.1/","_xmlns:content":"http://purl.org/rss/1.0/modules/content/","_xmlns:atom":"http://www.w3.org/2005/Atom","_xmlns:cc":"http://cyber.law.harvard.edu/rss/creativeCommonsRssModule.html","_version":"2.0"}');
+
+/***/ }),
+
+/***/ "./data/npr.json":
+/*!***********************!*\
+  !*** ./data/npr.json ***!
+  \***********************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = JSON.parse('{"channel":{"title":"News : NPR","link":"https://www.npr.org/templates/story/story.php?storyId=1001","description":"NPR news, audio, and podcasts. Coverage of breaking stories, national and world news, politics, business, science, technology, and extended coverage of major national and world events.","language":"en","copyright":"Copyright 2022 NPR - For Personal Use Only","generator":"NPR API RSS Generator 0.94","lastBuildDate":"Wed, 19 Oct 2022 16:53:21 -0400","image":{"url":"https://media.npr.org/images/podcasts/primary/npr_generic_image_300.jpg?s=200","title":"News","link":"https://www.npr.org/templates/story/story.php?storyId=1001"},"item":[{"title":"¿Cómo ha afectado su vida la ley de aborto estatal? Comparta su historia","description":"Las leyes que restringen el aborto están afectando la vida de las personas en formas grandes y pequeñas. Si han tenido un impacto en su vida o en la vida de su familia, NPR quiere oir de usted.","id":20,"pubDate":"Wed, 19 Oct 2022 16:53:21 -0400","link":"https://www.npr.org/2022/10/19/1129531281/-como-ha-afectado-su-vida-la-ley-de-aborto-estatal-comparta-su-historia","guid":"https://www.npr.org/2022/10/19/1129531281/-como-ha-afectado-su-vida-la-ley-de-aborto-estatal-comparta-su-historia","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1242531582_wide-2688e42bfe5f33c58f784c045e6fe3130241a4d2.jpg?s=600\' alt=\'Jasmine, 23, waits to receive an abortion at a Planned Parenthood Abortion Clinic in West Palm Beach, Florida.\'/><p>Las leyes que restringen el aborto están afectando la vida de las personas en formas grandes y pequeñas. Si han tenido un impacto en su vida o en la vida de su familia, NPR quiere oir de usted.</p><p>(Image credit: CHANDAN KHANNA/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129531281\' />"},"creator":{"__text":"Maria Godoy"}},{"title":"A former UCLA student was sentenced to over three years in prison for Capitol riot","description":"Christian Secor, a former UCLA student and follower of the far-right racist livestreamer Nick Fuentes, was sentenced on Wednesday for obstructing congress during the Jan. 6 Capitol riot.","id":21,"pubDate":"Wed, 19 Oct 2022 16:38:23 -0400","link":"https://www.npr.org/2022/10/19/1129912913/a-former-ucla-student-was-sentenced-to-over-three-years-in-prison-for-capitol-ri","guid":"https://www.npr.org/2022/10/19/1129912913/a-former-ucla-student-was-sentenced-to-over-three-years-in-prison-for-capitol-ri","encoded":{"__cdata":"<p>Christian Secor, a former UCLA student and follower of the far-right racist livestreamer Nick Fuentes, was sentenced on Wednesday for obstructing congress during the Jan. 6 Capitol riot.</p><p>(Image credit: Department of Justice)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129912913\' />"},"creator":{"__text":"Tom Dreisbach"}},{"title":"\'Swift-footed lizard\' is named the Massachusetts state dinosaur","description":"<em>Podokesaurus holyokensis</em>, which lived millions of years ago in what is now Massachusetts, has been named the state\'s official dinosaur under legislation signed into law by Gov. Charlie Baker.","id":22,"pubDate":"Wed, 19 Oct 2022 16:16:52 -0400","link":"https://www.npr.org/2022/10/19/1130024340/massachusetts-state-dinosaur","guid":"https://www.npr.org/2022/10/19/1130024340/massachusetts-state-dinosaur","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22292674613587_wide-7036137c9f069f173a5488a0a28e518cb92b4d1b.jpg?s=600\' alt=\'This is an artist\'s rendering of the dinosaur Podokesaurus holyokensis, which lived millions of years ago in what is now Massachusetts. The dinosaur, whose name means \\"swift-footed lizard of Holyoke,\\" has been named the state\'s official dinosaur.\'/><p><em>Podokesaurus holyokensis</em>, which lived millions of years ago in what is now Massachusetts, has been named the state\'s official dinosaur under legislation signed into law by Gov. Charlie Baker.</p><p>(Image credit: FunkMonk Michael B.H. via AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1130024340\' />"},"creator":{"__text":"The Associated Press"}},{"title":"The Sanibel Island causeway washed out by Hurricane Ian has reopened","description":"The causeway linking the island to the Florida mainland reopened with temporary repairs just three weeks after it was washed out by the hurricane. The reopening will help recovery work on the island.","id":23,"pubDate":"Wed, 19 Oct 2022 14:05:57 -0400","link":"https://www.npr.org/2022/10/19/1129956050/hurricane-ian-sanibel-island-causeway-reopens-florida","guid":"https://www.npr.org/2022/10/19/1129956050/hurricane-ian-sanibel-island-causeway-reopens-florida","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22292527856329_wide-3a046fd24ce29e41c1383f380b1c9652b548744f.jpg?s=600\' alt=\'In this aerial photo made in a flight provided by mediccorps.org, damage from Hurricane Ian is seen on the causeway leading to Sanibel Island from Fort Myers, Fla., on Sept. 30. The causeway has reopened with temporary repairs.\'/><p>The causeway linking the island to the Florida mainland reopened with temporary repairs just three weeks after it was washed out by the hurricane. The reopening will help recovery work on the island.</p><p>(Image credit: Gerald Herbert/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129956050\' />"},"creator":{"__text":"The Associated Press"}},{"title":"Nestlé recalls its stuffed chocolate chip cookie dough","description":"The voluntary recall is for Nestlé Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling products manufactured between June and September. Some consumers found plastic pieces in them.","id":24,"pubDate":"Wed, 19 Oct 2022 13:08:03 -0400","link":"https://www.npr.org/2022/10/19/1129917084/toll-house-cookie-dough-recall-nestle","guid":"https://www.npr.org/2022/10/19/1129917084/toll-house-cookie-dough-recall-nestle","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/nestl___toll_house__stuffed_chocolate_chip__cookie_dough_with_fudge_filling_upc_wide-0a05b0560f1583e6bf9c325cd009f3cb6a31db9e.jpeg?s=600\' alt=\'Nestlé is recalling its Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling after some consumers found white plastic pieces in the products.\'/><p>The voluntary recall is for Nestlé Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling products manufactured between June and September. Some consumers found plastic pieces in them.</p><p>(Image credit: Nestlé USA)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129917084\' />"},"creator":{"__text":"Ashley Ahn"}},{"title":"Does Marjorie Taylor Greene represent the future of the Republican Party?","description":"Journalist Robert Draper says the GOP\'s embrace of extremism opened the door to fringe actors, who\'ve become among the party\'s most influential leaders. His new book is <em>Weapons of Mass Delusion.</em>","id":25,"pubDate":"Wed, 19 Oct 2022 11:40:00 -0400","link":"https://www.npr.org/2022/10/19/1129516628/trump-republican-marjorie-taylor-greene-robert-draper-weapons-of-mass-delusion","guid":"https://www.npr.org/2022/10/19/1129516628/trump-republican-marjorie-taylor-greene-robert-draper-weapons-of-mass-delusion","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1230422858_wide-d1091629dafb4195677a57e77d90ef70dc0929da.jpg?s=600\' alt=\'U.S. Rep. Marjorie Taylor Greene, shown here on Jan. 4, 2021, continues to embrace the falsehood that the 2020 election was stolen.\'/><p>Journalist Robert Draper says the GOP\'s embrace of extremism opened the door to fringe actors, who\'ve become among the party\'s most influential leaders. His new book is <em>Weapons of Mass Delusion.</em> </p><p>(Image credit: Saul Loeb/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129516628\' />"},"creator":{"__text":"Dave Davies"}},{"title":"Herschel Walker plans to hand out fake police badges to highlight support for police","description":"After being called out for flashing an honorary police badge at a debate, Herschel Walker\'s campaign is embracing the moment with plans to distribute 1,000 fake badges as a fundraising prop tomorrow.","id":26,"pubDate":"Wed, 19 Oct 2022 09:36:54 -0400","link":"https://www.npr.org/2022/10/19/1129754080/herschel-walker-bought-1000-fake-badges-controversy","guid":"https://www.npr.org/2022/10/19/1129754080/herschel-walker-bought-1000-fake-badges-controversy","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/18/screenshot-45-_wide-98b583e6dc70f2a2ddc33f10642dd544c06c7788.png?s=600\' alt=\'Johnson County Sheriff Greg Rowland (left) stands in support of former football star-turned-prospective-politician Herschel Walker. Rowland said if Walker\'s badge is a prop, then so is his, which he carries every day in the line of duty. Following a heated debate last Friday, Walker ordered 1,000 imitation badges to be used as props for an upcoming fundraising event.\'/><p>After being called out for flashing an honorary police badge at a debate, Herschel Walker\'s campaign is embracing the moment with plans to distribute 1,000 fake badges as a fundraising prop tomorrow.</p><p>(Image credit: Screen grab/Twitter)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129754080\' />"},"creator":{"__text":"Dustin Jones"}},{"title":"A rare but dangerous flesh-eating bacteria is infecting Florida residents","description":"Hurricane Ian caused storm surges of up to 12 feet, leaving behind warm, brackish floodwaters where <em>Vibrio vulnificus </em>thrives.","id":27,"pubDate":"Wed, 19 Oct 2022 09:13:03 -0400","link":"https://www.npr.org/2022/10/19/1129865243/flesh-eating-bacteria-florida-floodwater","guid":"https://www.npr.org/2022/10/19/1129865243/flesh-eating-bacteria-florida-floodwater","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1243621314_wide-5803fa9d7b9545d12ab27c45dfbc75a43052908d.jpg?s=600\' alt=\'A man tows a canoe through a flooded street of his neighborhood in New Smyrna Beach, Fla., last month. Vibrio vulnificus thrives in warm, brackish floodwaters.\'/><p>Hurricane Ian caused storm surges of up to 12 feet, leaving behind warm, brackish floodwaters where <em>Vibrio vulnificus </em>thrives. </p><p>(Image credit: Jim Watson/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129865243\' />"},"creator":{"__text":"Emily Olson"}},{"title":"Ukrainians keep a wary eye on U.S. midterm elections, fearing a loss of support","description":"The likelihood that Republicans may win the House has triggered concerns in Ukraine. Last month, most House Republicans voted against a funding package that included billions earmarked for Ukraine.","id":28,"pubDate":"Wed, 19 Oct 2022 08:50:00 -0400","link":"https://www.npr.org/2022/10/19/1129652322/ukraine-us-midterm-elections","guid":"https://www.npr.org/2022/10/19/1129652322/ukraine-us-midterm-elections","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/18/coffee-interview-1_wide-dc3a55c8556931ad55311c70a41b7d0d8e980e79.jpg?s=600\' alt=\'From left: Ivan Sushchyk, Vadym Zahozytsky and Yana Yelizarova discuss U.S. support for the war in Ukraine at a coffee shop in Kyiv on Oct. 11.\'/><p>The likelihood that Republicans may win the House has triggered concerns in Ukraine. Last month, most House Republicans voted against a funding package that included billions earmarked for Ukraine.</p><p>(Image credit: Franco Ordoñez/NPR)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129652322\' />"},"creator":{"__text":"Franco Ordoñez"}},{"title":"Putin orders martial law in occupied Ukrainian areas as Kyiv\'s forces gain ground","description":"The move signals Russia\'s growing frustration over Ukrainian advances in areas the Kremlin claimed to annex. It came hours after Kremlin-appointed officials ordered civilians to evacuate Kherson.","id":29,"pubDate":"Wed, 19 Oct 2022 07:25:39 -0400","link":"https://www.npr.org/2022/10/19/1129853677/an-occupied-region-of-ukraine-is-evacuating-residents-to-russia","guid":"https://www.npr.org/2022/10/19/1129853677/an-occupied-region-of-ukraine-is-evacuating-residents-to-russia","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1244075698_wide-65900306d56767502909e5fd5711225f7c989b2b.jpg?s=600\' alt=\'Russian President Vladimir Putin chairs a Security Council meeting via a video link at the Novo-Ogaryovo state residence outside Moscow on Wednesday. Putin introduced martial law in Ukraine\'s Donetsk, Luhansk, Kherson and Zaporizhzhia regions that Moscow claims to have annexed.\'/><p>The move signals Russia\'s growing frustration over Ukrainian advances in areas the Kremlin claimed to annex. It came hours after Kremlin-appointed officials ordered civilians to evacuate Kherson.</p><p>(Image credit: Sergei Ilyin/Sputnik/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129853677\' />"},"creator":{"__text":"Charles Maynes"}},{"title":"Enrollment in Korean classes has shot up. Thank K-pop","description":"College student enrollment in language classes has plateaued in recent years, but enrollment in Korean language classes rose 78% from 2009 to 2016.","id":30,"pubDate":"Wed, 19 Oct 2022 07:12:45 -0400","link":"https://www.npr.org/2022/10/19/1129380984/korean-language-classes-us-colleges-k-pop-parasite-squid-game","guid":"https://www.npr.org/2022/10/19/1129380984/korean-language-classes-us-colleges-k-pop-parasite-squid-game","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22165598949718_wide-6f213e8fe4a8fa3979ea1cb75c58ef6b69bd9795.jpg?s=600\' alt=\'BTS arrives at the 64th Annual Grammy Awards on April 3, in Las Vegas. The popularity of K-pop has contributed to a surge in people taking Korean language courses.\'/><p>College student enrollment in language classes has plateaued in recent years, but enrollment in Korean language classes rose 78% from 2009 to 2016.</p><p>(Image credit: Jordan Strauss/Jordan Strauss/Invision/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129380984\' />"},"creator":{"__text":"Ashley Ahn"}},{"title":"Online platforms radicalized the Buffalo mass shooting suspect, a new report says","description":"The New York attorney general\'s office said it reviewed thousands of pages of documents and social media content to study how the suspect used online platforms to plan and publicize the mass shooting.","id":31,"pubDate":"Wed, 19 Oct 2022 06:00:00 -0400","link":"https://www.npr.org/2022/10/19/1129792055/buffalo-tops-shooting-attorney-general-report","guid":"https://www.npr.org/2022/10/19/1129792055/buffalo-tops-shooting-attorney-general-report","encoded":{"__cdata":"<p>The New York attorney general\'s office said it reviewed thousands of pages of documents and social media content to study how the suspect used online platforms to plan and publicize the mass shooting.</p><p>(Image credit: Matt Rourke/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129792055\' />"},"creator":{"__text":"Jonathan Franklin"}},{"title":"Val Demings goes on attack against Marco Rubio in Florida Senate debate","description":"Democratic U.S. Rep. Val Demings of Florida went on the attack Tuesday in her first debate against Republican Sen. Marco Rubio.","id":32,"pubDate":"Wed, 19 Oct 2022 05:16:26 -0400","link":"https://www.npr.org/2022/10/19/1129849444/val-demings-goes-on-attack-against-marco-rubio-in-florida-senate-debate","guid":"https://www.npr.org/2022/10/19/1129849444/val-demings-goes-on-attack-against-marco-rubio-in-florida-senate-debate","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22291855886901_wide-d884530674906169066ee1153f3239d5da7b6420.jpg?s=600\' alt=\'Republican U.S. Sen. Marco Rubio, and his Democratic challenger, U.S. Rep. Val Demings, greet each other before a televised debate at Duncan Theater on the campus of Palm Beach State College on Tuesday.\'/><p>Democratic U.S. Rep. Val Demings of Florida went on the attack Tuesday in her first debate against Republican Sen. Marco Rubio.</p><p>(Image credit: Thomas Cordy/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129849444\' />"},"creator":{"__text":"The Associated Press"}},{"title":"The family of George Floyd plans to file a $250 million lawsuit against Ye","description":"The announcement of the lawsuit comes after Ye, the rapper formerly known as Kanye West, made comments about Floyd\'s death on the podcast <em>Drink Champs. </em>","id":33,"pubDate":"Wed, 19 Oct 2022 05:15:00 -0400","link":"https://www.npr.org/2022/10/19/1129747423/kanye-west-george-floyd-lawsuit","guid":"https://www.npr.org/2022/10/19/1129747423/kanye-west-george-floyd-lawsuit","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/18/gettyimages-1243694046_wide-064bd9daa3e766014af093256eb2c56586e7e771.jpg?s=600\' alt=\'Ye (C), formerly known as Kanye West, attends the Givenchy Spring-Summer 2023 fashion show during the Paris Womenswear Fashion Week, in Paris, on Oct. 2, 2022.\'/><p>The announcement of the lawsuit comes after Ye, the rapper formerly known as Kanye West, made comments about Floyd\'s death on the podcast <em>Drink Champs. </em></p><p>(Image credit: Julien de Rosa/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129747423\' />"},"creator":{"__text":"Matt Adams"}},{"title":"The family of slain Palestinian American journalist Shireen Abu Akleh demands justice","description":"It\'s been over five months since Abu Akleh was killed on the job, most likely by Israeli forces. Her niece tells <em>Morning Edition</em> about her aunt\'s legacy and her family\'s campaign for accountability.","id":34,"pubDate":"Wed, 19 Oct 2022 05:11:43 -0400","link":"https://www.npr.org/2022/10/19/1129846198/lina-abu-akleh-justice-palestinian-american-journalist","guid":"https://www.npr.org/2022/10/19/1129846198/lina-abu-akleh-justice-palestinian-american-journalist","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1241876906_wide-82c1c307244b9c4a3a0287280a05556ec9997373.jpg?s=600\' alt=\'Lina Abu Akleh sits near photographs of her late aunt, journalist Shireen Abu Akleh, at their family home in east Jerusalem in July.\'/><p>It\'s been over five months since Abu Akleh was killed on the job, most likely by Israeli forces. Her niece tells <em>Morning Edition</em> about her aunt\'s legacy and her family\'s campaign for accountability.</p><p>(Image credit: Rosie Scammell/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129846198\' />"},"creator":{"__text":"Leila Fadel"}}]},"_xmlns:npr":"https://www.npr.org/rss/","_xmlns:nprml":"https://api.npr.org/nprml","_xmlns:itunes":"http://www.itunes.com/dtds/podcast-1.0.dtd","_xmlns:content":"http://purl.org/rss/1.0/modules/content/","_xmlns:dc":"http://purl.org/dc/elements/1.1/","_xmlns:media":"http://search.yahoo.com/mrss/","_version":"2.0"}');
 
 /***/ }),
 
@@ -62319,17 +67960,6 @@ module.exports = JSON.parse('{"channel":{"bookmarked":false,"title":{"__cdata":"
 
 "use strict";
 module.exports = JSON.parse('{"_args":[["axios@0.21.4","/Users/karenle/Desktop/RSS_Project"]],"_development":true,"_from":"axios@0.21.4","_id":"axios@0.21.4","_inBundle":false,"_integrity":"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==","_location":"/axios","_phantomChildren":{},"_requested":{"type":"version","registry":true,"raw":"axios@0.21.4","name":"axios","escapedName":"axios","rawSpec":"0.21.4","saveSpec":null,"fetchSpec":"0.21.4"},"_requiredBy":["#DEV:/"],"_resolved":"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz","_spec":"0.21.4","_where":"/Users/karenle/Desktop/RSS_Project","author":{"name":"Matt Zabriskie"},"browser":{"./lib/adapters/http.js":"./lib/adapters/xhr.js"},"bugs":{"url":"https://github.com/axios/axios/issues"},"bundlesize":[{"path":"./dist/axios.min.js","threshold":"5kB"}],"dependencies":{"follow-redirects":"^1.14.0"},"description":"Promise based HTTP client for the browser and node.js","devDependencies":{"coveralls":"^3.0.0","es6-promise":"^4.2.4","grunt":"^1.3.0","grunt-banner":"^0.6.0","grunt-cli":"^1.2.0","grunt-contrib-clean":"^1.1.0","grunt-contrib-watch":"^1.0.0","grunt-eslint":"^23.0.0","grunt-karma":"^4.0.0","grunt-mocha-test":"^0.13.3","grunt-ts":"^6.0.0-beta.19","grunt-webpack":"^4.0.2","istanbul-instrumenter-loader":"^1.0.0","jasmine-core":"^2.4.1","karma":"^6.3.2","karma-chrome-launcher":"^3.1.0","karma-firefox-launcher":"^2.1.0","karma-jasmine":"^1.1.1","karma-jasmine-ajax":"^0.1.13","karma-safari-launcher":"^1.0.0","karma-sauce-launcher":"^4.3.6","karma-sinon":"^1.0.5","karma-sourcemap-loader":"^0.3.8","karma-webpack":"^4.0.2","load-grunt-tasks":"^3.5.2","minimist":"^1.2.0","mocha":"^8.2.1","sinon":"^4.5.0","terser-webpack-plugin":"^4.2.3","typescript":"^4.0.5","url-search-params":"^0.10.0","webpack":"^4.44.2","webpack-dev-server":"^3.11.0"},"homepage":"https://axios-http.com","jsdelivr":"dist/axios.min.js","keywords":["xhr","http","ajax","promise","node"],"license":"MIT","main":"index.js","name":"axios","repository":{"type":"git","url":"git+https://github.com/axios/axios.git"},"scripts":{"build":"NODE_ENV=production grunt build","coveralls":"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js","examples":"node ./examples/server.js","fix":"eslint --fix lib/**/*.js","postversion":"git push && git push --tags","preversion":"npm test","start":"node ./sandbox/server.js","test":"grunt test","version":"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json"},"typings":"./index.d.ts","unpkg":"dist/axios.min.js","version":"0.21.4"}');
-
-/***/ }),
-
-/***/ "./npr.json":
-/*!******************!*\
-  !*** ./npr.json ***!
-  \******************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = JSON.parse('{"channel":{"title":"News : NPR","link":"https://www.npr.org/templates/story/story.php?storyId=1001","description":"NPR news, audio, and podcasts. Coverage of breaking stories, national and world news, politics, business, science, technology, and extended coverage of major national and world events.","language":"en","copyright":"Copyright 2022 NPR - For Personal Use Only","generator":"NPR API RSS Generator 0.94","lastBuildDate":"Wed, 19 Oct 2022 16:53:21 -0400","image":{"url":"https://media.npr.org/images/podcasts/primary/npr_generic_image_300.jpg?s=200","title":"News","link":"https://www.npr.org/templates/story/story.php?storyId=1001"},"item":[{"title":"¿Cómo ha afectado su vida la ley de aborto estatal? Comparta su historia","description":"Las leyes que restringen el aborto están afectando la vida de las personas en formas grandes y pequeñas. Si han tenido un impacto en su vida o en la vida de su familia, NPR quiere oir de usted.","id":20,"pubDate":"Wed, 19 Oct 2022 16:53:21 -0400","link":"https://www.npr.org/2022/10/19/1129531281/-como-ha-afectado-su-vida-la-ley-de-aborto-estatal-comparta-su-historia","guid":"https://www.npr.org/2022/10/19/1129531281/-como-ha-afectado-su-vida-la-ley-de-aborto-estatal-comparta-su-historia","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1242531582_wide-2688e42bfe5f33c58f784c045e6fe3130241a4d2.jpg?s=600\' alt=\'Jasmine, 23, waits to receive an abortion at a Planned Parenthood Abortion Clinic in West Palm Beach, Florida.\'/><p>Las leyes que restringen el aborto están afectando la vida de las personas en formas grandes y pequeñas. Si han tenido un impacto en su vida o en la vida de su familia, NPR quiere oir de usted.</p><p>(Image credit: CHANDAN KHANNA/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129531281\' />"},"creator":{"__text":"Maria Godoy"}},{"title":"A former UCLA student was sentenced to over three years in prison for Capitol riot","description":"Christian Secor, a former UCLA student and follower of the far-right racist livestreamer Nick Fuentes, was sentenced on Wednesday for obstructing congress during the Jan. 6 Capitol riot.","id":21,"pubDate":"Wed, 19 Oct 2022 16:38:23 -0400","link":"https://www.npr.org/2022/10/19/1129912913/a-former-ucla-student-was-sentenced-to-over-three-years-in-prison-for-capitol-ri","guid":"https://www.npr.org/2022/10/19/1129912913/a-former-ucla-student-was-sentenced-to-over-three-years-in-prison-for-capitol-ri","encoded":{"__cdata":"<p>Christian Secor, a former UCLA student and follower of the far-right racist livestreamer Nick Fuentes, was sentenced on Wednesday for obstructing congress during the Jan. 6 Capitol riot.</p><p>(Image credit: Department of Justice)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129912913\' />"},"creator":{"__text":"Tom Dreisbach"}},{"title":"\'Swift-footed lizard\' is named the Massachusetts state dinosaur","description":"<em>Podokesaurus holyokensis</em>, which lived millions of years ago in what is now Massachusetts, has been named the state\'s official dinosaur under legislation signed into law by Gov. Charlie Baker.","id":22,"pubDate":"Wed, 19 Oct 2022 16:16:52 -0400","link":"https://www.npr.org/2022/10/19/1130024340/massachusetts-state-dinosaur","guid":"https://www.npr.org/2022/10/19/1130024340/massachusetts-state-dinosaur","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22292674613587_wide-7036137c9f069f173a5488a0a28e518cb92b4d1b.jpg?s=600\' alt=\'This is an artist\'s rendering of the dinosaur Podokesaurus holyokensis, which lived millions of years ago in what is now Massachusetts. The dinosaur, whose name means \\"swift-footed lizard of Holyoke,\\" has been named the state\'s official dinosaur.\'/><p><em>Podokesaurus holyokensis</em>, which lived millions of years ago in what is now Massachusetts, has been named the state\'s official dinosaur under legislation signed into law by Gov. Charlie Baker.</p><p>(Image credit: FunkMonk Michael B.H. via AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1130024340\' />"},"creator":{"__text":"The Associated Press"}},{"title":"The Sanibel Island causeway washed out by Hurricane Ian has reopened","description":"The causeway linking the island to the Florida mainland reopened with temporary repairs just three weeks after it was washed out by the hurricane. The reopening will help recovery work on the island.","id":23,"pubDate":"Wed, 19 Oct 2022 14:05:57 -0400","link":"https://www.npr.org/2022/10/19/1129956050/hurricane-ian-sanibel-island-causeway-reopens-florida","guid":"https://www.npr.org/2022/10/19/1129956050/hurricane-ian-sanibel-island-causeway-reopens-florida","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22292527856329_wide-3a046fd24ce29e41c1383f380b1c9652b548744f.jpg?s=600\' alt=\'In this aerial photo made in a flight provided by mediccorps.org, damage from Hurricane Ian is seen on the causeway leading to Sanibel Island from Fort Myers, Fla., on Sept. 30. The causeway has reopened with temporary repairs.\'/><p>The causeway linking the island to the Florida mainland reopened with temporary repairs just three weeks after it was washed out by the hurricane. The reopening will help recovery work on the island.</p><p>(Image credit: Gerald Herbert/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129956050\' />"},"creator":{"__text":"The Associated Press"}},{"title":"Nestlé recalls its stuffed chocolate chip cookie dough","description":"The voluntary recall is for Nestlé Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling products manufactured between June and September. Some consumers found plastic pieces in them.","id":24,"pubDate":"Wed, 19 Oct 2022 13:08:03 -0400","link":"https://www.npr.org/2022/10/19/1129917084/toll-house-cookie-dough-recall-nestle","guid":"https://www.npr.org/2022/10/19/1129917084/toll-house-cookie-dough-recall-nestle","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/nestl___toll_house__stuffed_chocolate_chip__cookie_dough_with_fudge_filling_upc_wide-0a05b0560f1583e6bf9c325cd009f3cb6a31db9e.jpeg?s=600\' alt=\'Nestlé is recalling its Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling after some consumers found white plastic pieces in the products.\'/><p>The voluntary recall is for Nestlé Toll House Stuffed Chocolate Chip Cookie Dough with Fudge Filling products manufactured between June and September. Some consumers found plastic pieces in them.</p><p>(Image credit: Nestlé USA)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129917084\' />"},"creator":{"__text":"Ashley Ahn"}},{"title":"Does Marjorie Taylor Greene represent the future of the Republican Party?","description":"Journalist Robert Draper says the GOP\'s embrace of extremism opened the door to fringe actors, who\'ve become among the party\'s most influential leaders. His new book is <em>Weapons of Mass Delusion.</em>","id":25,"pubDate":"Wed, 19 Oct 2022 11:40:00 -0400","link":"https://www.npr.org/2022/10/19/1129516628/trump-republican-marjorie-taylor-greene-robert-draper-weapons-of-mass-delusion","guid":"https://www.npr.org/2022/10/19/1129516628/trump-republican-marjorie-taylor-greene-robert-draper-weapons-of-mass-delusion","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1230422858_wide-d1091629dafb4195677a57e77d90ef70dc0929da.jpg?s=600\' alt=\'U.S. Rep. Marjorie Taylor Greene, shown here on Jan. 4, 2021, continues to embrace the falsehood that the 2020 election was stolen.\'/><p>Journalist Robert Draper says the GOP\'s embrace of extremism opened the door to fringe actors, who\'ve become among the party\'s most influential leaders. His new book is <em>Weapons of Mass Delusion.</em> </p><p>(Image credit: Saul Loeb/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129516628\' />"},"creator":{"__text":"Dave Davies"}},{"title":"Herschel Walker plans to hand out fake police badges to highlight support for police","description":"After being called out for flashing an honorary police badge at a debate, Herschel Walker\'s campaign is embracing the moment with plans to distribute 1,000 fake badges as a fundraising prop tomorrow.","id":26,"pubDate":"Wed, 19 Oct 2022 09:36:54 -0400","link":"https://www.npr.org/2022/10/19/1129754080/herschel-walker-bought-1000-fake-badges-controversy","guid":"https://www.npr.org/2022/10/19/1129754080/herschel-walker-bought-1000-fake-badges-controversy","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/18/screenshot-45-_wide-98b583e6dc70f2a2ddc33f10642dd544c06c7788.png?s=600\' alt=\'Johnson County Sheriff Greg Rowland (left) stands in support of former football star-turned-prospective-politician Herschel Walker. Rowland said if Walker\'s badge is a prop, then so is his, which he carries every day in the line of duty. Following a heated debate last Friday, Walker ordered 1,000 imitation badges to be used as props for an upcoming fundraising event.\'/><p>After being called out for flashing an honorary police badge at a debate, Herschel Walker\'s campaign is embracing the moment with plans to distribute 1,000 fake badges as a fundraising prop tomorrow.</p><p>(Image credit: Screen grab/Twitter)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129754080\' />"},"creator":{"__text":"Dustin Jones"}},{"title":"A rare but dangerous flesh-eating bacteria is infecting Florida residents","description":"Hurricane Ian caused storm surges of up to 12 feet, leaving behind warm, brackish floodwaters where <em>Vibrio vulnificus </em>thrives.","id":27,"pubDate":"Wed, 19 Oct 2022 09:13:03 -0400","link":"https://www.npr.org/2022/10/19/1129865243/flesh-eating-bacteria-florida-floodwater","guid":"https://www.npr.org/2022/10/19/1129865243/flesh-eating-bacteria-florida-floodwater","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1243621314_wide-5803fa9d7b9545d12ab27c45dfbc75a43052908d.jpg?s=600\' alt=\'A man tows a canoe through a flooded street of his neighborhood in New Smyrna Beach, Fla., last month. Vibrio vulnificus thrives in warm, brackish floodwaters.\'/><p>Hurricane Ian caused storm surges of up to 12 feet, leaving behind warm, brackish floodwaters where <em>Vibrio vulnificus </em>thrives. </p><p>(Image credit: Jim Watson/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129865243\' />"},"creator":{"__text":"Emily Olson"}},{"title":"Ukrainians keep a wary eye on U.S. midterm elections, fearing a loss of support","description":"The likelihood that Republicans may win the House has triggered concerns in Ukraine. Last month, most House Republicans voted against a funding package that included billions earmarked for Ukraine.","id":28,"pubDate":"Wed, 19 Oct 2022 08:50:00 -0400","link":"https://www.npr.org/2022/10/19/1129652322/ukraine-us-midterm-elections","guid":"https://www.npr.org/2022/10/19/1129652322/ukraine-us-midterm-elections","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/18/coffee-interview-1_wide-dc3a55c8556931ad55311c70a41b7d0d8e980e79.jpg?s=600\' alt=\'From left: Ivan Sushchyk, Vadym Zahozytsky and Yana Yelizarova discuss U.S. support for the war in Ukraine at a coffee shop in Kyiv on Oct. 11.\'/><p>The likelihood that Republicans may win the House has triggered concerns in Ukraine. Last month, most House Republicans voted against a funding package that included billions earmarked for Ukraine.</p><p>(Image credit: Franco Ordoñez/NPR)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129652322\' />"},"creator":{"__text":"Franco Ordoñez"}},{"title":"Putin orders martial law in occupied Ukrainian areas as Kyiv\'s forces gain ground","description":"The move signals Russia\'s growing frustration over Ukrainian advances in areas the Kremlin claimed to annex. It came hours after Kremlin-appointed officials ordered civilians to evacuate Kherson.","id":29,"pubDate":"Wed, 19 Oct 2022 07:25:39 -0400","link":"https://www.npr.org/2022/10/19/1129853677/an-occupied-region-of-ukraine-is-evacuating-residents-to-russia","guid":"https://www.npr.org/2022/10/19/1129853677/an-occupied-region-of-ukraine-is-evacuating-residents-to-russia","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1244075698_wide-65900306d56767502909e5fd5711225f7c989b2b.jpg?s=600\' alt=\'Russian President Vladimir Putin chairs a Security Council meeting via a video link at the Novo-Ogaryovo state residence outside Moscow on Wednesday. Putin introduced martial law in Ukraine\'s Donetsk, Luhansk, Kherson and Zaporizhzhia regions that Moscow claims to have annexed.\'/><p>The move signals Russia\'s growing frustration over Ukrainian advances in areas the Kremlin claimed to annex. It came hours after Kremlin-appointed officials ordered civilians to evacuate Kherson.</p><p>(Image credit: Sergei Ilyin/Sputnik/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129853677\' />"},"creator":{"__text":"Charles Maynes"}},{"title":"Enrollment in Korean classes has shot up. Thank K-pop","description":"College student enrollment in language classes has plateaued in recent years, but enrollment in Korean language classes rose 78% from 2009 to 2016.","id":30,"pubDate":"Wed, 19 Oct 2022 07:12:45 -0400","link":"https://www.npr.org/2022/10/19/1129380984/korean-language-classes-us-colleges-k-pop-parasite-squid-game","guid":"https://www.npr.org/2022/10/19/1129380984/korean-language-classes-us-colleges-k-pop-parasite-squid-game","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22165598949718_wide-6f213e8fe4a8fa3979ea1cb75c58ef6b69bd9795.jpg?s=600\' alt=\'BTS arrives at the 64th Annual Grammy Awards on April 3, in Las Vegas. The popularity of K-pop has contributed to a surge in people taking Korean language courses.\'/><p>College student enrollment in language classes has plateaued in recent years, but enrollment in Korean language classes rose 78% from 2009 to 2016.</p><p>(Image credit: Jordan Strauss/Jordan Strauss/Invision/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129380984\' />"},"creator":{"__text":"Ashley Ahn"}},{"title":"Online platforms radicalized the Buffalo mass shooting suspect, a new report says","description":"The New York attorney general\'s office said it reviewed thousands of pages of documents and social media content to study how the suspect used online platforms to plan and publicize the mass shooting.","id":31,"pubDate":"Wed, 19 Oct 2022 06:00:00 -0400","link":"https://www.npr.org/2022/10/19/1129792055/buffalo-tops-shooting-attorney-general-report","guid":"https://www.npr.org/2022/10/19/1129792055/buffalo-tops-shooting-attorney-general-report","encoded":{"__cdata":"<p>The New York attorney general\'s office said it reviewed thousands of pages of documents and social media content to study how the suspect used online platforms to plan and publicize the mass shooting.</p><p>(Image credit: Matt Rourke/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129792055\' />"},"creator":{"__text":"Jonathan Franklin"}},{"title":"Val Demings goes on attack against Marco Rubio in Florida Senate debate","description":"Democratic U.S. Rep. Val Demings of Florida went on the attack Tuesday in her first debate against Republican Sen. Marco Rubio.","id":32,"pubDate":"Wed, 19 Oct 2022 05:16:26 -0400","link":"https://www.npr.org/2022/10/19/1129849444/val-demings-goes-on-attack-against-marco-rubio-in-florida-senate-debate","guid":"https://www.npr.org/2022/10/19/1129849444/val-demings-goes-on-attack-against-marco-rubio-in-florida-senate-debate","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/ap22291855886901_wide-d884530674906169066ee1153f3239d5da7b6420.jpg?s=600\' alt=\'Republican U.S. Sen. Marco Rubio, and his Democratic challenger, U.S. Rep. Val Demings, greet each other before a televised debate at Duncan Theater on the campus of Palm Beach State College on Tuesday.\'/><p>Democratic U.S. Rep. Val Demings of Florida went on the attack Tuesday in her first debate against Republican Sen. Marco Rubio.</p><p>(Image credit: Thomas Cordy/AP)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129849444\' />"},"creator":{"__text":"The Associated Press"}},{"title":"The family of George Floyd plans to file a $250 million lawsuit against Ye","description":"The announcement of the lawsuit comes after Ye, the rapper formerly known as Kanye West, made comments about Floyd\'s death on the podcast <em>Drink Champs. </em>","id":33,"pubDate":"Wed, 19 Oct 2022 05:15:00 -0400","link":"https://www.npr.org/2022/10/19/1129747423/kanye-west-george-floyd-lawsuit","guid":"https://www.npr.org/2022/10/19/1129747423/kanye-west-george-floyd-lawsuit","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/18/gettyimages-1243694046_wide-064bd9daa3e766014af093256eb2c56586e7e771.jpg?s=600\' alt=\'Ye (C), formerly known as Kanye West, attends the Givenchy Spring-Summer 2023 fashion show during the Paris Womenswear Fashion Week, in Paris, on Oct. 2, 2022.\'/><p>The announcement of the lawsuit comes after Ye, the rapper formerly known as Kanye West, made comments about Floyd\'s death on the podcast <em>Drink Champs. </em></p><p>(Image credit: Julien de Rosa/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129747423\' />"},"creator":{"__text":"Matt Adams"}},{"title":"The family of slain Palestinian American journalist Shireen Abu Akleh demands justice","description":"It\'s been over five months since Abu Akleh was killed on the job, most likely by Israeli forces. Her niece tells <em>Morning Edition</em> about her aunt\'s legacy and her family\'s campaign for accountability.","id":34,"pubDate":"Wed, 19 Oct 2022 05:11:43 -0400","link":"https://www.npr.org/2022/10/19/1129846198/lina-abu-akleh-justice-palestinian-american-journalist","guid":"https://www.npr.org/2022/10/19/1129846198/lina-abu-akleh-justice-palestinian-american-journalist","encoded":{"__cdata":"<img src=\'https://media.npr.org/assets/img/2022/10/19/gettyimages-1241876906_wide-82c1c307244b9c4a3a0287280a05556ec9997373.jpg?s=600\' alt=\'Lina Abu Akleh sits near photographs of her late aunt, journalist Shireen Abu Akleh, at their family home in east Jerusalem in July.\'/><p>It\'s been over five months since Abu Akleh was killed on the job, most likely by Israeli forces. Her niece tells <em>Morning Edition</em> about her aunt\'s legacy and her family\'s campaign for accountability.</p><p>(Image credit: Rosie Scammell/AFP via Getty Images)</p><img src=\'https://media.npr.org/include/images/tracking/npr-rss-pixel.png?story=1129846198\' />"},"creator":{"__text":"Leila Fadel"}}]},"_xmlns:npr":"https://www.npr.org/rss/","_xmlns:nprml":"https://api.npr.org/nprml","_xmlns:itunes":"http://www.itunes.com/dtds/podcast-1.0.dtd","_xmlns:content":"http://purl.org/rss/1.0/modules/content/","_xmlns:dc":"http://purl.org/dc/elements/1.1/","_xmlns:media":"http://search.yahoo.com/mrss/","_version":"2.0"}');
 
 /***/ })
 
@@ -62353,7 +67983,7 @@ module.exports = JSON.parse('{"channel":{"title":"News : NPR","link":"https://ww
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
@@ -62453,19 +68083,17 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
-/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app */ "./client/app.js");
-/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./history */ "./client/history.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/node_modules/react-router/esm/react-router.js");
+/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app */ "./client/app.js");
+/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./history */ "./client/history.js");
 
 
 
 
 
-
-react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Router, {
-  history: _history__WEBPACK_IMPORTED_MODULE_4__["default"]
-}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_app__WEBPACK_IMPORTED_MODULE_3__["default"], null)), document.getElementById('app'));
+react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Router, {
+  history: _history__WEBPACK_IMPORTED_MODULE_3__["default"]
+}, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_app__WEBPACK_IMPORTED_MODULE_2__["default"], null)), document.getElementById("app"));
 })();
 
 /******/ })()

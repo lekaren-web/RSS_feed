@@ -3,6 +3,8 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
+const { parse } = require('rss-to-json');
+
 app.use(
   cors({
     origin: "*",
@@ -17,7 +19,7 @@ app.use(express.json());
 // static middleware
 app.use(express.static(path.join(__dirname,'..', '/public')))
 
-// app.use('/api', require('./api')) // include our routes!
+app.use('/api', require('./api')) // include our routes!
 
 app.get('*', (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
