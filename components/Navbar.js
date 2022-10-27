@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
   faNewspaper,
-  faGear
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 const Navbar = (props) => {
   function openNav() {
     document.getElementById("mySidenav").style.width = "60vw";
@@ -16,7 +16,7 @@ const Navbar = (props) => {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
   }
- 
+
   const location = useLocation();
 
   return (
@@ -24,21 +24,26 @@ const Navbar = (props) => {
     <div className="left-nav">
       {/* user profile icon */}
 
-      
-
       {/* hoomepage Navicon */}
       <div className="nav_links">
-      <div className="userIcon">
-        <img src="" />
-      </div>
-        <span style={{margin:'0 auto'}}>
+        <div className="userIcon">
+          <img src="" />
+        </div>
+        {/* <span style={{margin:'0 auto'}}>
           <Link to="/" style={{textDecoration: 'none'}}>
             <FontAwesomeIcon className={ location.pathname === '/home' ? "home_icon_active" : 'home_icon_inactive'} icon={faHouse} />
           </Link>
-        </span>
-        <span style={{margin:'0 auto'}}>
-          <Link to="/feeds" style={{textDecoration: 'none'}}>
-            <FontAwesomeIcon className={ location.pathname === '/feeds' || location.pathname.includes('/feed/') ? "feed_icon_active" : 'feed_icon_inactive'} icon={faNewspaper} />
+        </span> */}
+        <span style={{ margin: "0 auto" }}>
+          <Link to="/feeds" style={{ textDecoration: "none" }}>
+            <FontAwesomeIcon
+              className={
+                location.pathname === "/feeds"
+                  ? "feed_icon_active"
+                  : "feed_icon_inactive"
+              }
+              icon={faNewspaper}
+            />
             <p className="nav_label_inactive">Feeds</p>
           </Link>
         </span>

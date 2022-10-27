@@ -12,23 +12,23 @@ export const setFeeds = (feeds) => ({
   feeds
 });
 
-// export const singleProject = (project) => ({
-//   type: SINGLE_PROJECT,
-//   project
+// export const singleFeed = (feed) => ({
+//   type: SINGLE_FEED,
+//   feed
 // })
-// export const createProject = (project) => ({
-//   type: CREATE_PROJECT,
-//   project
-// });
+export const createFeed = (feed) => ({
+  type: CREATE_FEED,
+  feed
+});
 
-// export const deleteProject = (project) => ({
-//   type: DELETE_PROJECT,
-//   project
+// export const deleteFeed = (feed) => ({
+//   type: DELETE_FEED,
+//   feed
 // })
 
-// export const updateProject = (project) => ({
-//   type: UPDATE_PROJECT,
-//   project
+// export const updateFeed = (feed) => ({
+//   type: UPDATE_FEED,
+//   feed
 // })
 
 export const fetchFeeds = () => {
@@ -40,38 +40,40 @@ export const fetchFeeds = () => {
   // console.log(err)
 }}};
 
-// export const fetchSingleProject = (id) => async (dispatch) => {
+// export const fetchSingleFeed = (id) => async (dispatch) => {
 //   try {
-//     const {data} = await axios.get(`/api/projects/${id}`)
-//     dispatch(singleProject(data))
+//     const {data} = await axios.get(`/api/feeds/${id}`)
+//     dispatch(singleFeed(data))
 //   } catch (err) {
 //     console.log(err)
 //   }
 // }
-// export const createNewProject = (project, history) => {
-// return async (dispatch) => {
-//   const {data: created} = await axios.post('/api/projects/create', project)
-//   dispatch(createProject(created))
-//   history.push('/projects')
-// }}
 
-// export const deleteTheProject = (id, history) => {
+export const createNewFeed = (feed, history) => {
+return async (dispatch) => {
+  const {data: created} = await axios.post('/api/feed/create', feed)
+  dispatch(createFeed(created))
+  history.push('/feed')
+}}
+
+// export const deleteTheFeed = (id, history) => {
 //   return async (dispatch) => {
-//     const {data: project} = await axios.delete(`api/projects/${id}`)
-//     dispatch(deleteProject(project))
+//     const {data: feed} = await axios.delete(`api/feeds/${id}`)
+//     dispatch(deleteFeed(Feed))
 //     history.push('/')
-//     history.push('/projects')
+//     history.push('/feeds')
 //   }
 // }
 
-// export const updateTheProject = (project, history) => {
+// export const updateTheFeed = (feed, history) => {
 //   return async (dispatch) => {
-//     const {data: updated} = await axios.put(`/api/projects/edit/${project.id}`, project)
-//     dispatch(updateProject(updated));
+//     const {data: updated} = await axios.put(`/api/feeds/edit/${feed.id}`, feed)
+//     dispatch(updateFeed(updated));
 //     history.push('/')
-//     history.push(`/projects/${project.id}`)
+//     history.push(`/feeds/${feed.id}`)
 //   }
 // }
+
 // Take a look at app/redux/index.js to see where this reducer is
 // added to the Redux store with combineReducers
 export default function feedsReducer(state = initialState, action) {
@@ -82,15 +84,15 @@ switch (action.type){
   case 'SINGLE_FEED':
     return action.feed
 
-//   case 'CREATE_PROJECT':
-//     return [...state, action.project]
+  case 'CREATE_FEED':
+    return [...state, action.feed]
 
-//   case 'DELETE_PROJECT':
-//   return state.filter((project) => project.id !== action.project.id)
+//   case 'DELETE_FEED':
+//   return state.filter((feed) => feed.id !== action.feed.id)
 
-//   case 'UPDATE_PROJECT':
+//   case 'UPDATE_FEED':
 //      state = []
-//       return state.map((project) => { return project.id === action.project.id ? action.project : project})
+//       return state.map((feed) => { return feed.id === action.feed.id ? action.feed : feed})
   default:
   return state
 }

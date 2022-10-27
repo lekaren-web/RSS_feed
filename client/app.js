@@ -5,11 +5,9 @@ import { Provider } from "react-redux";
 import store from './store'
 const App = () => {
   return (
-    <Provider store={store}>
-      <div className="mainContainer">
+    <Provider className="mainContainer" store={store}>
         <Navbar id="mySidenav" />
-        <Routes id="main" />
-      </div>
+        <Routes id="main" style={{width: '100%'}} />
     </Provider>
   );
 };

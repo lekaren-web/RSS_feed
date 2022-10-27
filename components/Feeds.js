@@ -9,6 +9,8 @@ import npr from "../data/npr.json";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import { fetchFeeds } from "../client/redux/feeds";
+import { BoxLoading } from "react-loadingg";
+import { AddFeedModal } from "../components/AddFeedModal";
 import {
   faDuotone,
   faList,
@@ -18,7 +20,6 @@ import {
   faNewspaper,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-// import column from '../client/assets/column.png'
 import { parse } from "rss-to-json";
 import Feed from "rss-to-json";
 class Feeds extends React.Component {
@@ -66,20 +67,21 @@ class Feeds extends React.Component {
         },
       ],
       bookmarked: [],
-      
+      isLoading: false,
     };
-    
   }
 
   componentDidMount() {
-    this.props.getFeeds();
+    this.props.getFeeds().then(() => {
+      setTimeout(() => {
+        this.setState({ isLoading: true });
+      }, "1000")
+    })
     this.setState({
-      bookmarked: JSON.parse(localStorage.getItem("bookmarkedReadings" )),
+      bookmarked: JSON.parse(localStorage.getItem("bookmarkedReadings")),
     });
-    // var rss = await parse("https://medium.com/feed/backchannel");
   }
 
-  // var self = this;
   // axios
   //   .create({
   //     baseURL: "https://medium.com/feed/backchannel",
@@ -108,85 +110,105 @@ class Feeds extends React.Component {
   render() {
     return (
       <div className="allFeed_container_outer">
-        <h2 className="feeds_heading">
-          Feeds
-          <span className="Add_feed">
-            <FontAwesomeIcon icon={faPlus} style={{ width: 25, height: 25 }} />
-          </span>
-        </h2>
-        <div className="filters"></div>
-        <div className="allFeed_container">
-          {this.props.feeds.map((e, index) => {
-            return (
-              <Link
-                key={index}
-                className="feeds_card"
-                to={{
-                  pathname: `/feed/${e.title}`,
-                  // search: `?name=${e.title.__cdata}`,
-                  state: { feed: e },
-                }}
-              >
-                <div className="container">
-                  <img
-                    className="image"
-                    src={e?.image}
-                    alt={e?.title}
-                    style={{ width: "100%" }}
-                  />
-                  <div className="middle">
-                    <h2 className="text">{e?.title}</h2>
-                  </div>
-                </div>
-                {/* <p>{e.encoded ? e.encoded.__cdata : ''}</p> */}
-              </Link>
-            );
-          
-          })
-        }
-        </div>
-        <div className="heading2" style={{ marginTop: "50px" }}>
-          <h2 className="Bookmarked_Readings_h2 ">
-            Bookmarked Readings{" "}
-            <FontAwesomeIcon
-              icon={faBookBookmark}
-              className="faBookBookmark_icon"
-            />
-          </h2>
-        </div>
-        <div className="bookmarkedList">
-          {this.state.bookmarked ? (
-            this.state.bookmarked.map((e, index) => {
-              return (
-                <Link
-                  style={{ textDecoration: "none" }}
-                  key={index}
-                  to={{
-                    pathname: `/post/${e.id}`,
-                    state: {
-                      feedtitle: "",
-                      posts: e.reading,
-                    },
+        {this.state.isLoading ? (
+          <>
+            <h2 className="feeds_heading">
+              Feeds
+              <span className="Add_feed">
+                
+                {/* <AddFeedModal
+                style={{width: '340px',
+                  height: '200px'}}
+                  onSubmit={(event) => {
+                    event.preventDefault(event);
+                    console.log(event.target.name.value);
+                    console.log(event.target.email.value);
                   }}
                 >
-                  <div className="bookmarked_cards">
-                    <div className="bookmarked_description">
-                      <h4>{e.reading.title}</h4>
-                      <p>
-                        <strong>{e.reading?.author}</strong> 
-                      </p>
+                  <FontAwesomeIcon
+                  icon={faPlus}
+                  style={{ width: 25, height: 25 }}
+                />
+                </AddFeedModal> */}
+              </span>
+            </h2>
+            {/* <div className="filters"></div> */}
+            <div className="allFeed_container">
+              {this.props.feeds.map((e, index) => {
+                return (
+                  <Link
+                    key={index}
+                    className="feeds_card"
+                    to={{
+                      pathname: `/feed/${e.title}`,
+                      // search: `?name=${e.title.__cdata}`,
+                      state: { feed: e },
+                    }}
+                  >
+                    <div className="container">
+                      <img
+                        className="image"
+                        src={e?.image}
+                        alt={e?.title}
+                        style={{ width: "100%" }}
+                      />
+                      <div className="middle">
+                        <h2 className="text">{e?.title}</h2>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              );
-            })
-          ) : (
-            // if there are bookmarked items, map and return each item as a card
-            <div className="nobookmarks">
-              <p>No bookmarked items</p>
+                    {/* <p>{e.encoded ? e.encoded.__cdata : ''}</p> */}
+                  </Link>
+                );
+              })}
             </div>
-          )}
-        </div>
+            <div className="heading2" style={{ marginTop: "50px" }}>
+              <h2 className="Bookmarked_Readings_h2 ">
+                Bookmarked Readings{" "}
+                <FontAwesomeIcon
+                  icon={faBookBookmark}
+                  className="faBookBookmark_icon"
+                />
+              </h2>
+            </div>
+            <div className="bookmarkedList">
+              {this.state.bookmarked ? (
+                this.state.bookmarked.map((e, index) => {
+                  return (
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      key={index}
+                      to={{
+                        pathname: `/post/${e.id}`,
+                        state: {
+                          feedtitle: "",
+                          posts: e.reading,
+                        },
+                      }}
+                    >
+                      <div className="bookmarked_cards">
+                        <div className="bookmarked_description">
+                          <h4>{e.reading.title}</h4>
+                          <p>
+                            <strong>{e.reading?.author}</strong>
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })
+              ) : (
+                // if there are bookmarked items, map and return each item as a card
+                <div className="nobookmarks">
+                  <p>No bookmarked items</p>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="loading_text">
+            <BoxLoading />
+          </div>
+        )}
       </div>
     );
   }
@@ -200,8 +222,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch, { history }) => ({
   getFeeds: () => dispatch(fetchFeeds()),
-  // deleteTheProject: (project) => dispatch(deleteTheProject(project, history)),
-  // createNewProject: (project) => dispatch(createNewProject(project, history)),
+  // deleteTheFeed: (feed) => dispatch(deleteTheFeed(feed, history)),
+  createNewFeed: (feed) => dispatch(createNewFeed(feed, history)),
 });
 
 export default connect(mapState, mapDispatch)(Feeds);

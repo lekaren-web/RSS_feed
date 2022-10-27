@@ -3,7 +3,7 @@ const path = require('path');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
-const { parse } = require('rss-to-json');
+
 
 app.use(
   cors({
@@ -26,11 +26,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '/public/index.html'));
 }) // Send index.html for any other requests
 
-// error handling middleware
-// app.use((err, req, res, next) => {
-//   if (process.env.NODE_ENV !== 'test') console.error(err.stack)
-//   res.status(err.status || 500).send(err.message || 'Internal server error')
-// })
+
 
 app.listen(8080, function(){
     console.log('Server on port 8080');

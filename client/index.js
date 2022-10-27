@@ -5,7 +5,7 @@ import App from "./app";
 import history from "./history";
 
 ReactDOM.render(
-    <Router history={history}>
+    <Router history={history} className="mainContainer">
       <App />
     </Router>,
   document.getElementById("app")

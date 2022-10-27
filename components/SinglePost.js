@@ -25,11 +25,11 @@ function SinglePost(props) {
           </Link>
         </span>
       </div>
-      <div className="downloadPdf">
+      {/* <div className="downloadPdf">
         <span>
         <button onClick={() => {window.print()}}>Download Article</button>
         </span>
-      </div>
+      </div> */}
     </div>
 
       <div className="blog_pdf myDivToPrint">
